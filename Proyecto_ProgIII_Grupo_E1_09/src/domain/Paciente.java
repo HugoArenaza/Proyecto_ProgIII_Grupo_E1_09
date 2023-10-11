@@ -96,6 +96,12 @@ public class Paciente {
 				+ ", telefono=" + telefono + ", enfermedad=" + enfermedad + ", direccion=" + direccion
 				+ ", veterinario=" + veterinario + "]";
 	}
+	public TipoPaciente getTipoPaciente() {
+		return tipoPaciente;
+	}
+	public void setTipoPaciente(TipoPaciente tipoPaciente) {
+		this.tipoPaciente = tipoPaciente;
+	}
 	
 	
 	
