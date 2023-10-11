@@ -11,6 +11,7 @@ public class Paciente {
 	private String enfermedad;
 	private String direccion;
 	private Veterinario veterinario;
+	private TipoPaciente tipoPaciente;
 	
 	public Paciente(int id, String nombreDueño, String dni, int microChip, int telefono, String enfermedad,
 			String direccion, Veterinario veterinario) {
@@ -19,7 +20,7 @@ public class Paciente {
 		contador++;
 		this.nombreDueño = nombreDueño;
 		this.dni = dni;
-		this.microChip = microChip;
+		this.microChip = microChip;	
 		this.telefono = telefono;
 		this.enfermedad = enfermedad;
 		this.direccion = direccion;
