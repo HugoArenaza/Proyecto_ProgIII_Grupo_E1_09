@@ -13,6 +13,7 @@ public class Paciente {
 	private Veterinario veterinario;
 	private TipoPaciente tipoPaciente;
 	
+	
 	public Paciente(int id, String nombreDueño, String dni, int microChip, int telefono, String enfermedad,
 			String direccion, Veterinario veterinario) {
 		super();
