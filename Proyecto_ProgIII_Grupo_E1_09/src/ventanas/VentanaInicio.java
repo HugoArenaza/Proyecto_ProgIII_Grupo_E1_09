@@ -19,7 +19,7 @@ public class VentanaInicio extends JFrame{
 		setTitle("Bienvenido a Furwell!");
 		setBounds(400, 100, 800, 600);
 		setVisible(true);
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		/*Creamos paneles y componentes*/
 		pCentro = new JPanel();
 		pCentroIzq = new JPanel();
