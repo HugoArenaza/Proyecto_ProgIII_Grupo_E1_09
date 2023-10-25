@@ -1,6 +1,6 @@
 package domain;
 
-public class Paciente {
+public class Paciente extends Dueño{
 	protected static int contador=1;
 	
 	private int id;
