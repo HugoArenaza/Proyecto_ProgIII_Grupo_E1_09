@@ -7,8 +7,9 @@ import java.awt.FlowLayout;
 import javax.swing.*;
 
 import domain.Paciente;
+import domain.Veterinario;
 
-public class VentanaRegistro extends JFrame{
+public class VentanaRegistroMiniJefe extends JFrame{
 	
 	private JPanel panel, panelSur, panelCentro, pCInformacion, pcIzq;
 	private JLabel lblNomR, lblDniR, lblApeR, lblFNacR ,lblUsuR, lblConR, lblConR2;
@@ -16,6 +17,7 @@ public class VentanaRegistro extends JFrame{
 	private JPasswordField txtConR, txtConR2;
 	private JButton btnRegistrarse, btnSalir;
 	private JFrame vActual;
+	private Veterinario veterinario;
 	
 	private static Paciente paciente;
 	
@@ -25,7 +27,7 @@ public class VentanaRegistro extends JFrame{
 	
 	
 	
-	public VentanaRegistro() {
+	public VentanaRegistroMiniJefe() {
 		
 		
 		panel = new JPanel();
@@ -99,10 +101,33 @@ public class VentanaRegistro extends JFrame{
 		
 		getContentPane().add(panel);
 		btnRegistrarse.addActionListener((e)->{
-			String dni = txtDniR.getText();
+			
 			String nom = txtNomR.getText();
-			String fNac = txtFNacR.getText();
+			String apell = txtApeR.getText();
+			String User = txtUsuR.getText();
 			String con = txtConR.getText();
+			String con2 = txtConR2.getText();
+			String dni = txtDniR.getText();
+			String fNac = txtFNacR.getText();
+				
+			Veterinario v = new Veterinario(nom, apell, User, con, null, paciente, null, null, dni);
+			
+			if (con.equals(con2)) {
+				JOptionPane.showMessageDialog(null, "Veterinario registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
+				/*
+				 * if(Veterinario.buscarVeterinario(dni)!=null) {
+					JOptionPane.showMessageDialog(null, "Ya existe un veterinario con ese dni","ERROR",JOptionPane.ERROR_MESSAGE);
+				}else {
+					Veterinario.aniadirVeterinario(c);
+					JOptionPane.showMessageDialog(null, "Cliente registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
+			}*/
+				
+			}else {
+				JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden","ERROR",JOptionPane.WARNING_MESSAGE);
+				txtConR.setText("");
+				txtConR2.setText("");
+			
+				}
 		});
 		btnSalir.addActionListener((e)->{
 			dispose();

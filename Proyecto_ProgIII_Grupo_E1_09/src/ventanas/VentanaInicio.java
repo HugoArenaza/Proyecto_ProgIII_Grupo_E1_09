@@ -60,7 +60,7 @@ public class VentanaInicio extends JFrame{
 			
 		});
 		btnRegistro.addActionListener((e)->{
-			new VentanaRegistro();
+			new VentanaEleccion();
 		});
 
 	}
