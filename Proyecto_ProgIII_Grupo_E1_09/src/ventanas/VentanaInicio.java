@@ -48,8 +48,8 @@ public class VentanaInicio extends JFrame{
 		});
 		
 		btnInicioSesion.addActionListener((e)->{
+			new VentanaInicioSesion();
 			
-			/*Preguntar como abrir una ventana al clickar el boton*/
 		});
 
 	}
