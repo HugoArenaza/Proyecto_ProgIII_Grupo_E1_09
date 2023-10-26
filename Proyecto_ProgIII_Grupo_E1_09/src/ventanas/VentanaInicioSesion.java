@@ -54,7 +54,7 @@ public class VentanaInicioSesion extends JFrame{
 		
 		
 		
-		pcIzq.setBorder(new EmptyBorder(200, 150, 500, 500));
+		pcIzq.setBorder(new EmptyBorder(50, 250, 500, 500));
 		
 
 	
@@ -79,7 +79,10 @@ public class VentanaInicioSesion extends JFrame{
 		
 		getContentPane().add(panel);
 		
-		
+		btnCancelar.addActionListener((e)->{
+			dispose();
+			
+		});
 		
 		vActual = this;
 		setTitle("Bienvenido a Furwell!");

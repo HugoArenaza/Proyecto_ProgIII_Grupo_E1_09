@@ -5,12 +5,19 @@ public class Veterinario {
 	private String apellidos;
 	private String usuario;
 	private String contraseña;
+	private String dni;
 	private Clinica clinica;
 	private Paciente paciente;
 	private Float sueldo;
 	private Especialidades especailidad;
 	
 	
+	public String getDni() {
+		return dni;
+	}
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -61,7 +68,7 @@ public class Veterinario {
 	}
 	
 	public Veterinario(String nombre, String apellidos, String usuario, String contraseña, Clinica clinica,
-			Paciente paciente, Float sueldo, Especialidades especailidad) {
+			Paciente paciente, Float sueldo, Especialidades especailidad, String dni) {
 		super();
 		this.nombre = nombre;
 		this.apellidos = apellidos;
@@ -71,6 +78,7 @@ public class Veterinario {
 		this.paciente = paciente;
 		this.sueldo = sueldo;
 		this.especailidad = especailidad;
+		this.dni = dni;
 	}
 	
 	public Veterinario() {
@@ -83,13 +91,14 @@ public class Veterinario {
 		this.paciente = null;
 		this.sueldo = (float) 0.0;
 		this.especailidad = null;
+		this.dni = "sin dni";
 	}
 	
 	@Override
 	public String toString() {
 		return "Veterinario [nombre=" + nombre + ", apellidos=" + apellidos + ", usuario=" + usuario + ", contraseña="
 				+ contraseña + ", clinica=" + clinica + ", paciente=" + paciente + ", sueldo=" + sueldo
-				+ ", especailidad=" + especailidad + "]";
+				+ ", especailidad=" + especailidad + ", dni=" + dni +  "]";
 	}
 	
 	

@@ -1,5 +1,5 @@
 package domain;
 
-public class Trabajador {
+public class Trabajador extends Veterinario{
 
 }
