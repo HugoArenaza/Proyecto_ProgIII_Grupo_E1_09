@@ -51,6 +51,9 @@ public class VentanaInicio extends JFrame{
 			new VentanaInicioSesion();
 			
 		});
+		btnRegistroTrabajador.addActionListener((e)->{
+			//new VentanaRegistroTrabajador;
+		});
 
 	}
 	

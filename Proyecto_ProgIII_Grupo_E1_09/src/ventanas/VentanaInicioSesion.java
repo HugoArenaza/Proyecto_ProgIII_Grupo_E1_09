@@ -1,20 +1,25 @@
 package ventanas;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class VentanaInicioSesion extends JFrame{
 	
 	private JFrame vActual;
-	private JPanel panel, panelCentro, panelSur;
+	private JPanel panel, panelCentro, panelSur, pCInformacion, pcIzq;
 	private JLabel labelUsuraio, labelContraseña;
 	private JTextField textUsuario; 
 	private JPasswordField textContraseña;
@@ -23,29 +28,58 @@ public class VentanaInicioSesion extends JFrame{
 	
 	
 	public VentanaInicioSesion(){
-		
+		//BoxLayout.X_AXIS
 		panel = new JPanel();
-		panelCentro = new JPanel(new GridLayout(2,2));
+		panel.setLayout(new BorderLayout());
+		panelCentro = new JPanel();
+		panelCentro.setLayout(new BorderLayout());
 		panelSur = new JPanel(new FlowLayout());
+		
+		pcIzq = new JPanel();
+		pcIzq.setLayout(new BoxLayout(pcIzq, BoxLayout.Y_AXIS));
+		
+		
+		pCInformacion = new JPanel();
+		pCInformacion.setLayout(new BoxLayout(pCInformacion, BoxLayout.Y_AXIS));
 		
 		labelUsuraio = new JLabel("Usuario: ");
 		labelContraseña = new JLabel("Contraseña: ");
-		textUsuario = new JTextField();
+		textUsuario = new JTextField(20);
 		textContraseña = new JPasswordField();
 		btnAceptar = new JButton("Aceptar");
 		btnCancelar = new JButton("Cancelar");
 		
-		panelCentro.add(labelUsuraio);
-		panelCentro.add(textUsuario);
-		panelCentro.add(labelContraseña);
-		panelCentro.add(textContraseña);
+		textUsuario.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
+		textContraseña.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
+		
+		
+		
+		pcIzq.setBorder(new EmptyBorder(200, 150, 500, 500));
+		
+
+	
+		pcIzq.add(labelUsuraio);
+		pcIzq.add(textUsuario);
+		pcIzq.add(labelContraseña);
+		pcIzq.add(textContraseña);
+		
+		
 		panelSur.add(btnAceptar);
 		panelSur.add(btnCancelar);
 		
-		this.add(panel);
-		panel.setLayout(new BorderLayout());
+		
+		panelCentro.add(pcIzq, BorderLayout.WEST);
+		
+		
 		panel.add(panelCentro, BorderLayout.CENTER);
+		
 		panel.add(panelSur, BorderLayout.SOUTH);
+		
+		
+		
+		getContentPane().add(panel);
+		
+		
 		
 		vActual = this;
 		setTitle("Bienvenido a Furwell!");
