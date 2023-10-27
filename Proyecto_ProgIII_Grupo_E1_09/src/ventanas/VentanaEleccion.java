@@ -32,10 +32,6 @@ public class VentanaEleccion extends JFrame{
 		ImageIcon dueñoI = new ImageIcon("src/imagenes/dueño.jpg");
 		
 		
-		
-		
-		
-		
 		Image imagenEscaladaJefe = jefeI.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
         ImageIcon jefeEscalado = new ImageIcon(imagenEscaladaJefe);
         Image imagenEscaladaMiniJefe = mini_jefeI.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
