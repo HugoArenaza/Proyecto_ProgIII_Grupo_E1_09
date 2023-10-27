@@ -6,6 +6,15 @@ public class Clinica {
 	private MedicamentosAnimales medicamentos;
 	private Trabajador trabajador;
 	private MiniJefe jefeVeterinario;
+	private int numeroTrabajadores;
+	
+	
+	public int getNumeroTrabajadores() {
+		return numeroTrabajadores;
+	}
+	public void setNumeroTrabajadores(int numeroTrabajadores) {
+		this.numeroTrabajadores = numeroTrabajadores;
+	}
 	public String getCalle() {
 		return calle;
 	}
@@ -38,13 +47,14 @@ public class Clinica {
 	}
 	
 	public Clinica(String calle, int num_max_clientes, MedicamentosAnimales medicamentos, Trabajador trabajador,
-			MiniJefe jefeVeterinario) {
+			MiniJefe jefeVeterinario, int numeroTrabajadores) {
 		super();
 		this.calle = calle;
 		this.num_max_clientes = num_max_clientes;
 		this.medicamentos = medicamentos;
 		this.trabajador = trabajador;
 		this.jefeVeterinario = jefeVeterinario;
+		this.numeroTrabajadores = numeroTrabajadores;
 	}
 	
 	public Clinica() {
@@ -54,15 +64,14 @@ public class Clinica {
 		this.medicamentos = null;
 		this.trabajador = null;
 		this.jefeVeterinario = null;
+		this.numeroTrabajadores = 0;
 	}
 	
 	@Override
 	public String toString() {
 		return "Clinica [calle=" + calle + ", num_max_clientes=" + num_max_clientes + ", medicamentos=" + medicamentos
-				+ ", trabajador=" + trabajador + ", jefeVeterinario=" + jefeVeterinario + "]";
+				+ ", trabajador=" + trabajador + ", jefeVeterinario=" + jefeVeterinario + ", numeroTrabajadores=" + numeroTrabajadores + "]";
 	}
-	
-	
 	
 
 }
