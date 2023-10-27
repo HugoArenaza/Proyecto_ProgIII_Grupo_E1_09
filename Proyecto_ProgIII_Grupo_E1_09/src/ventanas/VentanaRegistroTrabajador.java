@@ -121,6 +121,8 @@ public class VentanaRegistroTrabajador extends JFrame{
 					Veterinario.aniadirVeterinario(c);
 					JOptionPane.showMessageDialog(null, "Cliente registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
 			}*/
+			new VentanaTrabajador();	
+			
 				
 			}else {
 				JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden","ERROR",JOptionPane.WARNING_MESSAGE);
