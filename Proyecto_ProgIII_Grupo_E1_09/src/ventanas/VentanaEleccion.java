@@ -74,7 +74,7 @@ public class VentanaEleccion extends JFrame{
 		});
 		
 		dueño.addActionListener((e)->{
-			new VentanaRegistroTrabajador();
+			new VentanaRegistroDueño();
 		});
 		
 		cancelar.addActionListener((e)->{
