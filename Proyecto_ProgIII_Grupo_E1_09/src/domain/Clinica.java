@@ -1,5 +1,8 @@
 package domain;
 
+import java.util.ArrayList;
+
+
 public class Clinica {
 	private String calle;
 	private int num_max_clientes;
@@ -7,6 +10,11 @@ public class Clinica {
 	private Trabajador trabajador;
 	private MiniJefe jefeVeterinario;
 	private int numeroTrabajadores;
+	
+	protected ArrayList<Paciente> pacientes;
+	protected ArrayList productos;
+	protected ArrayList proveedores;
+	
 	
 	
 	public int getNumeroTrabajadores() {

@@ -114,6 +114,7 @@ public class VentanaRegistroTrabajador extends JFrame{
 			
 			if (con.equals(con2)) {
 				JOptionPane.showMessageDialog(null, "Veterinario registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
+				new VentanaTrabajador();
 				/*
 				 * if(Veterinario.buscarVeterinario(dni)!=null) {
 					JOptionPane.showMessageDialog(null, "Ya existe un veterinario con ese dni","ERROR",JOptionPane.ERROR_MESSAGE);
@@ -121,7 +122,7 @@ public class VentanaRegistroTrabajador extends JFrame{
 					Veterinario.aniadirVeterinario(c);
 					JOptionPane.showMessageDialog(null, "Cliente registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
 			}*/
-			new VentanaTrabajador();	
+				/*new VentanaTrabajador();*/	
 			
 				
 			}else {
