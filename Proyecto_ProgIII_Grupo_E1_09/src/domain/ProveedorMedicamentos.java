@@ -1,6 +1,6 @@
 package domain;
 
-public class ProveedorMedicamentos {
+public class ProveedorMedicamentos extends Proveedor {
 	//base de datos con mediamentos:pecio
 	/*BISTURI,
     TIJERAS_DE_CIRUGIA,
@@ -23,7 +23,6 @@ public class ProveedorMedicamentos {
     CANULAS_INTRAVENOSAS_IV,
     VENDAS_Y_APOSITOS
 	 */
-	private String correo;
-	private int num_contacto;
+	
 
 }

@@ -1,6 +1,8 @@
 package main;
 
+
 import ventanas.VentanaInicio;
+
 
 public class ClinicaVeterinaria {
 

@@ -1,42 +1,32 @@
 package domain;
 
-public class ProveedorMaterialQuirurjico {
+public class ProveedorMaterialQuirurjico extends Proveedor {
 	private TipoMaterialQuirurjico tipoMaterialQuirurjico;
-	private String correo;
-	private int num_contacto;
-	
+
+	public ProveedorMaterialQuirurjico(String correo, int num_contacto, TipoMaterialQuirurjico tipoMaterialQuirurjico) {
+		super(correo, num_contacto);
+		this.tipoMaterialQuirurjico = tipoMaterialQuirurjico;
+	}
+
 	public TipoMaterialQuirurjico getTipoMaterialQuirurjico() {
 		return tipoMaterialQuirurjico;
 	}
+
 	public void setTipoMaterialQuirurjico(TipoMaterialQuirurjico tipoMaterialQuirurjico) {
 		this.tipoMaterialQuirurjico = tipoMaterialQuirurjico;
 	}
-	public String getCorreo() {
-		return correo;
+
+	@Override
+	public String toString() {
+		return "ProveedorMaterialQuirurjico [tipoMaterialQuirurjico=" + tipoMaterialQuirurjico + ", getCorreo()="
+				+ getCorreo() + ", getNum_contacto()=" + getNum_contacto() + "]";
 	}
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
-	public int getNum_contacto() {
-		return num_contacto;
-	}
-	public void setNum_contacto(int num_contacto) {
-		this.num_contacto = num_contacto;
-	}
-	public ProveedorMaterialQuirurjico(TipoMaterialQuirurjico tipoMaterialQuirurjico, String correo, int num_contacto) {
-		super();
-		this.tipoMaterialQuirurjico = tipoMaterialQuirurjico;
-		this.correo = correo;
-		this.num_contacto = num_contacto;
-	}
-	
-	public ProveedorMaterialQuirurjico() {
-		super();
-		this.tipoMaterialQuirurjico = null;
-		this.correo = "Sin correo";
-		this.num_contacto = 0;
-	}
+
 	
 	
+	
+	
+	
+
 
 }

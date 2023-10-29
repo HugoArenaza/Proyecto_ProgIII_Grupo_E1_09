@@ -1,7 +1,7 @@
 package domain;
 
 public class Dueño {
-	private String nombre;
+	private String NombreDueño;
 	private String apellidos;
 	private String dni;
 	private Clinica clinicaAsociada;
@@ -9,11 +9,11 @@ public class Dueño {
 	private int numeroTlf;
 	private String correo;
 	private String contraseña;
-	public String getNombre() {
-		return nombre;
+	public String getNombreDueño() {
+		return NombreDueño;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNombreDueño(String NombreDueño) {
+		this.NombreDueño = NombreDueño;
 	}
 	public String getApellidos() {
 		return apellidos;
@@ -59,10 +59,10 @@ public class Dueño {
 		this.contraseña = contraseña;
 	}
 	
-	public Dueño(String nombre, String apellidos, String dni, Clinica clinicaAsociada, String direccion, int numeroTlf,
+	public Dueño(String NombreDueño, String apellidos, String dni, Clinica clinicaAsociada, String direccion, int numeroTlf,
 			String correo, String contraseña) {
 		super();
-		this.nombre = nombre;
+		this.NombreDueño = NombreDueño;
 		this.apellidos = apellidos;
 		this.dni = dni;
 		this.clinicaAsociada = clinicaAsociada;
@@ -74,7 +74,7 @@ public class Dueño {
 	
 	public Dueño() {
 		super();
-		this.nombre = "Sin nombre";
+		this.NombreDueño = "Sin NombreDueño";
 		this.apellidos = "Sin apellido";
 		this.dni = "Sin dni";
 		this.clinicaAsociada = null;
@@ -86,7 +86,7 @@ public class Dueño {
 	
 	@Override
 	public String toString() {
-		return "Dueño [nombre=" + nombre + ", apellidos=" + apellidos + ", dni=" + dni + ", clinicaAsociada="
+		return "Dueño [NombreDueño=" + NombreDueño + ", apellidos=" + apellidos + ", dni=" + dni + ", clinicaAsociada="
 				+ clinicaAsociada + ", direccion=" + direccion + ", numeroTlf=" + numeroTlf + ", correo=" + correo
 				+ ", contraseña=" + contraseña + "]";
 	}

@@ -101,7 +101,8 @@ public class Veterinario {
 				+ ", especailidad=" + especailidad + ", dni=" + dni +  "]";
 	}
 	
+}
 	
 	
 
-}
+
