@@ -42,7 +42,7 @@ public class VentanaEleccion extends JFrame{
         ImageIcon TrabajadorDueño = new ImageIcon(imagenEscaladaDueño);
         
         jefe = new JButton("JEFE", jefeEscalado);
-		mini_jefe = new JButton("MINI JEFE",minijefeEscalado);
+		mini_jefe = new JButton("JEFE DE CLINICA",minijefeEscalado);
 		trabajador = new JButton("TRABAJADOR",TrabajadorEscalado);
 		dueño = new JButton("DUEÑO",TrabajadorDueño);
 		
