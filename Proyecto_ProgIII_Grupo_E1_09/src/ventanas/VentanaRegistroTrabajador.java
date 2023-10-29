@@ -12,8 +12,8 @@ import domain.Veterinario;
 public class VentanaRegistroTrabajador extends JFrame{
 	
 	private JPanel panel, panelSur, panelCentro, pCInformacion, pcIzq;
-	private JLabel lblNomR, lblDniR, lblApeR, lblFNacR ,lblUsuR, lblConR, lblConR2;
-	private JTextField txtNomR, txtDniR, txtFNacR, txtApeR, txtUsuR;
+	private JLabel lblNomR, lblDniR, lblApeR, lblFNacR ,lblUsuR, lblConR, lblConR2, lblCorreo;
+	private JTextField txtNomR, txtDniR, txtFNacR, txtApeR, txtUsuR, txtCorreo;
 	private JPasswordField txtConR, txtConR2;
 	private JButton btnRegistrarse, btnSalir;
 	private JFrame vActual;
@@ -49,6 +49,7 @@ public class VentanaRegistroTrabajador extends JFrame{
 		lblNomR = new JLabel("NOMBRE: ");
 		lblApeR = new JLabel("APELLIDOS: ");
 		lblFNacR = new JLabel("FECHA DE NACIMIENTO: ");
+		lblCorreo = new JLabel("CORREO: ((modifica 'example' para crear tu correo correctamente)");
 		lblUsuR = new JLabel("USUARIO: ");
 		lblConR = new JLabel("CONTRASEÑA: ");
 		lblConR2 = new JLabel("REPITE CONTRASEÑA: ");
@@ -58,6 +59,7 @@ public class VentanaRegistroTrabajador extends JFrame{
 		txtNomR = new JTextField();
 		txtApeR = new JTextField();
 		txtFNacR = new JTextField();
+		txtCorreo = new JTextField("example@veterinariofurwell.com");
 		txtUsuR = new JTextField();
 		txtConR = new JPasswordField();
 		txtConR2 = new JPasswordField();
@@ -66,6 +68,7 @@ public class VentanaRegistroTrabajador extends JFrame{
 		txtApeR.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
 		txtDniR.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
 		txtFNacR.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
+		txtCorreo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
 		txtUsuR.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
 		txtConR.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
 		txtConR2.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
@@ -80,6 +83,8 @@ public class VentanaRegistroTrabajador extends JFrame{
 		pcIzq.add(txtDniR);
 		pcIzq.add(lblFNacR);
 		pcIzq.add(txtFNacR);
+		pcIzq.add(lblCorreo);
+		pcIzq.add(txtCorreo);
 		pcIzq.add(lblUsuR);
 		pcIzq.add(txtUsuR);
 		pcIzq.add(lblConR);
@@ -109,6 +114,7 @@ public class VentanaRegistroTrabajador extends JFrame{
 			String con2 = txtConR2.getText();
 			String dni = txtDniR.getText();
 			String fNac = txtFNacR.getText();
+			String correo = txtCorreo.getText();
 				
 			Veterinario v = new Veterinario(nom, apell, User, con, null, paciente, null, null, dni);
 			

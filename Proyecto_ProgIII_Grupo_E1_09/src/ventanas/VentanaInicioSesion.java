@@ -79,6 +79,15 @@ public class VentanaInicioSesion extends JFrame{
 		
 		getContentPane().add(panel);
 		
+		btnAceptar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+		});
+		
 		btnCancelar.addActionListener((e)->{
 			dispose();
 			
