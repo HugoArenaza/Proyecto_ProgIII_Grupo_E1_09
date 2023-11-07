@@ -118,9 +118,22 @@ public class VentanaRegistroTrabajador extends JFrame{
 				
 			Veterinario v = new Veterinario(nom, apell, User, con, null, paciente, null, null, dni);
 			
-			if (con.equals(con2)) {
-				JOptionPane.showMessageDialog(null, "Veterinario registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
-				new VentanaTrabajador();
+			String correoNoValido = "example@veterinariofurwell.com";
+			if (nom.isEmpty() || User.isEmpty() || con.isEmpty() || con2.isEmpty() || dni.isEmpty() || correo.isEmpty())  {
+					JOptionPane.showMessageDialog(null, "No dejes ningun campo vacio","ERROR",JOptionPane.WARNING_MESSAGE);
+			}else if(correo.equals(correoNoValido)){
+				JOptionPane.showMessageDialog(null, "Cambia el correo de ejemplo","ERROR",JOptionPane.WARNING_MESSAGE);
+				
+					
+			}else if(con.equals(con2)) {
+					JOptionPane.showMessageDialog(null, "Veterinario registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
+					new VentanaJefe();
+			}else {
+					JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden","ERROR",JOptionPane.WARNING_MESSAGE);
+					txtConR.setText("");
+					txtConR2.setText("");
+				
+					}
 				/*
 				 * if(Veterinario.buscarVeterinario(dni)!=null) {
 					JOptionPane.showMessageDialog(null, "Ya existe un veterinario con ese dni","ERROR",JOptionPane.ERROR_MESSAGE);
@@ -131,12 +144,7 @@ public class VentanaRegistroTrabajador extends JFrame{
 				/*new VentanaTrabajador();*/	
 			
 				
-			}else {
-				JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden","ERROR",JOptionPane.WARNING_MESSAGE);
-				txtConR.setText("");
-				txtConR2.setText("");
 			
-				}
 		});
 		btnSalir.addActionListener((e)->{
 			dispose();

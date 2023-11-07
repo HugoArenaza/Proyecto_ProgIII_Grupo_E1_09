@@ -114,11 +114,26 @@ public class VentanaRegistroMiniJefe extends JFrame{
 			String con2 = txtConR2.getText();
 			String dni = txtDniR.getText();
 			String fNac = txtFNacR.getText();
+			String correo = txtCorreo.getText();
 				
 			Veterinario v = new Veterinario(nom, apell, User, con, null, paciente, null, null, dni);
 			
-			if (con.equals(con2)) {
-				JOptionPane.showMessageDialog(null, "Veterinario registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
+			String correoNoValido = "example@clinicafurwell.com";
+			if (nom.isEmpty() || User.isEmpty() || con.isEmpty() || con2.isEmpty() || dni.isEmpty() || correo.isEmpty())  {
+					JOptionPane.showMessageDialog(null, "No dejes ningun campo vacio","ERROR",JOptionPane.WARNING_MESSAGE);
+			}else if(correo.equals(correoNoValido)){
+				JOptionPane.showMessageDialog(null, "Cambia el correo de ejemplo","ERROR",JOptionPane.WARNING_MESSAGE);
+				
+					
+			}else if(con.equals(con2)) {
+					JOptionPane.showMessageDialog(null, "Veterinario registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
+					new VentanaJefe();
+			}else {
+					JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden","ERROR",JOptionPane.WARNING_MESSAGE);
+					txtConR.setText("");
+					txtConR2.setText("");
+				
+					}
 				/*
 				 * if(Veterinario.buscarVeterinario(dni)!=null) {
 					JOptionPane.showMessageDialog(null, "Ya existe un veterinario con ese dni","ERROR",JOptionPane.ERROR_MESSAGE);
@@ -127,12 +142,7 @@ public class VentanaRegistroMiniJefe extends JFrame{
 					JOptionPane.showMessageDialog(null, "Cliente registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
 			}*/
 				
-			}else {
-				JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden","ERROR",JOptionPane.WARNING_MESSAGE);
-				txtConR.setText("");
-				txtConR2.setText("");
 			
-				}
 		});
 		btnSalir.addActionListener((e)->{
 			dispose();
