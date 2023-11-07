@@ -127,7 +127,9 @@ public class VentanaRegistroJefe extends JFrame{
 					
 			}else if(con.equals(con2)) {
 					JOptionPane.showMessageDialog(null, "Veterinario registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
+					dispose();
 					new VentanaJefe();
+					
 			}else {
 					JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden","ERROR",JOptionPane.WARNING_MESSAGE);
 					txtConR.setText("");
