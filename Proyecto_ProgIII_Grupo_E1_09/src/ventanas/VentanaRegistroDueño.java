@@ -119,7 +119,7 @@ public class VentanaRegistroDueño extends JFrame{
 			String correo = txtCorreo.getText();
 				
 			
-			Veterinario v = new Veterinario(nom, apell, correo, con2, null, paciente, null, null, dni);
+			Veterinario v = new Veterinario(nom, apell, correo, con2, 0, null, null, null, dni);
 			
 			String correoNoValido = "example@furwell.com";
 			if (nom.isEmpty() || User.isEmpty() || con.isEmpty() || con2.isEmpty() || dni.isEmpty() || correo.isEmpty())  {
