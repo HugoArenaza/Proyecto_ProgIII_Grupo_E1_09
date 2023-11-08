@@ -135,7 +135,7 @@ public class VentanaRegistroDueño extends JFrame{
 				
 					
 			}else if(con.equals(con2)) {
-					JOptionPane.showMessageDialog(null, "Veterinario registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Dueño registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
 					dispose();
 					new VentanaInicioSesion();
 					
