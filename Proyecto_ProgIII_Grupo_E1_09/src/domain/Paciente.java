@@ -1,26 +1,26 @@
 package domain;
 
-public class Paciente extends Dueño{
+public class Paciente {
 	
 	
 	private int id;
 	private String NombrePaciente;
 	private int microChip;
 	private String enfermedad;
-	private Veterinario veterinario;
+	private int Id_veterinario;
 	private TipoPaciente tipoPaciente;
-	public Paciente(String NombreDueño, String apellidos, String dni, Clinica clinicaAsociada, String direccion,
-			int numeroTlf, String correo, String contraseña, int id, String nombrePaciente, int microChip,
-			String enfermedad, Veterinario veterinario, TipoPaciente tipoPaciente) {
-		super(NombreDueño, apellidos, dni, clinicaAsociada, direccion, numeroTlf, correo, contraseña);
+	private Dueño dueño;
+	public Paciente(int id, String nombrePaciente, int microChip, String enfermedad, int Id_veterinario,
+			TipoPaciente tipoPaciente, Dueño dueño) {
+		super();
 		this.id = id;
 		NombrePaciente = nombrePaciente;
 		this.microChip = microChip;
 		this.enfermedad = enfermedad;
-		this.veterinario = veterinario;
+		this.Id_veterinario = Id_veterinario;
 		this.tipoPaciente = tipoPaciente;
+		this.dueño = dueño;
 	}
-
 	public int getId() {
 		return id;
 	}
@@ -45,11 +45,11 @@ public class Paciente extends Dueño{
 	public void setEnfermedad(String enfermedad) {
 		this.enfermedad = enfermedad;
 	}
-	public Veterinario getVeterinario() {
-		return veterinario;
+	public int getId_Veterinario() {
+		return Id_veterinario;
 	}
-	public void setVeterinario(Veterinario veterinario) {
-		this.veterinario = veterinario;
+	public void setId_Veterinario(int Id_veterinario) {
+		this.Id_veterinario = Id_veterinario;
 	}
 	public TipoPaciente getTipoPaciente() {
 		return tipoPaciente;
@@ -57,14 +57,19 @@ public class Paciente extends Dueño{
 	public void setTipoPaciente(TipoPaciente tipoPaciente) {
 		this.tipoPaciente = tipoPaciente;
 	}
+	public Dueño getDueño() {
+		return dueño;
+	}
+	public void setDueño(Dueño dueño) {
+		this.dueño = dueño;
+	}
 	@Override
 	public String toString() {
 		return "Paciente [id=" + id + ", NombrePaciente=" + NombrePaciente + ", microChip=" + microChip
-				+ ", enfermedad=" + enfermedad + ", veterinario=" + veterinario + ", tipoPaciente=" + tipoPaciente
-				+ ", getNombreDueño()=" + getNombreDueño() + ", getApellidos()=" + getApellidos() + ", getDni()="
-				+ getDni() + ", getClinicaAsociada()=" + getClinicaAsociada() + ", getDireccion()=" + getDireccion()
-				+ ", getNumeroTlf()=" + getNumeroTlf() + ", getCorreo()=" + getCorreo() + "]";
+				+ ", enfermedad=" + enfermedad + ", Id_veterinario=" + Id_veterinario + ", tipoPaciente=" + tipoPaciente
+				+ ", dueño=" + dueño + "]";
 	}
+	
 	
 	
 	

@@ -12,7 +12,7 @@ public class Clinica {
 	private int id;
 	private String calle;
 	private int cantidadPacientes;
-	private MedicamentosAnimales medicamentos; //array list
+	private ArrayList<MedicamentosAnimales> medicamentos; //array list
 	private ArrayList<Trabajador> trabajadores;
 	private MiniJefe jefeVeterinario;
 	private int numeroTrabajadores; 
@@ -23,7 +23,7 @@ public class Clinica {
 
 	
 	
-	public Clinica(int id, String calle, int cantidadPacientes, MedicamentosAnimales medicamentos, ArrayList<Trabajador> trabajadores,
+	public Clinica(int id, String calle, int cantidadPacientes, ArrayList<MedicamentosAnimales> medicamentos, ArrayList<Trabajador> trabajadores,
 		MiniJefe jefeVeterinario, int numeroTrabajadores, ArrayList<Paciente> pacientes,
 		ArrayList<Proveedor> proveedores) {
 	super();
@@ -98,10 +98,10 @@ public class Clinica {
 	public void setCantidadPacientes(int cantidadPacientes) {
 		this.cantidadPacientes = cantidadPacientes;
 	}
-	public MedicamentosAnimales getMedicamentos() {
+	public ArrayList<MedicamentosAnimales> getMedicamentos() {
 		return medicamentos;
 	}
-	public void setMedicamentos(MedicamentosAnimales medicamentos) {
+	public void setMedicamentos(ArrayList<MedicamentosAnimales> medicamentos) {
 		this.medicamentos = medicamentos;
 	}
 	public ArrayList<Trabajador> getTrabajadores() {
