@@ -1,13 +1,14 @@
 package main;
 
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
+//import java.io.FileInputStream;
+//import java.io.FileNotFoundException;
+//import java.io.IOException;
+//import java.util.logging.LogManager;
+//import java.util.logging.Logger;
 
 import ventanas.VentanaInicio;
+
 
 
 public class ClinicaVeterinaria {

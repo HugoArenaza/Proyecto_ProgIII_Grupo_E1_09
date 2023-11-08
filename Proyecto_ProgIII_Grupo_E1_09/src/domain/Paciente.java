@@ -1,7 +1,7 @@
 package domain;
 
 public class Paciente extends Dueño{
-	protected static int contador=1;
+	
 	
 	private int id;
 	private String NombrePaciente;
@@ -13,20 +13,14 @@ public class Paciente extends Dueño{
 			int numeroTlf, String correo, String contraseña, int id, String nombrePaciente, int microChip,
 			String enfermedad, Veterinario veterinario, TipoPaciente tipoPaciente) {
 		super(NombreDueño, apellidos, dni, clinicaAsociada, direccion, numeroTlf, correo, contraseña);
-		this.id = contador;
-		contador++;
+		this.id = id;
 		NombrePaciente = nombrePaciente;
 		this.microChip = microChip;
 		this.enfermedad = enfermedad;
 		this.veterinario = veterinario;
 		this.tipoPaciente = tipoPaciente;
 	}
-	public static int getContador() {
-		return contador;
-	}
-	public static void setContador(int contador) {
-		Paciente.contador = contador;
-	}
+
 	public int getId() {
 		return id;
 	}

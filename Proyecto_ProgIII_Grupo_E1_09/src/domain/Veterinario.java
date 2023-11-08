@@ -1,15 +1,18 @@
 package domain;
 
+import java.util.ArrayList;
+
 public class Veterinario {
 	private String nombre;
 	private String apellidos;
 	private String usuario;
 	private String contraseña;
 	private String dni;
-	private Clinica clinica;
-	private Paciente paciente;
+	private int id_clinica;  					// Cambiar variable a int id_clinica
+	private ArrayList<Paciente> pacientes; 		// hacerlo arrayList
 	private Float sueldo;
-	private Especialidades especailidad;
+	private Especialidades especialidad;
+	
 	
 	
 	public String getDni() {
@@ -42,17 +45,17 @@ public class Veterinario {
 	public void setContraseña(String contraseña) {
 		this.contraseña = contraseña;
 	}
-	public Clinica getClinica() {
-		return clinica;
+	public int getClinica() {
+		return id_clinica;
 	}
-	public void setClinica(Clinica clinica) {
-		this.clinica = clinica;
+	public void setClinica(int clinica) {
+		this.id_clinica = clinica;
 	}
-	public Paciente getPaciente() {
-		return paciente;
+	public ArrayList<Paciente> getPaciente() {
+		return pacientes;
 	}
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
+	public void setPaciente(ArrayList<Paciente> pacientes) {
+		this.pacientes = pacientes;
 	}
 	public Float getSueldo() {
 		return sueldo;
@@ -60,24 +63,24 @@ public class Veterinario {
 	public void setSueldo(Float sueldo) {
 		this.sueldo = sueldo;
 	}
-	public Especialidades getEspecailidad() {
-		return especailidad;
+	public Especialidades getespecialidad() {
+		return especialidad;
 	}
-	public void setEspecailidad(Especialidades especailidad) {
-		this.especailidad = especailidad;
+	public void setespecialidad(Especialidades especialidad) {
+		this.especialidad = especialidad;
 	}
 	
-	public Veterinario(String nombre, String apellidos, String usuario, String contraseña, Clinica clinica,
-			Paciente paciente, Float sueldo, Especialidades especailidad, String dni) {
+	public Veterinario(String nombre, String apellidos, String usuario, String contraseña, int id_clinica,
+			ArrayList<Paciente> pacientes, Float sueldo, Especialidades especialidad, String dni) {
 		super();
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.usuario = usuario;
 		this.contraseña = contraseña;
-		this.clinica = clinica;
-		this.paciente = paciente;
+		this.id_clinica = id_clinica;
+		this.pacientes = pacientes;
 		this.sueldo = sueldo;
-		this.especailidad = especailidad;
+		this.especialidad = especialidad;
 		this.dni = dni;
 	}
 	
@@ -87,18 +90,18 @@ public class Veterinario {
 		this.apellidos = "Sin apellidos";
 		this.usuario = "Sin nombre de usuario";
 		this.contraseña = "Sin contraseña";
-		this.clinica = null;
-		this.paciente = null;
+	
+		this.pacientes = null;
 		this.sueldo = (float) 0.0;
-		this.especailidad = null;
+		this.especialidad = null;
 		this.dni = "sin dni";
 	}
 	
 	@Override
 	public String toString() {
 		return "Veterinario [nombre=" + nombre + ", apellidos=" + apellidos + ", usuario=" + usuario + ", contraseña="
-				+ contraseña + ", clinica=" + clinica + ", paciente=" + paciente + ", sueldo=" + sueldo
-				+ ", especailidad=" + especailidad + ", dni=" + dni +  "]";
+				+ contraseña + ", clinica=" + id_clinica + ", paciente=" + pacientes + ", sueldo=" + sueldo
+				+ ", especialidad=" + especialidad + ", dni=" + dni +  "]";
 	}
 	
 }
