@@ -16,9 +16,9 @@ public class Trabajador extends Veterinario{
 		this.num_pacientes = num_pacientes;
 	}
 
-	public Trabajador(String nombre, String apellidos, String usuario, String contraseña, int id_clinica,
+	public Trabajador(int Id, String nombre, String apellidos, String usuario, String contraseña, int id_clinica,
 			ArrayList<Paciente> pacientes, Float sueldo, Especialidades especialidad, String dni, int num_pacientes) {
-		super(nombre, apellidos, usuario, contraseña, id_clinica, pacientes, sueldo, especialidad, dni);
+		super(Id,nombre, apellidos, usuario, contraseña, id_clinica, pacientes, sueldo, especialidad, dni);
 		this.num_pacientes = num_pacientes;
 	}
 

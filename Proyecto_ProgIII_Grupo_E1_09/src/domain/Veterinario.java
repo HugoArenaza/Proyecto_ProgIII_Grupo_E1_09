@@ -2,7 +2,11 @@ package domain;
 
 import java.util.ArrayList;
 
-public class Veterinario {
+
+public class Veterinario implements Comparable<Veterinario>{
+	
+	
+	private int Id;
 	private String nombre;
 	private String apellidos;
 	private String usuario;
@@ -14,7 +18,12 @@ public class Veterinario {
 	private Especialidades especialidad;
 	
 	
-	
+	public int getId() {
+		return Id;
+	}
+	public void setId(int Id) {
+		this.Id= Id;
+	}
 	public String getDni() {
 		return dni;
 	}
@@ -70,9 +79,10 @@ public class Veterinario {
 		this.especialidad = especialidad;
 	}
 	
-	public Veterinario(String nombre, String apellidos, String usuario, String contraseña, int id_clinica,
+	public Veterinario(int Id, String nombre, String apellidos, String usuario, String contraseña, int id_clinica,
 			ArrayList<Paciente> pacientes, Float sueldo, Especialidades especialidad, String dni) {
 		super();
+		this.Id= Id;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.usuario = usuario;
@@ -99,10 +109,22 @@ public class Veterinario {
 	
 	@Override
 	public String toString() {
-		return "Veterinario [nombre=" + nombre + ", apellidos=" + apellidos + ", usuario=" + usuario + ", contraseña="
+		return "Veterinario [Id = " + Id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", usuario=" + usuario + ", contraseña="
 				+ contraseña + ", clinica=" + id_clinica + ", paciente=" + pacientes + ", sueldo=" + sueldo
 				+ ", especialidad=" + especialidad + ", dni=" + dni +  "]";
 	}
+
+	
+	//Metodo para añadir paciente una vez creado el Veterinario
+	public void anyadirPaciente(Paciente p ) {
+		pacientes.add(p);
+		}
+	@Override
+	public int compareTo(Veterinario o) {
+		// TODO Auto-generated method stub
+		return this.getNombre().compareTo(o.getNombre());
+	}
+	
 	
 }
 	

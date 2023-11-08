@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class Jefe extends MiniJefe {
 
-	public Jefe(String nombre, String apellidos, String usuario, String contraseña, int id_clinica,
+	public Jefe(int Id, String nombre, String apellidos, String usuario, String contraseña, int id_clinica,
 			ArrayList<Paciente> pacientes, Float sueldo, Especialidades especialidad, String dni, int num_pacientes,
 			int num_empleados) {
-		super(nombre, apellidos, usuario, contraseña, id_clinica, pacientes, sueldo, especialidad, dni, num_pacientes,
+		super(Id, nombre, apellidos, usuario, contraseña, id_clinica, pacientes, sueldo, especialidad, dni, num_pacientes,
 				num_empleados);
 		// TODO Auto-generated constructor stub
 		
