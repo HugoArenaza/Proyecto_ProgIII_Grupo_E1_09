@@ -57,12 +57,20 @@ public class VentanaInicio extends JFrame{
 		
 		btnInicioSesion.addActionListener((e)->{
 			new VentanaInicioSesion();
+			dispose();
 			
 		});
 		btnRegistro.addActionListener((e)->{
 			new VentanaRegistroDueño();
+			dispose();
 		});
 		setVisible(true);
+		int anchoPantalla = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
+		int altoPantalla = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight();
+		setSize(anchoPantalla, altoPantalla);
+		setExtendedState(MAXIMIZED_BOTH);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		setResizable(false);
 
 	}
 	

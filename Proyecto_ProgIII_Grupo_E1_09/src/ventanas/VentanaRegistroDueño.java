@@ -3,6 +3,7 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,7 +136,9 @@ public class VentanaRegistroDueño extends JFrame{
 					
 			}else if(con.equals(con2)) {
 					JOptionPane.showMessageDialog(null, "Veterinario registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
-					new VentanaJefe();
+					dispose();
+					new VentanaInicioSesion();
+					
 			}else {
 					JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden","ERROR",JOptionPane.WARNING_MESSAGE);
 					txtConR.setText("");
@@ -143,16 +146,15 @@ public class VentanaRegistroDueño extends JFrame{
 					
 				
 					}
-			listaDueños.add(d);
+			if(Contenedora.buscarCliente(dni)!=null) {
+				JOptionPane.showMessageDialog(null, "Ya existe un dueño con ese dni","ERROR",JOptionPane.ERROR_MESSAGE);
+			}else {
+				Contenedora.aniadirDueño(d);
+			}
 			
 			
-				/*
-				 * if(Veterinario.buscarVeterinario(dni)!=null) {
-					JOptionPane.showMessageDialog(null, "Ya existe un veterinario con ese dni","ERROR",JOptionPane.ERROR_MESSAGE);
-				}else {
-					Veterinario.aniadirVeterinario(c);
-					JOptionPane.showMessageDialog(null, "Cliente registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
-			}*/
+			
+				
 				
 			
 		});
@@ -161,9 +163,12 @@ public class VentanaRegistroDueño extends JFrame{
 		});
 		
 		vActual = this;
-		setBounds(400, 100, 800, 500);
+		int anchoPantalla = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
+		int altoPantalla = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight();
+		setSize(anchoPantalla, altoPantalla);
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		
 	}
 	

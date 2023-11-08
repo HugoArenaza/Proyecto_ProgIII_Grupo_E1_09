@@ -16,10 +16,38 @@ public class Contenedora {
 	
 	public ArrayList<Clinica> clinicas;
 	public Jefe jefe;
-	private Map<String, List<Dueño>> mapaDniPorDueño = new HashMap<>();
+	private static List<Dueño> dueños = new ArrayList<>();
 	
 	
 	
+	public List<Dueño> getDueños() {
+		return dueños;
+	}
+
+
+	public static void aniadirDueño(Dueño d) {
+		dueños.add(d);
+	}
+	
+	
+	public static Dueño buscarCliente(String dni) {
+		boolean dueñoEncontrado = false;
+		int pos = 0;
+		Dueño d = null;
+		while(!dueñoEncontrado && pos<dueños.size()) {
+			d = dueños.get(pos);
+			if(d.getDni().equals(dni)) {
+				dueñoEncontrado = true;
+			}else {
+				pos++;
+			}
+		}
+		if(dueñoEncontrado) {
+			return d;
+		}else{
+			return null;
+		}
+	}
 	
 	
 	
@@ -43,6 +71,7 @@ public class Contenedora {
 
 
 
+	
 	
 
 }
