@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -19,10 +20,19 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 import domain.Clinica;
+import domain.Especialidades;
 import domain.Proveedor;
+import domain.TipoPaciente;
+import domain.Trabajador;
+import domain.Veterinario;
+import domain.Paciente;
 
 public class VentanaJefe extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton btnProveedores, btnPacientes, btnTrabajadores , btnSalir;
 	private JPanel  panelDerecha, panelAbajo;	
 	public VentanaJefe() {
@@ -177,6 +187,30 @@ public class VentanaJefe extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			panelDerecha.removeAll();
 			
+			
+			Paciente paciente1 = new Paciente("Jorge", " Martinez", "10002", null, "mario12", 1231, "ada", "adad", 12, "Maiwether", 1222, "Enfermedad", null, TipoPaciente.ALPACAS);
+			ArrayList<Paciente> pacientes = new ArrayList<Paciente>();
+			
+//			int microchip = 0;
+//			if (pacientes != null && !pacientes.isEmpty()) {
+//			    Paciente ultimoPaciente = pacientes.get(pacientes.size());
+//			    microchip = ultimoPaciente.getMicroChip();
+//			} 
+		
+/* No funciona como quiero que funcione este codigo por lo que tendre que revisarlo,
+ * el funcionamiento planeado es temporal ya que quiero implementar un renderer que haga que la columna de pacientes sea un comboBox y que muestre todos los pacientes
+ * identificados por su microchip, que luego sea clickable y muestre el paciente con todos sus datos.
+ * de momento ese codigo coge el ultimo paciente del arrayList.
+ * 
+ */
+			pacientes.add(paciente1);
+			
+			
+			Trabajador veterinario =  new Trabajador("Nombre", "Apellidos", "Usuario", "Contraseña", 1,
+	                 pacientes, (float) 5000.0, Especialidades.CIRUGIA, "asda",12);
+			
+			
+			
 			JTable tableVeterinarios= new JTable();
 			DefaultTableModel model= (DefaultTableModel) tableVeterinarios.getModel();
 			
@@ -191,6 +225,21 @@ public class VentanaJefe extends JFrame {
 			model.addColumn("Especialidad");
 			model.addColumn("Tipo");// Columna para diferenciar tipo de veterinario
 			
+			
+			
+			   model.addRow(new Object[]{
+		                veterinario.getNombre(),
+		                veterinario.getApellidos(),
+		                veterinario.getUsuario(),
+		                veterinario.getContraseña(),
+		                veterinario.getDni(),
+		                veterinario.getClinica(),
+		                veterinario.getPaciente(),
+		                veterinario.getSueldo(),
+		                veterinario.getespecialidad(),
+		                veterinario.getClass().getSimpleName()
+		           
+		        });
 			
 			
 			
