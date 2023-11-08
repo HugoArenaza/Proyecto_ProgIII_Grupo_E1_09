@@ -3,9 +3,13 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 
+import domain.Contenedora;
+import domain.Dueño;
 import domain.Paciente;
 import domain.Veterinario;
 
@@ -17,7 +21,9 @@ public class VentanaRegistroDueño extends JFrame{
 	private JPasswordField txtConR, txtConR2;
 	private JButton btnRegistrarse, btnSalir;
 	private JFrame vActual;
-	private Veterinario veterinario;
+	private Dueño dueño;
+	private List<Dueño> listaDueños = new ArrayList<>();
+	
 	
 	private static Paciente paciente;
 	
@@ -119,8 +125,7 @@ public class VentanaRegistroDueño extends JFrame{
 			String correo = txtCorreo.getText();
 				
 			
-			Veterinario v = new Veterinario(nom, apell, correo, con2, 0, null, null, null, dni);
-			
+			Dueño d = new Dueño(nom, apell, dni, null, fNac, 0, correo, con);			
 			String correoNoValido = "example@furwell.com";
 			if (nom.isEmpty() || User.isEmpty() || con.isEmpty() || con2.isEmpty() || dni.isEmpty() || correo.isEmpty())  {
 					JOptionPane.showMessageDialog(null, "No dejes ningun campo vacio","ERROR",JOptionPane.WARNING_MESSAGE);
@@ -135,8 +140,12 @@ public class VentanaRegistroDueño extends JFrame{
 					JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden","ERROR",JOptionPane.WARNING_MESSAGE);
 					txtConR.setText("");
 					txtConR2.setText("");
+					
 				
 					}
+			listaDueños.add(d);
+			
+			
 				/*
 				 * if(Veterinario.buscarVeterinario(dni)!=null) {
 					JOptionPane.showMessageDialog(null, "Ya existe un veterinario con ese dni","ERROR",JOptionPane.ERROR_MESSAGE);

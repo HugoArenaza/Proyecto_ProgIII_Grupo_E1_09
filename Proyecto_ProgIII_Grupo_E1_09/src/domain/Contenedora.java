@@ -1,6 +1,9 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Contenedora {
 	
@@ -13,12 +16,18 @@ public class Contenedora {
 	
 	public ArrayList<Clinica> clinicas;
 	public Jefe jefe;
+	private Map<String, List<Dueño>> mapaDniPorDueño = new HashMap<>();
+	
+	
+	
 	
 	
 	
 	
 	
 	public Contenedora() {
+		
+		
 	
 		
 //	Clinica clinicaPrincipal= new Clinica(1, "Calle Olaguibel", 12,MedicamentosAnimales.AMANTADINA,null,null, 12, null, null);
