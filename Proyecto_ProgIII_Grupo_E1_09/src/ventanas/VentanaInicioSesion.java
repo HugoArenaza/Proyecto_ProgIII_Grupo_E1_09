@@ -7,6 +7,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -22,6 +23,8 @@ import domain.Contenedora;
 import domain.Dueño;
 
 public class VentanaInicioSesion extends JFrame{
+	
+	private Logger logger = java.util.logging.Logger.getLogger("Logger");
 	
 	private JFrame vActual;
 	private JPanel panel, panelCentro, panelSur, pCInformacion, pcIzq;
@@ -99,6 +102,7 @@ public class VentanaInicioSesion extends JFrame{
 				Dueño d = Contenedora.buscarCliente(dni);
 				if(d == null) {
 					JOptionPane.showMessageDialog(null, "Para poder iniciar sesión tienes que estar registrado","ERROR",JOptionPane.ERROR_MESSAGE);
+					logger.warning("Se ha introducido un usuario sin registrar");
 				}else {
 					if(d.getContraseña().equals(con)) {
 						JOptionPane.showMessageDialog(null, "Bienvenido!","SESIÓN INICIADA",JOptionPane.INFORMATION_MESSAGE);
@@ -110,6 +114,7 @@ public class VentanaInicioSesion extends JFrame{
 						textContraseña.setText("");
 						textUsuario.setText("");
 						txtDni.setText("");
+						logger.info("Se ha iniciado sesión con un usuario");
 					}else {
 						JOptionPane.showMessageDialog(null, "Contraseña incorrecta","ERROR",JOptionPane.WARNING_MESSAGE);
 					}
