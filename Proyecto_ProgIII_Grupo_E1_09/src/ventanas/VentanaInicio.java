@@ -57,12 +57,12 @@ public class VentanaInicio extends JFrame{
 		
 		btnInicioSesion.addActionListener((e)->{
 			new VentanaInicioSesion();
-			dispose();
+			
 			
 		});
 		btnRegistro.addActionListener((e)->{
 			new VentanaRegistroDueño();
-			dispose();
+			
 		});
 		setVisible(true);
 		int anchoPantalla = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();

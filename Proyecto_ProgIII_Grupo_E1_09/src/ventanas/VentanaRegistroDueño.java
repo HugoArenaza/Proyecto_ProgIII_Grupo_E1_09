@@ -56,7 +56,7 @@ public class VentanaRegistroDueño extends JFrame{
 		lblNomR = new JLabel("NOMBRE: ");
 		lblApeR = new JLabel("APELLIDOS: ");
 		lblFNacR = new JLabel("FECHA DE NACIMIENTO: ");
-		lblCorreo = new JLabel("CORREO: (modifica 'example' para crear tu correo correctamente)");
+		lblCorreo = new JLabel("CORREO: ");
 		lblUsuR = new JLabel("USUARIO: ");
 		lblConR = new JLabel("CONTRASEÑA: ");
 		lblConR2 = new JLabel("REPITE CONTRASEÑA: ");
@@ -68,7 +68,7 @@ public class VentanaRegistroDueño extends JFrame{
 		txtApeR = new JTextField();
 		txtFNacR = new JTextField();
 		txtUsuR = new JTextField();
-		txtCorreo = new JTextField("example@furwell.com");
+		txtCorreo = new JTextField();
 		txtConR = new JPasswordField();
 		txtConR2 = new JPasswordField();
 		
@@ -127,13 +127,9 @@ public class VentanaRegistroDueño extends JFrame{
 				
 			
 			Dueño d = new Dueño(nom, apell, dni, null, fNac, 0, correo, con);			
-			String correoNoValido = "example@furwell.com";
 			if (nom.isEmpty() || User.isEmpty() || con.isEmpty() || con2.isEmpty() || dni.isEmpty() || correo.isEmpty())  {
 					JOptionPane.showMessageDialog(null, "No dejes ningun campo vacio","ERROR",JOptionPane.WARNING_MESSAGE);
-			}else if(correo.equals(correoNoValido)){
-				JOptionPane.showMessageDialog(null, "Cambia el correo de ejemplo","ERROR",JOptionPane.WARNING_MESSAGE);
 				
-					
 			}else if(con.equals(con2)) {
 					JOptionPane.showMessageDialog(null, "Dueño registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
 					dispose();
@@ -160,12 +156,12 @@ public class VentanaRegistroDueño extends JFrame{
 		});
 		btnSalir.addActionListener((e)->{
 			dispose();
+			new VentanaInicio();
 		});
 		
 		vActual = this;
-		int anchoPantalla = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
-		int altoPantalla = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight();
-		setSize(anchoPantalla, altoPantalla);
+		setBounds(800, 350, 350, 400);
+	
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
