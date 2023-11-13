@@ -99,13 +99,15 @@ public class VentanaInicioSesion extends JFrame{
 				Dueño d = Contenedora.buscarCliente(dni);
 				if(d == null) {
 					JOptionPane.showMessageDialog(null, "Para poder iniciar sesión tienes que estar registrado","ERROR",JOptionPane.ERROR_MESSAGE);
+					new VentanaRegistroDueño();
+					dispose();
 				}else {
 					if(d.getContraseña().equals(con)) {
 						JOptionPane.showMessageDialog(null, "Bienvenido!","SESIÓN INICIADA",JOptionPane.INFORMATION_MESSAGE);
 						dueño = d; 
-						
-						new VentanaDueño();
 						dispose();
+						new VentanaDueño();
+						
 						vActual.setVisible(false);
 						textContraseña.setText("");
 						textUsuario.setText("");
@@ -123,9 +125,7 @@ public class VentanaInicioSesion extends JFrame{
 		});
 		
 		vActual = this;
-		int anchoPantalla = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
-		int altoPantalla = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight();
-		setSize(anchoPantalla, altoPantalla);
+		setBounds(600, 350, 750, 400);
 		setTitle("Bienvenido a Furwell!");
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

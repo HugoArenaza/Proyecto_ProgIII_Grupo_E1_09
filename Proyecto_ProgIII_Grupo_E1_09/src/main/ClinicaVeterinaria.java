@@ -1,6 +1,8 @@
 package main;
 
 
+
+
 //import java.io.FileInputStream;
 //import java.io.FileNotFoundException;
 //import java.io.IOException;
@@ -8,6 +10,7 @@ package main;
 //import java.util.logging.Logger;
 
 import ventanas.VentanaInicio;
+
 
 
 
@@ -32,7 +35,6 @@ public class ClinicaVeterinaria {
 		}*/
 
 		new VentanaInicio();
-	
-
+		
 }
 }
