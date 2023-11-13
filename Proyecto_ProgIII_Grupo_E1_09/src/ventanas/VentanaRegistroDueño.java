@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.swing.*;
 
@@ -14,7 +15,9 @@ import domain.Dueño;
 import domain.Paciente;
 import domain.Veterinario;
 
-public class VentanaRegistroDueño extends JFrame{
+public class VentanaRegistroDueño extends JFrame{	
+	
+	private Logger logger = java.util.logging.Logger.getLogger("Logger");
 	
 	private JPanel panel, panelSur, panelCentro, pCInformacion, pcIzq;
 	private JLabel lblNomR, lblDniR, lblApeR, lblFNacR ,lblUsuR, lblConR, lblConR2, lblCorreo;
@@ -129,9 +132,13 @@ public class VentanaRegistroDueño extends JFrame{
 			Dueño d = new Dueño(nom, apell, dni, null, fNac, 0, correo, con);			
 			if (nom.isEmpty() || User.isEmpty() || con.isEmpty() || con2.isEmpty() || dni.isEmpty() || correo.isEmpty())  {
 					JOptionPane.showMessageDialog(null, "No dejes ningun campo vacio","ERROR",JOptionPane.WARNING_MESSAGE);
-				
+
+
+					logger.warning("Hay algun campo vacio");
+			
 			}else if(con.equals(con2)) {
 					JOptionPane.showMessageDialog(null, "Dueño registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
+					logger.info("Se ha registrado un dueño");
 					dispose();
 					new VentanaInicioSesion();
 					
@@ -139,11 +146,13 @@ public class VentanaRegistroDueño extends JFrame{
 					JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden","ERROR",JOptionPane.WARNING_MESSAGE);
 					txtConR.setText("");
 					txtConR2.setText("");
+					logger.warning("Se ha introducido una contraseña incorrecta");
 					
 				
 					}
 			if(Contenedora.buscarCliente(dni)!=null) {
 				JOptionPane.showMessageDialog(null, "Ya existe un dueño con ese dni","ERROR",JOptionPane.ERROR_MESSAGE);
+				logger.warning("Se ha introducido un dni ya existente");
 			}else {
 				Contenedora.aniadirDueño(d);
 			}

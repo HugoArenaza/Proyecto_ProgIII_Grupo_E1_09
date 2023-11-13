@@ -2,12 +2,14 @@ package ventanas;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class VentanaTrabajador extends JFrame{
+	private Logger logger = java.util.logging.Logger.getLogger("Logger");
 	protected JButton btnSalir, btnAniadirCita, btnAnularCita, btnVerCalendario, btnVerPacientes;
 	protected JPanel pNorte, pCentro, pSur;
 	protected JFrame vActual;
@@ -28,11 +30,14 @@ public class VentanaTrabajador extends JFrame{
 			/*Cita c = new Cita();
 			 * ListaCitas.add(c);
 			Crear list vacia donde meter citas
+			logger.info("Se ha agregado una nueva cita");
+			
 		});
 		
 		btnAnularCita.addActionListener((e)->{
 			/*ListaCitas.remove(c);
 			Crear list vacia donde meter/borrar citas
+			logger.info("Se ha quitado una cita");
 		});
 		btnVerPacientes.addActionListener((e)->{
 			/*Empezaremos con un syso de la lista de pacientes
