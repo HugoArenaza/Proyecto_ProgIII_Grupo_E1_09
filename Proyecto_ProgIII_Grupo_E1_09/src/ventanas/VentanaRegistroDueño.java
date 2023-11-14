@@ -144,15 +144,15 @@ public class VentanaRegistroDueño extends JFrame{
 					dispose();
 					new VentanaInicioSesion();
 					
-			}else {
+			}else{
 					JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden","ERROR",JOptionPane.WARNING_MESSAGE);
 					txtConR.setText("");
 					txtConR2.setText("");
 					logger.warning("Se ha introducido una contraseña incorrecta");
 					
 				
-					}
-			if(Contenedora.buscarCliente(dni)!=null) {
+					
+			}if(Contenedora.buscarCliente(dni)!=null) {
 				JOptionPane.showMessageDialog(null, "Ya existe un dueño con ese dni","ERROR",JOptionPane.ERROR_MESSAGE);
 				logger.warning("Se ha introducido un dni ya existente");
 			}else {

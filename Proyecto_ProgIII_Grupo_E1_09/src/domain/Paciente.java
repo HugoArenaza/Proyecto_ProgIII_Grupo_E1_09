@@ -65,7 +65,7 @@ public class Paciente {
 	}
 	@Override
 	public String toString() {
-		return tipoPaciente+" llamado; "+NombrePaciente;
+		return tipoPaciente+" ("+NombrePaciente+") ";
 	}
 	
 	

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -56,16 +57,28 @@ public class VentanaDueño extends JFrame{
 
 	private JMenuItem compMedicamentos;
 	
+	private JMenuItem solicitarCita;
+	private JMenuItem verCalendario;
+	private JMenuItem modificarCita;
+	
+	private JMenuItem solicitarTranslado;
+	private JMenuItem verMiClinica;
+	
 	private DefaultTreeModel modeloArbol;
 	private JTree arbol;
 	private JScrollPane scrollArbol;
 	
-	private ModeloHistorial modeloHistorial;
+	private ModeloHistorialPacientes modeloHistorialPacientes;
+	
+
 	private JTable tablaHistorial;
 	private JScrollPane scrollHistorial;
 	
+	
 	private JComboBox<Paciente> comboMascotas;
 	private List<Paciente> listaPacientes;
+	
+	private JComboBox<String> comboHistorial;
 	
 	private Contenedora c;
 	
@@ -75,7 +88,7 @@ public class VentanaDueño extends JFrame{
 	pAbajo = new JPanel();
 	pMascotas = new JPanel(new GridLayout(2,2));
 	pArriba = new JPanel();
-	pHistorial = new JPanel();
+	pHistorial = new JPanel(new BorderLayout());
 	pMascotas = new JPanel();
 	pFacturas = new JPanel();
 	pTienda = new JPanel();
@@ -111,6 +124,9 @@ public class VentanaDueño extends JFrame{
     hist = new JMenuItem("Mi Historial");
     
     visualizarAgenda = new JMenu("Agenda");
+    modificarCita = new JMenuItem("Modificar Cita");
+    verCalendario = new JMenuItem("Visualizar Calendario");
+    solicitarCita = new JMenuItem("Solicitar Cita");
     
     visualizarMiPerfil = new JMenu("Cuenta");
     perfil = new JMenuItem("Mi Perfil");
@@ -119,6 +135,8 @@ public class VentanaDueño extends JFrame{
     cerrarSesion = new JMenuItem("Cerrar sesion");
     
     visualizarClinica = new JMenu("Clinica");
+    solicitarTranslado = new JMenuItem("Solicitar Translado");
+    verMiClinica = new JMenuItem("Mi clinica");
     
     visualizarTienda = new JMenu("Medicamentos");
     compMedicamentos = new JMenuItem("Comprar Medicamentos");
@@ -132,7 +150,13 @@ public class VentanaDueño extends JFrame{
     menuBar.add(visualizarAgenda);
     menuBar.add(visualizarMiPerfil);
    
-   
+    
+  
+    visualizarAgenda.add(solicitarCita);
+    visualizarAgenda.add(modificarCita);
+    visualizarAgenda.addSeparator();
+    visualizarAgenda.add(verCalendario);
+    
     visualizarMiPerfil.add(perfil);
     visualizarMiPerfil.add(cesta);
     visualizarMiPerfil.add(pedido);
@@ -145,18 +169,50 @@ public class VentanaDueño extends JFrame{
     
     visualizarFacturas.add(fact);
     
-    visualizarClinica.add(compMedicamentos);
+    visualizarTienda.add(compMedicamentos);
+    
+    visualizarClinica.add(solicitarTranslado);
+    visualizarClinica.add(verMiClinica);
     
     
 
 	/*CREACION DE JTABLE*/
-   modeloHistorial = new ModeloHistorial();
-   tablaHistorial = new JTable(modeloHistorial);
+   modeloHistorialPacientes = new ModeloHistorialPacientes(listaPacientes);
+   tablaHistorial = new JTable(modeloHistorialPacientes);
    scrollHistorial = new JScrollPane(tablaHistorial);
+   DefaultTableModel tablaDefault = new DefaultTableModel();
+   
+   
     
    /*CREACION DEL JCOMBOBOX*/
    comboMascotas = new JComboBox<Paciente>();
    listaPacientes = new ArrayList<>();
+   
+   comboHistorial = new JComboBox<String>();
+   comboHistorial.addItem("Historial de mis mascotas");
+   comboHistorial.addItem("Historial de compras");
+   
+   comboHistorial.addActionListener(new ActionListener() {
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(comboHistorial.getSelectedItem().toString().equals("Historial de compras")) {
+			tablaHistorial.setModel(tablaDefault);
+			tablaDefault.setRowCount(0);
+			//tablaDefault
+			Object [] titulos = {"NOMBRE DEL MEDICAMENTO","PRECIO" ,"FECHA DE COMPRA", "MASCOTA ASOCIADA"};
+			
+			tablaDefault.setColumnIdentifiers(titulos);
+			
+			
+		}else if(comboHistorial.getSelectedItem().toString().equals("Historial de mis mascotas")) {
+			tablaHistorial.setModel(modeloHistorialPacientes);
+			
+		}
+		
+		
+	}
+});
    
    /*CREACION DEL JBUTTON PACIENTES*/
    btnAniadirPaciente = new JButton("Añadir mascota");
@@ -171,6 +227,7 @@ public class VentanaDueño extends JFrame{
 	contenido.add(pMascotas);
 	contenido.add(pHistorial);
 	contenido.add(pFacturas);
+	contenido.add(pTienda);
 	
 	pMascotas.setVisible(false);
 	pHistorial.setVisible(false);
@@ -180,7 +237,8 @@ public class VentanaDueño extends JFrame{
 	  pAbajo.add(btnSalir);
 	  pArriba.add(menuBar);
 	  pFacturas.add(scrollArbol, BorderLayout.WEST);
-	  pHistorial.add(scrollHistorial);
+	  pHistorial.add(comboHistorial, BorderLayout.NORTH);
+	  pHistorial.add(scrollHistorial, BorderLayout.SOUTH);
 	  
 	  pMascotas.add(comboMascotas);
 	  pMascotas.add(btnAniadirPaciente);
@@ -239,6 +297,15 @@ public class VentanaDueño extends JFrame{
 			
 		}
 	});
+	compMedicamentos.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ocultarPaneles();
+			pTienda.setVisible(true);
+			
+		}
+	});
 	btnAniadirPaciente.addActionListener(new ActionListener() {
 		
 		@Override
@@ -290,8 +357,11 @@ public class VentanaDueño extends JFrame{
 				
 			}
 			
+			
 		}
 	});
+	
+	
 	comboMascotas.addActionListener(new ActionListener() {
 		
 		@Override
@@ -317,6 +387,7 @@ public class VentanaDueño extends JFrame{
 		pMascotas.setVisible(false);
 		pHistorial.setVisible(false);
 		pFacturas.setVisible(false);
+		pTienda.setVisible(false);
 		
 		
 	}
