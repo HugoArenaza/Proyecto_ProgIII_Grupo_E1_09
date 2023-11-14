@@ -65,9 +65,7 @@ public class Paciente {
 	}
 	@Override
 	public String toString() {
-		return "Paciente [id=" + id + ", NombrePaciente=" + NombrePaciente + ", microChip=" + microChip
-				+ ", enfermedad=" + enfermedad + ", Id_veterinario=" + Id_veterinario + ", tipoPaciente=" + tipoPaciente
-				+ ", dueño=" + dueño + "]";
+		return tipoPaciente+" llamado; "+NombrePaciente;
 	}
 	
 	

@@ -50,7 +50,14 @@ public class Contenedora {
 	}
 	
 	
-	
+	public TipoPaciente TipoPacienteaEnum(String s){
+		TipoPaciente t = TipoPaciente.valueOf(s);
+		return t;
+		
+	}
+	public void GuardarDueñoRegistrado(Dueño d){
+		dueños.add(d);
+	}
 	
 	
 	public Contenedora() {
@@ -63,6 +70,16 @@ public class Contenedora {
 //	this.clinicas.add(clinicaPrincipal);
 //	
 //	this.jefe = new Jefe("Mario","Ibañez","jefe@jefefurweel.com", "adad", clinicaPrincipal, null, (float) 10000.0, Especialidades.CIRUGIA, "uahsdudhas2", 12, 2  );
+	}
+
+
+	public String getMascotasPorTipo() {
+		List<Paciente> lP = new ArrayList<>();
+		
+		for (Paciente p: lP) {
+			return p.getTipoPaciente().toString();
+		}
+		return null;
 	}
 	
 	

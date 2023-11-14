@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import ventanas.VentanaDueño;
 import ventanas.VentanaInicio;
 
 
@@ -29,7 +30,7 @@ public class ClinicaVeterinaria {
 		}*/
 		
 
-		new VentanaInicio();
-		
+		//new VentanaInicio();
+		new VentanaDueño();
 }
 }

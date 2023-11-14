@@ -27,7 +27,7 @@ public class VentanaRegistroDueño extends JFrame{
 	private JFrame vActual;
 	private Dueño dueño;
 	private List<Dueño> listaDueños = new ArrayList<>();
-	
+	private Contenedora c;
 	
 	private static Paciente paciente;
 	
@@ -130,6 +130,8 @@ public class VentanaRegistroDueño extends JFrame{
 				
 			
 			Dueño d = new Dueño(nom, apell, dni, null, fNac, 0, correo, con);			
+			c = new Contenedora();
+			c.GuardarDueñoRegistrado(d);
 			if (nom.isEmpty() || User.isEmpty() || con.isEmpty() || con2.isEmpty() || dni.isEmpty() || correo.isEmpty())  {
 					JOptionPane.showMessageDialog(null, "No dejes ningun campo vacio","ERROR",JOptionPane.WARNING_MESSAGE);
 

@@ -203,7 +203,7 @@ public class VentanaJefe extends JFrame {
 
 
 				Trabajador veterinario = new Trabajador(1, "Mario", "Diaz", "aijsdj", "uno", 23, new ArrayList<Paciente>(), (float) 1000.0, Especialidades.CARDIOLOGIA, "12344", 21);
-				Paciente paciente1 = new Paciente(1,"Matias",2839, "Escoliosis", veterinario.getId(), TipoPaciente.CERDOS,null );
+				Paciente paciente1 = new Paciente(1,"Matias",2839, "Escoliosis", veterinario.getId(), TipoPaciente.CERDO,null );
 				veterinario.anyadirPaciente(paciente1);
 				
 				Trabajador veterinario2 = new Trabajador(2, "Mario", "Apellidos", "Usuario", "Contraseña", 1, new ArrayList<Paciente>(),
