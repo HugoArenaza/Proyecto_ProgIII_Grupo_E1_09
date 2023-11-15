@@ -8,6 +8,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import domain.Cita;
+import domain.Contenedora;
+
 public class VentanaTrabajador extends JFrame{
 	private Logger logger = java.util.logging.Logger.getLogger("Logger");
 	protected JButton btnSalir, btnAniadirCita, btnAnularCita, btnVerCalendario, btnVerPacientes;
@@ -20,29 +23,36 @@ public class VentanaTrabajador extends JFrame{
 		pSur = new JPanel();
 		getContentPane().add(pSur, BorderLayout.SOUTH);
 		
+		pCentro = new JPanel();
+		getContentPane().add(pCentro, BorderLayout.CENTER);
+		
 		btnSalir = new JButton("Salir");
 		pSur.add(btnSalir);
+		
+		btnVerPacientes = new JButton("Visualizar los pacientes");
+		
+	
+		btnAniadirCita = new JButton("Añadir cita");
+		
 		
 		btnSalir.addActionListener((e)->{
 			dispose();
 		});
-		/*btnAniadirCita.addActionListener((e)->{
-			/*Cita c = new Cita();
-			 * ListaCitas.add(c);
-			Crear list vacia donde meter citas
+		btnAniadirCita.addActionListener((e)->{
+			Contenedora.aniadirCita(null);
 			logger.info("Se ha agregado una nueva cita");
 			
 		});
 		
 		btnAnularCita.addActionListener((e)->{
-			/*ListaCitas.remove(c);
-			Crear list vacia donde meter/borrar citas
-			logger.info("Se ha quitado una cita");
+			Contenedora.eliminarCita(null);
+			logger.info("Se ha eliminado una cita");
 		});
 		btnVerPacientes.addActionListener((e)->{
-			/*Empezaremos con un syso de la lista de pacientes
-			 * mas tarde se visualizará en la ventana
-		});*/
+			Contenedora.imprimirListaPacientes();
+			logger.info("Se ha impreso la lista de pacientes");
+		});
+
 		
 		setBounds(400, 100, 800, 500);
 		setVisible(true);

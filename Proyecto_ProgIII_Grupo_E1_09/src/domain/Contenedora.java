@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.ListCellRenderer;
+
 public class Contenedora {
 	
 	
@@ -17,6 +19,8 @@ public class Contenedora {
 	public ArrayList<Clinica> clinicas;
 	public Jefe jefe;
 	private static List<Dueño> dueños = new ArrayList<>();
+	private static ArrayList<Paciente> listaPacientes = new ArrayList<>();
+	private static ArrayList<Cita> listaCitas = new ArrayList<>();
 	
 	
 	
@@ -28,6 +32,31 @@ public class Contenedora {
 	public static void aniadirDueño(Dueño d) {
 		dueños.add(d);
 	}
+	public ArrayList<Cita> getListaCitas(){
+		return listaCitas;
+	}
+	
+	public static void aniadirCita(Cita c) {
+		listaCitas.add(c);
+	}
+	
+	public static void eliminarCita(Cita c) {
+		listaCitas.remove(c);
+	}
+	
+	public static void imprimirListaCitas() {
+		System.out.println(listaCitas);
+	}
+	public ArrayList<Paciente> getListaPacientes(){
+		return listaPacientes;
+	}
+	public static void aniadirPaciente(Paciente p) {
+		listaPacientes.add(p);
+	} 
+	public static void imprimirListaPacientes() {
+		System.out.println(listaPacientes);
+	}
+
 	
 	
 	public static Dueño buscarCliente(String dni) {
