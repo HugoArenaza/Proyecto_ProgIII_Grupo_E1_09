@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import javax.swing.*;
 
+import base_de_datos.BD;
 import domain.Contenedora;
 import domain.Dueño;
 import domain.Paciente;
@@ -28,6 +29,7 @@ public class VentanaRegistroDueño extends JFrame{
 	private Dueño dueño;
 	private List<Dueño> listaDueños = new ArrayList<>();
 	private Contenedora c;
+	private BD BaseDatos;
 	
 	private static Paciente paciente;
 	
@@ -64,7 +66,7 @@ public class VentanaRegistroDueño extends JFrame{
 		lblConR = new JLabel("CONTRASEÑA: ");
 		lblConR2 = new JLabel("REPITE CONTRASEÑA: ");
 		
-		
+		BaseDatos = new BD("clinicaFurwell.db");
 	
 		txtDniR = new JTextField();
 		txtNomR = new JTextField();
@@ -129,34 +131,41 @@ public class VentanaRegistroDueño extends JFrame{
 			String correo = txtCorreo.getText();
 				
 			
-			Dueño d = new Dueño(nom, apell, dni, null, fNac, 0, correo, con);			
+			Dueño dLista = new Dueño(nom, apell, dni, null, fNac, 0, correo, con);			
 			c = new Contenedora();
-			c.GuardarDueñoRegistrado(d);
+			c.GuardarDueñoRegistrado(dLista);
 			if (nom.isEmpty() || User.isEmpty() || con.isEmpty() || con2.isEmpty() || dni.isEmpty() || correo.isEmpty())  {
 					JOptionPane.showMessageDialog(null, "No dejes ningun campo vacio","ERROR",JOptionPane.WARNING_MESSAGE);
-
-
 					logger.warning("Hay algun campo vacio");
 			
 			}else if(con.equals(con2)) {
-					JOptionPane.showMessageDialog(null, "Dueño registrado con éxito","REGISTRADO",JOptionPane.INFORMATION_MESSAGE);
+				Dueño d  = new Dueño(nom, apell, dni, null, fNac, 0, correo, con2);
+				
+				boolean registroInsertado = BaseDatos.insertarDueño(nom, apell, dni, null, fNac, 0, correo, con2);
+				/*Tiene que enviar un dueño no esos datos no tocar porfa*/
+				
+				if(registroInsertado) {
+					JOptionPane.showMessageDialog(null, "Dueño registrado con exito", "REGISTRADO", JOptionPane.INFORMATION_MESSAGE);
 					logger.info("Se ha registrado un dueño");
 					dispose();
 					new VentanaInicioSesion();
-					
-			}else{
-					JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden","ERROR",JOptionPane.WARNING_MESSAGE);
-					txtConR.setText("");
-					txtConR2.setText("");
-					logger.warning("Se ha introducido una contraseña incorrecta");
-					
+				}else {
+					JOptionPane.showMessageDialog(null, "Error al registrar el dueño","ERROR",JOptionPane.ERROR_MESSAGE);
+					logger.warning("Error al registrar el dueño");
+				}
 				
-					
-			}if(Contenedora.buscarCliente(dni)== null) {
+			}else {
+				JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "ERROR", JOptionPane.WARNING_MESSAGE);
+				txtConR.setText("");
+				txtConR.setText("");
+				logger.warning("Se ha introducido una contraseña que no coincide");
+			}
+				
+			if(Contenedora.buscarCliente(dni)== null) {
 				JOptionPane.showMessageDialog(null, "Ya existe un dueño con ese dni","ERROR",JOptionPane.ERROR_MESSAGE);
 				logger.warning("Se ha introducido un dni ya existente");
 			}else {
-				Contenedora.aniadirDueño(d);
+				Contenedora.aniadirDueño(dLista);
 			}
 			
 			

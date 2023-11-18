@@ -5,7 +5,7 @@ public class Dueño {
 	private String apellidos;
 	private String dni;
 	private Clinica clinicaAsociada;
-	private String direccion;
+	private String fNac;
 	private int numeroTlf;
 	private String correo;
 	private String contraseña;
@@ -34,11 +34,11 @@ public class Dueño {
 	public void setClinicaAsociada(Clinica clinicaAsociada) {
 		this.clinicaAsociada = clinicaAsociada;
 	}
-	public String getDireccion() {
-		return direccion;
+	public String getfNac() {
+		return fNac;
 	}
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+	public void setDireccion(String fNac) {
+		this.fNac = fNac;
 	}
 	public int getNumeroTlf() {
 		return numeroTlf;
@@ -59,14 +59,14 @@ public class Dueño {
 		this.contraseña = contraseña;
 	}
 	
-	public Dueño(String NombreDueño, String apellidos, String dni, Clinica clinicaAsociada, String direccion, int numeroTlf,
+	public Dueño(String NombreDueño, String apellidos, String dni, Clinica clinicaAsociada, String fNac, int numeroTlf,
 			String correo, String contraseña) {
 		super();
 		this.NombreDueño = NombreDueño;
 		this.apellidos = apellidos;
 		this.dni = dni;
 		this.clinicaAsociada = clinicaAsociada;
-		this.direccion = direccion;
+		this.fNac = fNac;
 		this.numeroTlf = numeroTlf;
 		this.correo = correo;
 		this.contraseña = contraseña;
@@ -78,7 +78,7 @@ public class Dueño {
 		this.apellidos = "Sin apellido";
 		this.dni = "Sin dni";
 		this.clinicaAsociada = null;
-		this.direccion = "Sin Direccion";
+		this.fNac = "01-01-1970";
 		this.numeroTlf = 000;
 		this.correo = "Sin correo";
 		this.contraseña = "Sin contraseña";
@@ -87,7 +87,7 @@ public class Dueño {
 	@Override
 	public String toString() {
 		return "Dueño [NombreDueño=" + NombreDueño + ", apellidos=" + apellidos + ", dni=" + dni + ", clinicaAsociada="
-				+ clinicaAsociada + ", direccion=" + direccion + ", numeroTlf=" + numeroTlf + ", correo=" + correo
+				+ clinicaAsociada + ", direccion=" + fNac + ", numeroTlf=" + numeroTlf + ", correo=" + correo
 				+ ", contraseña=" + contraseña + "]";
 	}
 	
