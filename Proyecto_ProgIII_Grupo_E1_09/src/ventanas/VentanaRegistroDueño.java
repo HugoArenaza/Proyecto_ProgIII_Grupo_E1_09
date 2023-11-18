@@ -152,7 +152,7 @@ public class VentanaRegistroDueño extends JFrame{
 					
 				
 					
-			}if(Contenedora.buscarCliente(dni)!=null) {
+			}if(Contenedora.buscarCliente(dni)== null) {
 				JOptionPane.showMessageDialog(null, "Ya existe un dueño con ese dni","ERROR",JOptionPane.ERROR_MESSAGE);
 				logger.warning("Se ha introducido un dni ya existente");
 			}else {
@@ -172,7 +172,7 @@ public class VentanaRegistroDueño extends JFrame{
 		
 		vActual = this;
 		setBounds(800, 350, 350, 400);
-	
+		
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

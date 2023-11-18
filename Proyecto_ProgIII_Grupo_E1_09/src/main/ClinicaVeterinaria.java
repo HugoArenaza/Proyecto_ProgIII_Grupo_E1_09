@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import ventanas.VentanaDueño;
 import ventanas.VentanaInicio;
+import ventanas.VentanaTrabajador;
 
 
 
@@ -29,7 +30,7 @@ public class ClinicaVeterinaria {
 			e.printStackTrace();
 		}*/
 		
-
+		//new VentanaTrabajador();
 		//new VentanaInicio();
 		new VentanaDueño();
 }

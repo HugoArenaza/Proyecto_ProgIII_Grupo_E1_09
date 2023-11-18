@@ -38,16 +38,16 @@ public class VentanaTrabajador extends JFrame{
 		btnSalir.addActionListener((e)->{
 			dispose();
 		});
-		btnAniadirCita.addActionListener((e)->{
-			Contenedora.aniadirCita(null);
+		/*btnAniadirCita.addActionListener((e)->{
+			//Contenedora.aniadirCita(null);
 			logger.info("Se ha agregado una nueva cita");
 			
-		});
+		});*/
 		
-		btnAnularCita.addActionListener((e)->{
-			Contenedora.eliminarCita(null);
+		/*btnAnularCita.addActionListener((e)->{
+			//Contenedora.eliminarCita(null);
 			logger.info("Se ha eliminado una cita");
-		});
+		});*/
 		btnVerPacientes.addActionListener((e)->{
 			Contenedora.imprimirListaPacientes();
 			logger.info("Se ha impreso la lista de pacientes");
