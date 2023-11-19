@@ -6,11 +6,9 @@ import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.swing.DefaultFocusManager;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -19,13 +17,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
 import domain.Cita;
-import domain.Contenedora;
 import domain.Paciente;
 
 public class VentanaTrabajador extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Logger logger = java.util.logging.Logger.getLogger("Logger");
 	protected JFrame vActual;
 	protected Cita citaActual;
@@ -103,6 +102,13 @@ public class VentanaTrabajador extends JFrame{
 		pDisplay = new JPanel();
 		getContentPane().add(pDisplay,BorderLayout.CENTER);
 		
+		pPacientes = new JPanel();
+		pCalendario = new JPanel();
+		pCitas = new JPanel();
+		pAniadirAnular = new JPanel();
+		pCuenta = new JPanel();
+		pMedicamentos = new JPanel();
+		
 		btnSalir = new JButton("Salir");
 		pAbajo.add(btnSalir);
 		
@@ -158,7 +164,7 @@ public class VentanaTrabajador extends JFrame{
 		modeloPacientes = new ModeloHistorialPacientes(lPacientes);
 		tablaPacientes = new JTable(modeloPacientes);
 		scrollTablaPacientes = new JScrollPane(tablaPacientes);
-		DefaultTableModel dtm = new DefaultTableModel();
+	
 		
 		//JTable Medicamentos
 		modeloMedicamentos = new ModeloMedicamentos();
@@ -176,7 +182,7 @@ public class VentanaTrabajador extends JFrame{
 		
 		
 		
-		pArriba.add(BarraMenu);
+		pArriba.add(BarraMenu, BorderLayout.NORTH);
 		pPacientes.add(scrollTablaPacientes,BorderLayout.NORTH);
 		pMedicamentos.add(scrollTablaMedicamentos,BorderLayout.SOUTH);
 		
@@ -196,6 +202,7 @@ public class VentanaTrabajador extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				quitaPanel();
 				pPacientes.setVisible(true);
+				logger.info("Se ha visualizado la tabla de pacientes");
 			}
 		});
 		citas.addActionListener(new ActionListener() {
@@ -270,9 +277,9 @@ public class VentanaTrabajador extends JFrame{
 		});
 
 		
-		setBounds(400, 100, 800, 500);
+		setSize(ancho, alto);
 		setVisible(true);
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Trabajador");
 	
 	}

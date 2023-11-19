@@ -1,6 +1,6 @@
 package base_de_datos;
 
-import java.lang.System.Logger;
+//import java.lang.System.Logger;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;

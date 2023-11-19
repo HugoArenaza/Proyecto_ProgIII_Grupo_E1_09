@@ -8,16 +8,19 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.Border;
+//import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import domain.Clinica;
@@ -242,8 +245,24 @@ public class VentanaJefe extends JFrame {
 						vet.getUsuario(), vet.getContraseña(), vet.getDni(),
 						vet.getClinica(), vet.getPaciente(), vet.getSueldo(),
 						vet.getespecialidad(), vet.getClass().getSimpleName()
-						});
-				}
+						});	
+					 TableColumn pacienteColumn = tableVeterinarios.getColumnModel().getColumn(7);
+				        JComboBox<String> comboBox = new JComboBox<>(new String[]{"Gato", "Perro", "Otro"});
+				        pacienteColumn.setCellEditor(new DefaultCellEditor(comboBox));
+
+				        // Personalizar el renderer para la columna 'Paciente'
+				        pacienteColumn.setCellRenderer((TableCellRenderer) new DefaultTableCellRenderer() {
+				            /**
+							 * 
+							 */
+							private static final long serialVersionUID = 1L;
+
+							@Override
+				            public void setValue(Object value) {
+				                setText((value == null) ? "" : value.toString());
+				            }
+				        });
+					}
 				
 						
 					

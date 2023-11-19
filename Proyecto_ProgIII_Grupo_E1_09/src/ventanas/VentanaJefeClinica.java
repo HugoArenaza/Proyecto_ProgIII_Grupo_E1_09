@@ -7,6 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class VentanaJefeClinica extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected JPanel pNorte, pSur, pCentro;
 	protected JButton btnSalir;
 	

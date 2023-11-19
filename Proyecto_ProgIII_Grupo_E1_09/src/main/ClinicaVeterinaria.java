@@ -28,7 +28,7 @@ public class ClinicaVeterinaria {
 		Connection con = BD.initBD("clinicaFurwell.db");
 		BD.cerrarBD(con);
 		
-		/*try {
+		try {
 			FileInputStream fis = new FileInputStream("config/logger.properties");
 			LogManager.getLogManager().readConfiguration(fis);
 		} catch (FileNotFoundException e) {
@@ -37,7 +37,7 @@ public class ClinicaVeterinaria {
 			e.printStackTrace();
 		}catch (IOException e ) {
 			e.printStackTrace();
-		}*/
+		}
 		
 		
 		
@@ -45,6 +45,6 @@ public class ClinicaVeterinaria {
 		
 		//new VentanaTrabajador();
 		//new VentanaInicio();
-		new VentanaDueño();
+		//new VentanaDueño();
 }
 }

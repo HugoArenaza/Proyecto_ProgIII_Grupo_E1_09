@@ -13,13 +13,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
+
+
 import domain.Cita;
+
+
 import domain.Dueño;
 import domain.Paciente;
 import domain.TipoPaciente;
