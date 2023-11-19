@@ -19,7 +19,7 @@ public class BD {
 	protected Connection con;
 	
 	public BD (String nomBD) {
-		con = connect(nomBD);
+		con = initBD(nomBD);
 		if(con != null) {
 			System.out.println("Conexion a la base de datos establecida");
 		}else {
@@ -27,14 +27,14 @@ public class BD {
 		}
 	}
 	
-	private Connection connect(String nomBD) {
+	public static Connection initBD(String nomBD) {
 		Connection conn = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection("jdbc:sqlite" + nomBD);
-		} catch (SQLException e) {
+		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
 		return conn;
@@ -77,5 +77,17 @@ public class BD {
 			System.out.println("Error al insertar el dueño"+ e.getMessage());
 			return false;
 		}
+	}
+	
+	
+	public static void cerrarBD(Connection con) {
+		if(con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 }
