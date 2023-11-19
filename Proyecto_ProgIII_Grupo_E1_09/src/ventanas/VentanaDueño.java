@@ -8,14 +8,26 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JSpinnerDateEditor;
+
+import domain.Cita;
 import domain.Clinica;
 import domain.Contenedora;
 import domain.Dueño;
@@ -25,8 +37,14 @@ import domain.TipoPaciente;
 public class VentanaDueño extends JFrame{
 	private JButton btnSalir;
 	private JButton btnAniadirPaciente;
-	
+	private JButton btnSolicitarCita;
 
+	
+	
+	private JLabel lblFecha;
+	
+	private JLabel lblHora;
+	
 	
 	private JPanel pAbajo;
 	private JPanel pMascotas;
@@ -35,6 +53,13 @@ public class VentanaDueño extends JFrame{
 	private JPanel contenido;
 	private JPanel pFacturas;
 	private JPanel pTienda;
+	private JPanel pSolCitaIzq;
+	private JPanel pSolCitaDerch;
+	private JPanel pSolCita;
+	private JPanel pBtnSolCita;
+	private JPanel pDateChooserSolCita;
+	private JPanel pComboHoras;
+	private JPanel pVisualizarAgenda;
 	
 	private JMenuBar menuBar;
 	
@@ -70,6 +95,7 @@ public class VentanaDueño extends JFrame{
 	
 	private ModeloHistorialPacientes modeloHistorialPacientes;
 	
+	private JCalendar calendario;
 
 	private JTable tablaHistorial;
 	private JScrollPane scrollHistorial;
@@ -80,7 +106,20 @@ public class VentanaDueño extends JFrame{
 	
 	private JComboBox<String> comboHistorial;
 	
-	private Contenedora c;
+	private JComboBox<Integer> comboHoras;
+	private JComboBox<Integer> comboMinutos;
+	
+	private List<Cita> listaCitasAlmacenamiento = new ArrayList<>();
+	
+	private DefaultListModel<Cita> modeloListaCitas;
+	private JList<Cita> listaCitas;
+	private JScrollPane scrollListaCitas;
+	
+	
+	
+	private JDateChooser dateChooser;
+	
+	private static int numcita = 000;
 	
 	public VentanaDueño(){
 		
@@ -93,11 +132,17 @@ public class VentanaDueño extends JFrame{
 	pFacturas = new JPanel();
 	pTienda = new JPanel();
 	contenido = new JPanel();
+	pSolCitaIzq = new JPanel(new GridLayout(6,1));
+	pSolCitaDerch = new JPanel(new BorderLayout());
+	pSolCita = new JPanel(new BorderLayout());
+	pComboHoras = new JPanel(new GridLayout(1,1));
+	pVisualizarAgenda = new JPanel();
+	
 	
 
 	/*CREACION DE BOTONES*/
 	btnSalir = new JButton("Salir");
-	
+	btnSolicitarCita = new JButton("Solicitar Cita");
 
 	/*CREACION DE JTREE*/
 	DefaultMutableTreeNode nraiz = new DefaultMutableTreeNode("FACTURAS");
@@ -217,10 +262,20 @@ public class VentanaDueño extends JFrame{
    /*CREACION DEL JBUTTON PACIENTES*/
    btnAniadirPaciente = new JButton("Añadir mascota");
 
-   /*CREACION DEL JLABEL*/
+   /*CREACION DEL JLABEL Y JTEXTFIEL*/
+   lblFecha = new JLabel("Fecha de la cita: ");
+   lblHora = new JLabel("Hora de la cita: ");
    
-   
-   
+     
+   /*CREACION DEL JLIST*/
+	modeloListaCitas = new DefaultListModel<>();
+	listaCitas = new JList<Cita>(modeloListaCitas);
+	scrollListaCitas = new JScrollPane(listaCitas);
+	
+	scrollListaCitas.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);  
+	scrollListaCitas.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+	
+	/*AÑADIMOS TODOS LOS COMPONENTES A EL PANEL JEFE*/   
 	getContentPane().add(pAbajo, BorderLayout.SOUTH);
 	getContentPane().add(pArriba, BorderLayout.NORTH);
 	getContentPane().add(contenido,BorderLayout.CENTER);
@@ -228,11 +283,19 @@ public class VentanaDueño extends JFrame{
 	contenido.add(pHistorial);
 	contenido.add(pFacturas);
 	contenido.add(pTienda);
+	contenido.add(pSolCita);
+	contenido.add(pVisualizarAgenda);
+	
 	
 	pMascotas.setVisible(false);
 	pHistorial.setVisible(false);
 	pFacturas.setVisible(false);
+	pFacturas.setVisible(false);
+	pTienda.setVisible(false);
+	pSolCita.setVisible(false);
+	pVisualizarAgenda.setVisible(false);
 	
+
 	/*AÑADIMOS A PANELES*/
 	  pAbajo.add(btnSalir);
 	  pArriba.add(menuBar);
@@ -243,7 +306,8 @@ public class VentanaDueño extends JFrame{
 	  pMascotas.add(comboMascotas);
 	  pMascotas.add(btnAniadirPaciente);
 
-	
+	  pSolCita.add(pSolCitaIzq, BorderLayout.WEST);
+	  pSolCita.add(pSolCitaDerch, BorderLayout.EAST);
 	
 	
 
@@ -360,7 +424,110 @@ public class VentanaDueño extends JFrame{
 			
 		}
 	});
+	solicitarCita.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ocultarPaneles();
+			pSolCita.setVisible(true);
+			
+			
+			comboHoras = new JComboBox<Integer>();
+			comboHoras.addItem(8);
+			comboHoras.addItem(9);
+			comboHoras.addItem(10);
+			comboHoras.addItem(11);
+			comboHoras.addItem(12);
+			comboHoras.addItem(13);
+			comboHoras.addItem(17);
+			comboHoras.addItem(18);
+			comboHoras.addItem(19);
+			comboHoras.addItem(20);
+			
+			
+			comboMinutos = new JComboBox<Integer>();
+			comboMinutos.addItem(10);
+			comboMinutos.addItem(20);
+			comboMinutos.addItem(30);
+			comboMinutos.addItem(40);
+			comboMinutos.addItem(50);
+			
+			pComboHoras.add(comboHoras);
+			pComboHoras.add(comboMinutos);
+			
+			
+			pDateChooserSolCita = new JPanel();
+			dateChooser = new JDateChooser();
+			pDateChooserSolCita.add(dateChooser);
+			
+			
+			pBtnSolCita = new JPanel();
+			
+			pBtnSolCita.add(btnSolicitarCita);
+			
+			pSolCitaIzq.add(lblFecha);
+			pSolCitaIzq.add(pDateChooserSolCita);
+			pSolCitaIzq.add(lblHora);
+			pSolCitaIzq.add(pComboHoras);
+			pSolCitaIzq.add(pBtnSolCita);
+			
+			pSolCitaDerch.add(scrollListaCitas, BorderLayout.WEST);
+			
+			btnSolicitarCita.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Object [] lista = {"Clinica1", "Clinica2","Clinica3", "Clinica4" } ;
+					
+					Date diaElegida = dateChooser.getDate();
+					
+					int pos = (int) Math.random();
+					String lugar = (String) lista[pos];
+					numcita++;
+					int hora = (int) comboHoras.getSelectedItem();
+					int minutos = (int) comboMinutos.getSelectedItem();
+					String horaCita = hora + " : " + minutos; 			
+					Cita c = new Cita(diaElegida , lugar, horaCita, numcita); 					
+					JOptionPane.showMessageDialog(null, "Se le esta asignando una cita, si desea cambiarla \n la podra modificar en el apartado de Modificar Cita \n Gracias ", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+					modeloListaCitas.addElement(c);
+					listaCitasAlmacenamiento.add(c);
+					
+				}
+			});
+			
+			
+		}
+	});
 	
+	modificarCita.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ocultarPaneles();
+			//pModificarCita.setVisible(true);
+				for(Cita c: listaCitasAlmacenamiento) {
+					Date fecha = c.getFecha_cita();
+					String hora = c.getHora();
+					String lugar = c.getLugar();
+					int numCita = c.getNum_cita();
+					Cita citaParaModificar = new Cita(fecha, lugar, hora, numCita);
+				}
+			
+		}
+	});
+	verCalendario.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ocultarPaneles();
+			pVisualizarAgenda.setVisible(true);
+			calendario = new JCalendar();
+			
+			pVisualizarAgenda.add(calendario);
+			
+			
+		}
+	});
 	
 	comboMascotas.addActionListener(new ActionListener() {
 		
@@ -388,6 +555,10 @@ public class VentanaDueño extends JFrame{
 		pHistorial.setVisible(false);
 		pFacturas.setVisible(false);
 		pTienda.setVisible(false);
+		pSolCita.setVisible(false);
+		pVisualizarAgenda.setVisible(false);
+		
+		
 		
 		
 	}
