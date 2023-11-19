@@ -103,6 +103,13 @@ public class VentanaTrabajador extends JFrame{
 		pDisplay = new JPanel();
 		getContentPane().add(pDisplay,BorderLayout.CENTER);
 		
+		pPacientes = new JPanel();
+		pCalendario = new JPanel();
+		pCitas = new JPanel();
+		pAniadirAnular = new JPanel();
+		pCuenta = new JPanel();
+		pMedicamentos = new JPanel();
+		
 		btnSalir = new JButton("Salir");
 		pAbajo.add(btnSalir);
 		
@@ -158,7 +165,7 @@ public class VentanaTrabajador extends JFrame{
 		modeloPacientes = new ModeloHistorialPacientes(lPacientes);
 		tablaPacientes = new JTable(modeloPacientes);
 		scrollTablaPacientes = new JScrollPane(tablaPacientes);
-		DefaultTableModel dtm = new DefaultTableModel();
+	
 		
 		//JTable Medicamentos
 		modeloMedicamentos = new ModeloMedicamentos();
