@@ -5,45 +5,48 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
-import com.toedter.calendar.JSpinnerDateEditor;
-
 import domain.Cita;
-import domain.Clinica;
-import domain.Contenedora;
 import domain.Dueño;
 import domain.Paciente;
 import domain.TipoPaciente;
 
 public class VentanaDueño extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton btnSalir;
 	private JButton btnAniadirPaciente;
 	private JButton btnSolicitarCita;
-
-	
+	private JButton btnModificarCita;
+	private JButton btnGuardarCitaModificada;
 	
 	private JLabel lblFecha;
 	
 	private JLabel lblHora;
+	
+	private JLabel lblFechaCita;
+	private JLabel lblLugarCita;
+	private JLabel lblHoraCita;
+	private JLabel lblNumeroCita;
+	
+	private JTextField txtFechaCita;
+	private JTextField txtLugarCita;
+	private JTextField txtHoraCita;
 	
 	
 	private JPanel pAbajo;
@@ -60,6 +63,9 @@ public class VentanaDueño extends JFrame{
 	private JPanel pDateChooserSolCita;
 	private JPanel pComboHoras;
 	private JPanel pVisualizarAgenda;
+	private JPanel pModificarCita;
+	private JPanel pBtnModificarCita;
+	private JPanel pCambiarLaCitaSeleccionada;
 	
 	private JMenuBar menuBar;
 	
@@ -102,7 +108,7 @@ public class VentanaDueño extends JFrame{
 	
 	
 	private JComboBox<Paciente> comboMascotas;
-	private List<Paciente> listaPacientes;
+	private List<Paciente> listaPacientes = new ArrayList<>();
 	
 	private JComboBox<String> comboHistorial;
 	
@@ -114,6 +120,10 @@ public class VentanaDueño extends JFrame{
 	private DefaultListModel<Cita> modeloListaCitas;
 	private JList<Cita> listaCitas;
 	private JScrollPane scrollListaCitas;
+	
+	private DefaultListModel<Cita> modeloListaModificarCitas;
+	private JList<Cita> listaModificarCitas;
+	private JScrollPane scrollListaModificarCitas;
 	
 	
 	
@@ -137,9 +147,9 @@ public class VentanaDueño extends JFrame{
 	pSolCita = new JPanel(new BorderLayout());
 	pComboHoras = new JPanel(new GridLayout(1,1));
 	pVisualizarAgenda = new JPanel();
+	pModificarCita = new JPanel(new GridLayout(2,1));
+	pCambiarLaCitaSeleccionada = new JPanel(new GridLayout(8,1));
 	
-	
-
 	/*CREACION DE BOTONES*/
 	btnSalir = new JButton("Salir");
 	btnSolicitarCita = new JButton("Solicitar Cita");
@@ -237,27 +247,6 @@ public class VentanaDueño extends JFrame{
    comboHistorial.addItem("Historial de mis mascotas");
    comboHistorial.addItem("Historial de compras");
    
-   comboHistorial.addActionListener(new ActionListener() {
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(comboHistorial.getSelectedItem().toString().equals("Historial de compras")) {
-			tablaHistorial.setModel(tablaDefault);
-			tablaDefault.setRowCount(0);
-			//tablaDefault
-			Object [] titulos = {"NOMBRE DEL MEDICAMENTO","PRECIO" ,"FECHA DE COMPRA", "MASCOTA ASOCIADA"};
-			
-			tablaDefault.setColumnIdentifiers(titulos);
-			
-			
-		}else if(comboHistorial.getSelectedItem().toString().equals("Historial de mis mascotas")) {
-			tablaHistorial.setModel(modeloHistorialPacientes);
-			
-		}
-		
-		
-	}
-});
    
    /*CREACION DEL JBUTTON PACIENTES*/
    btnAniadirPaciente = new JButton("Añadir mascota");
@@ -285,6 +274,8 @@ public class VentanaDueño extends JFrame{
 	contenido.add(pTienda);
 	contenido.add(pSolCita);
 	contenido.add(pVisualizarAgenda);
+	contenido.add(pModificarCita);
+	contenido.add(pCambiarLaCitaSeleccionada);
 	
 	
 	pMascotas.setVisible(false);
@@ -294,8 +285,8 @@ public class VentanaDueño extends JFrame{
 	pTienda.setVisible(false);
 	pSolCita.setVisible(false);
 	pVisualizarAgenda.setVisible(false);
-	
-
+	pModificarCita.setVisible(false);
+	pCambiarLaCitaSeleccionada.setVisible(false);
 	/*AÑADIMOS A PANELES*/
 	  pAbajo.add(btnSalir);
 	  pArriba.add(menuBar);
@@ -346,6 +337,30 @@ public class VentanaDueño extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			ocultarPaneles();
 			pHistorial.setVisible(true);
+
+			   comboHistorial.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(comboHistorial.getSelectedItem().toString().equals("Historial de compras")) {
+						tablaHistorial.setModel(tablaDefault);
+						tablaDefault.setRowCount(0);
+						//tablaDefault
+						Object [] titulos = {"NOMBRE DEL MEDICAMENTO","PRECIO" ,"FECHA DE COMPRA", "MASCOTA ASOCIADA"};
+						
+						tablaDefault.setColumnIdentifiers(titulos);
+						
+						
+					}else if(comboHistorial.getSelectedItem().toString().equals("Historial de mis mascotas")) {
+						modeloHistorialPacientes = new ModeloHistorialPacientes(listaPacientes);
+						tablaHistorial.setModel(modeloHistorialPacientes);
+						tablaHistorial.updateUI();
+						
+					}
+					
+					
+				}
+			});
 			
 		}
 	});
@@ -416,11 +431,7 @@ public class VentanaDueño extends JFrame{
 			Dueño d = new Dueño();//mas tarde coger dueño registrado
 			Paciente p = new Paciente(id, NombrePaciente, microchipInt, enfermedad, id_veterinario, tipoMascota, d);
 			listaPacientes.add(p);
-			for(Paciente pAlCombo: listaPacientes) {
-				comboMascotas.addItem(pAlCombo);
-				
-			}
-			
+			comboMascotas.addItem(p);
 			
 		}
 	});
@@ -432,102 +443,187 @@ public class VentanaDueño extends JFrame{
 			pSolCita.setVisible(true);
 			
 			
-			comboHoras = new JComboBox<Integer>();
-			comboHoras.addItem(8);
-			comboHoras.addItem(9);
-			comboHoras.addItem(10);
-			comboHoras.addItem(11);
-			comboHoras.addItem(12);
-			comboHoras.addItem(13);
-			comboHoras.addItem(17);
-			comboHoras.addItem(18);
-			comboHoras.addItem(19);
-			comboHoras.addItem(20);
 			
-			
-			comboMinutos = new JComboBox<Integer>();
-			comboMinutos.addItem(10);
-			comboMinutos.addItem(20);
-			comboMinutos.addItem(30);
-			comboMinutos.addItem(40);
-			comboMinutos.addItem(50);
-			
-			pComboHoras.add(comboHoras);
-			pComboHoras.add(comboMinutos);
-			
-			
-			pDateChooserSolCita = new JPanel();
-			dateChooser = new JDateChooser();
-			pDateChooserSolCita.add(dateChooser);
-			
-			
-			pBtnSolCita = new JPanel();
-			
-			pBtnSolCita.add(btnSolicitarCita);
-			
-			pSolCitaIzq.add(lblFecha);
-			pSolCitaIzq.add(pDateChooserSolCita);
-			pSolCitaIzq.add(lblHora);
-			pSolCitaIzq.add(pComboHoras);
-			pSolCitaIzq.add(pBtnSolCita);
-			
-			pSolCitaDerch.add(scrollListaCitas, BorderLayout.WEST);
-			
-			btnSolicitarCita.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					Object [] lista = {"Clinica1", "Clinica2","Clinica3", "Clinica4" } ;
-					
-					Date diaElegida = dateChooser.getDate();
-					
-					int pos = (int) Math.random();
-					String lugar = (String) lista[pos];
-					numcita++;
-					int hora = (int) comboHoras.getSelectedItem();
-					int minutos = (int) comboMinutos.getSelectedItem();
-					String horaCita = hora + " : " + minutos; 			
-					Cita c = new Cita(diaElegida , lugar, horaCita, numcita); 					
-					JOptionPane.showMessageDialog(null, "Se le esta asignando una cita, si desea cambiarla \n la podra modificar en el apartado de Modificar Cita \n Gracias ", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-					modeloListaCitas.addElement(c);
-					listaCitasAlmacenamiento.add(c);
-					
-				}
-			});
 			
 			
 		}
 	});
+	
 	
 	modificarCita.addActionListener(new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ocultarPaneles();
-			//pModificarCita.setVisible(true);
-				for(Cita c: listaCitasAlmacenamiento) {
-					Date fecha = c.getFecha_cita();
-					String hora = c.getHora();
-					String lugar = c.getLugar();
-					int numCita = c.getNum_cita();
-					Cita citaParaModificar = new Cita(fecha, lugar, hora, numCita);
-				}
+			pModificarCita.setVisible(true);
+			
 			
 		}
 	});
+	
+	
+	/*CREACION DEL JLIST MODIFICARLISTA*/
+	modeloListaModificarCitas = new DefaultListModel<Cita>();
+	listaModificarCitas = new JList<Cita>(modeloListaModificarCitas);
+	scrollListaModificarCitas = new JScrollPane(listaModificarCitas);
+	pModificarCita.add(scrollListaModificarCitas);
+	
+	/*CREACION DEL PANEL SOLCITA*/
+	comboHoras = new JComboBox<Integer>();
+	comboHoras.addItem(8);
+	comboHoras.addItem(9);
+	comboHoras.addItem(10);
+	comboHoras.addItem(11);
+	comboHoras.addItem(12);
+	comboHoras.addItem(13);
+	comboHoras.addItem(17);
+	comboHoras.addItem(18);
+	comboHoras.addItem(19);
+	comboHoras.addItem(20);
+	
+	
+	comboMinutos = new JComboBox<Integer>();
+	comboMinutos.addItem(10);
+	comboMinutos.addItem(20);
+	comboMinutos.addItem(30);
+	comboMinutos.addItem(40);
+	comboMinutos.addItem(50);
+	
+	pComboHoras.add(comboHoras);
+	pComboHoras.add(comboMinutos);
+	
+	
+	pDateChooserSolCita = new JPanel();
+	dateChooser = new JDateChooser();
+	pDateChooserSolCita.add(dateChooser);
+	
+	
+	pBtnSolCita = new JPanel();
+	
+	pBtnSolCita.add(btnSolicitarCita);
+	
+	pSolCitaIzq.add(lblFecha);
+	pSolCitaIzq.add(pDateChooserSolCita);
+	pSolCitaIzq.add(lblHora);
+	pSolCitaIzq.add(pComboHoras);
+	pSolCitaIzq.add(pBtnSolCita);
+	
+	pSolCitaDerch.add(scrollListaCitas, BorderLayout.WEST);
+	listaCitasAlmacenamiento = new ArrayList<>();
+	btnSolicitarCita.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Object [] lista = {"Clinica1", "Clinica2","Clinica3", "Clinica4" } ;
+			
+			Date diaElegida = dateChooser.getDate();
+			
+			int pos = (int) Math.random();
+			String lugar = (String) lista[pos];
+			numcita++;
+			int hora = (int) comboHoras.getSelectedItem();
+			int minutos = (int) comboMinutos.getSelectedItem();
+			String horaCita = hora + " : " + minutos; 			
+			Cita c = new Cita(diaElegida , lugar, horaCita, numcita); 					
+			JOptionPane.showMessageDialog(null, "Se le esta asignando una cita, si desea cambiarla \n la podra modificar en el apartado de Modificar Cita \n Gracias ", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+			modeloListaCitas.addElement(c);
+			listaCitasAlmacenamiento.add(c);
+			for(Cita citaAlmacenada: listaCitasAlmacenamiento) {
+				Date fechaA = citaAlmacenada.getFecha_cita();
+				String horaA = citaAlmacenada.getHora();
+				String lugarA = citaAlmacenada.getLugar();
+				int numCitaA = citaAlmacenada.getNum_cita();
+				Cita citaParaModificarA = new Cita(fechaA, lugarA, horaA, numCitaA);
+				modeloListaModificarCitas.addElement(citaParaModificarA);
+			}
+			
+		}
+	});
+	
+	
+	/*CREACION DEL PANEL MODIFICARCITA*/
+	
+	pBtnModificarCita = new JPanel();
+	btnModificarCita = new JButton("Modificar cita");
+	pBtnModificarCita.add(btnModificarCita);
+	pModificarCita.add(pBtnModificarCita);
+	btnModificarCita.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int pos = listaModificarCitas.getSelectedIndex();
+			if(pos == -1) {
+				JOptionPane.showMessageDialog(null, "Primero debes seleccionar un artículo");
+			}else {
+				Cita c = modeloListaModificarCitas.getElementAt(pos);
+				ocultarPaneles();
+				lblFechaCita = new JLabel("Cambie la fecha: ");
+				DateFormat sdfDia = new SimpleDateFormat("dd-MM-YYYY");
+				txtFechaCita = new JTextField(""+sdfDia.format(c.getFecha_cita()));
+				lblLugarCita = new JLabel("Cambie el Lugar: ");
+				txtLugarCita = new JTextField(c.getLugar());
+				lblHoraCita = new JLabel("Cambie la Hora: ");
+				txtHoraCita = new JTextField(c.getHora());
+				lblNumeroCita = new JLabel("El numero de su cita es: "+c.getNum_cita());
+				pCambiarLaCitaSeleccionada.add(lblFechaCita);
+				pCambiarLaCitaSeleccionada.add(txtFechaCita);
+				pCambiarLaCitaSeleccionada.add(lblLugarCita);
+				pCambiarLaCitaSeleccionada.add(txtLugarCita);
+				pCambiarLaCitaSeleccionada.add(lblHoraCita);
+				pCambiarLaCitaSeleccionada.add(txtHoraCita);
+				pCambiarLaCitaSeleccionada.add(lblNumeroCita);
+				btnGuardarCitaModificada = new JButton("Guardar Modificacion");
+				pCambiarLaCitaSeleccionada.add(btnGuardarCitaModificada);
+				pCambiarLaCitaSeleccionada.setVisible(true);
+				btnGuardarCitaModificada.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						String diaCambiadoStr = txtFechaCita.getText();
+						Date diaCambiadoDate;
+						try{
+							diaCambiadoDate = sdfDia.parse(diaCambiadoStr);
+						}catch(ParseException e1){
+							diaCambiadoDate = new Date();
+						}
+						String lugarCambiado = txtLugarCita.getText();
+						String horaCambiada = txtHoraCita.getText();
+						int numeroDeSiempre = c.getNum_cita();
+						Cita citaCambiada = new Cita(diaCambiadoDate, lugarCambiado, horaCambiada, numeroDeSiempre);
+						
+						modeloListaModificarCitas.removeElementAt(pos);
+						modeloListaModificarCitas.addElement(citaCambiada);
+						ocultarPaneles();
+						pModificarCita.setVisible(true);
+					}
+				});
+				
+				
+				
+				
+				
+				
+			
+			}
+			
+		}
+	});
+	
+
 	verCalendario.addActionListener(new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ocultarPaneles();
 			pVisualizarAgenda.setVisible(true);
-			calendario = new JCalendar();
-			
-			pVisualizarAgenda.add(calendario);
 			
 			
 		}
 	});
+	calendario = new JCalendar();
+	
+	pVisualizarAgenda.add(calendario);
+	
 	
 	comboMascotas.addActionListener(new ActionListener() {
 		
@@ -557,6 +653,9 @@ public class VentanaDueño extends JFrame{
 		pTienda.setVisible(false);
 		pSolCita.setVisible(false);
 		pVisualizarAgenda.setVisible(false);
+		pModificarCita.setVisible(false);
+		pCambiarLaCitaSeleccionada.setVisible(false);
+
 		
 		
 		
