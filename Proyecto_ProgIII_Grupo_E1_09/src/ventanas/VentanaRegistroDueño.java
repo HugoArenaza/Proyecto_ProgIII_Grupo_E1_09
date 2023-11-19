@@ -3,7 +3,7 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GraphicsEnvironment;
+//import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -14,10 +14,15 @@ import base_de_datos.BD;
 import domain.Contenedora;
 import domain.Dueño;
 import domain.Paciente;
-import domain.Veterinario;
+//import domain.Veterinario;
 
 public class VentanaRegistroDueño extends JFrame{	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Logger logger = java.util.logging.Logger.getLogger("Logger");
 	
 	private JPanel panel, panelSur, panelCentro, pCInformacion, pcIzq;

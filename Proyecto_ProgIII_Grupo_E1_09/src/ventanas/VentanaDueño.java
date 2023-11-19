@@ -5,18 +5,18 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
-import java.awt.HeadlessException;
+//import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+//import java.text.DateFormat;
+//import java.text.SimpleDateFormat;
+//import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
+//import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
+//import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+//import java.util.Random;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -25,16 +25,20 @@ import javax.swing.tree.DefaultTreeModel;
 
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
-import com.toedter.calendar.JSpinnerDateEditor;
+//import com.toedter.calendar.JSpinnerDateEditor;
 
 import domain.Cita;
-import domain.Clinica;
-import domain.Contenedora;
+//import domain.Clinica;
+//import domain.Contenedora;
 import domain.Dueño;
 import domain.Paciente;
 import domain.TipoPaciente;
 
 public class VentanaDueño extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton btnSalir;
 	private JButton btnAniadirPaciente;
 	private JButton btnSolicitarCita;

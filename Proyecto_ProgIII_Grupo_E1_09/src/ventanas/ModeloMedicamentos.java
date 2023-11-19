@@ -3,13 +3,17 @@ package ventanas;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.JFrame;
+//import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 import domain.MedicamentosAnimales;
 
 public class ModeloMedicamentos extends DefaultTableModel{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<String> titulos = Arrays.asList("ID","Nombre");
 	
 	public ModeloMedicamentos() {

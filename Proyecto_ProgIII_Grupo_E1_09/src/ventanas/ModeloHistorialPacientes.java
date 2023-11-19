@@ -8,6 +8,10 @@ import javax.swing.table.DefaultTableModel;
 import domain.Paciente;
 
 public class ModeloHistorialPacientes extends DefaultTableModel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<String> titulos = Arrays.asList("NOMBRE MASCOTA", "MICROCHIP", "TIPO MASCOTA", "ENFERMEDAD", "RESOLUCION DE ENFERMEDAD");
 	private List<Paciente> lPacientes;
 	

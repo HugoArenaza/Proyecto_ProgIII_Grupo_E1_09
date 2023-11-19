@@ -5,11 +5,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
+//import javax.swing.JPasswordField;
 
 import java.awt.*;
 
 public class VentanaInicio extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton btnInicioSesion, btnRegistro, btnSalir;
 	private JPanel  pSur, pCentro ,pCentroIzq, pCentroDcha;
 	private JFrame vActual;
