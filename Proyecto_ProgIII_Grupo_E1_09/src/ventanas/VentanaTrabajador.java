@@ -16,7 +16,7 @@ public class VentanaTrabajador extends JFrame{
 	protected JButton btnSalir, btnAniadirCita, btnAnularCita, btnVerCalendario, btnVerPacientes;
 	protected JPanel pNorte, pCentro, pSur;
 	protected JFrame vActual;
-	
+	protected Cita citaActual;
 
 	public VentanaTrabajador() {
 		
@@ -38,16 +38,16 @@ public class VentanaTrabajador extends JFrame{
 		btnSalir.addActionListener((e)->{
 			dispose();
 		});
-		/*btnAniadirCita.addActionListener((e)->{
-			//Contenedora.aniadirCita(null);
+		btnAniadirCita.addActionListener((e)->{
+			Contenedora.aniadirCita(citaActual);
 			logger.info("Se ha agregado una nueva cita");
 			
-		});*/
+		});
 		
-		/*btnAnularCita.addActionListener((e)->{
-			//Contenedora.eliminarCita(null);
+		btnAnularCita.addActionListener((e)->{
+			Contenedora.eliminarCita(citaActual);
 			logger.info("Se ha eliminado una cita");
-		});*/
+		});
 		btnVerPacientes.addActionListener((e)->{
 			Contenedora.imprimirListaPacientes();
 			logger.info("Se ha impreso la lista de pacientes");
