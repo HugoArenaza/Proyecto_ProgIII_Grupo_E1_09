@@ -7,6 +7,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
@@ -19,6 +20,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import base_de_datos.BD;
 import domain.Contenedora;
 import domain.Dueño;
 
@@ -99,8 +101,22 @@ public class VentanaInicioSesion extends JFrame{
 				String User = textUsuario.getText();
 				String dni = txtDni.getText();
 				String con = textContraseña.getText();
-				Dueño d = Contenedora.buscarCliente(dni);
-				if(d == null) {
+				
+				Connection conn = BD.initBD("clinicaFurwell.db");
+				
+				Dueño dueñoABuscar = BD.buscarDueño(conn, dni);
+				
+				String contraseña = dueñoABuscar.getContraseña();
+				String apellidos = dueñoABuscar.getApellidos();
+				String nombre = dueñoABuscar.getNombreDueño();
+				String correo = dueñoABuscar.getCorreo();
+				String dniRegistrado = dueñoABuscar.getDni();
+				int numeroTlf = dueñoABuscar.getNumeroTlf();
+				String fNac = dueñoABuscar.getfNac();
+				
+				Dueño d = new Dueño(nombre, apellidos, dniRegistrado, null, fNac, numeroTlf, correo, contraseña);
+				
+				if(dni == null) {
 					JOptionPane.showMessageDialog(null, "Para poder iniciar sesión tienes que estar registrado","ERROR",JOptionPane.ERROR_MESSAGE);
 
 					new VentanaRegistroDueño();
@@ -109,7 +125,7 @@ public class VentanaInicioSesion extends JFrame{
 					logger.warning("Se ha introducido un usuario sin registrar");
 
 				}else {
-					if(d.getContraseña().equals(con)) {
+					if(contraseña.equals(con)) {
 						JOptionPane.showMessageDialog(null, "Bienvenido!","SESIÓN INICIADA",JOptionPane.INFORMATION_MESSAGE);
 						dueño = d; 
 						VentanaInicio.setDueño(d);

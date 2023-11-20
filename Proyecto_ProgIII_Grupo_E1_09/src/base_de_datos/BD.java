@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 
 import domain.Clinica;
+import domain.Dueño;
 
 
 public class BD {
@@ -42,9 +43,6 @@ public class BD {
 			
 	}
 	
-	
-	
-	
 	public static boolean insertarDueño(String NombreDueño, String apellidos, String dni, Clinica clinica_asociada,
 			 String fNac, int numeroTlf, String correo, String contraseña) {
 		String sql = "INSERT INTO dueños(NombreDueño, apellidos, dni, clinica_asociada, fNac, numeroTlf, correo, contraseña)"
@@ -58,18 +56,6 @@ public class BD {
 		
 		try {
 			Connection con = initBD("clinicaFurwell.db");
-			/*PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, NombreDueño);
-			pstmt.setString(2, apellidos);
-			pstmt.setString(3, dni);
-			if(clinica_asociada!=null)
-				pstmt.setString(4, Integer.toString(clinica_asociada.getId()));
-			else
-				pstmt.setString(4, "");
-			pstmt.setString(5, fNac);
-			pstmt.setString(6, Integer.toString(numeroTlf));
-			pstmt.setString(7, correo);
-			pstmt.setString(8, contraseña);*/
 			Statement st = con.createStatement();
 			st.executeUpdate(s);
 			cerrarBD(con);
@@ -81,6 +67,30 @@ public class BD {
 		}
 	}
 	
+	public static Dueño buscarDueño(Connection con, String dni) {
+		String sql = String.format("SELECT * FROM dueños WHERE dni = '%s'", dni);
+		Dueño dueño = null;
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sql); 
+			if(rs.next()) {
+				String NombreDueño = rs.getString("NombreDueño");
+				String apellidos = rs.getString("apellidos");
+				String dniStr = rs.getString("dni");
+				String fNac = rs.getString("fNac");
+				int numeroTlf = Integer.parseInt(rs.getString("numeroTlf"));
+				String correo = rs.getString("correo");
+				String contraseña = rs.getString("contraseña");
+				
+				dueño = new Dueño(NombreDueño, apellidos, dniStr, null, fNac, numeroTlf, correo, contraseña);
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return dueño;
+	}
 	
 	public static void cerrarBD(Connection con) {
 		if(con != null) {
