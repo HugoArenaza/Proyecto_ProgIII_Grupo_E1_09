@@ -31,7 +31,7 @@ public class BD {
 		Connection conn = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection("jdbc:sqlite" + nomBD);
+			conn = DriverManager.getConnection("jdbc:sqlite:datos/" + nomBD);
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
