@@ -40,6 +40,7 @@ public class VentanaDueño extends JFrame{
 	private JButton btnSolicitarCita;
 	private JButton btnModificarCita;
 	private JButton btnGuardarCitaModificada;
+	private JButton btnanularCita;
 	
 	private JLabel lblFecha;
 	
@@ -72,6 +73,7 @@ public class VentanaDueño extends JFrame{
 	private JPanel pModificarCita;
 	private JPanel pBtnModificarCita;
 	private JPanel pCambiarLaCitaSeleccionada;
+	private JPanel pBtnAnularCita;
 	
 	private JMenuBar menuBar;
 	
@@ -149,7 +151,7 @@ public class VentanaDueño extends JFrame{
 	pTienda = new JPanel();
 	contenido = new JPanel();
 	pSolCitaIzq = new JPanel(new GridLayout(6,1));
-	pSolCitaDerch = new JPanel(new BorderLayout());
+	pSolCitaDerch = new JPanel(new GridLayout(2,1));
 	pSolCita = new JPanel(new BorderLayout());
 	pComboHoras = new JPanel(new GridLayout(1,1));
 	pVisualizarAgenda = new JPanel();
@@ -293,6 +295,8 @@ public class VentanaDueño extends JFrame{
 	pVisualizarAgenda.setVisible(false);
 	pModificarCita.setVisible(false);
 	pCambiarLaCitaSeleccionada.setVisible(false);
+	
+	
 	/*AÑADIMOS A PANELES*/
 	  pAbajo.add(btnSalir);
 	  pArriba.add(menuBar);
@@ -513,8 +517,11 @@ public class VentanaDueño extends JFrame{
 	pSolCitaIzq.add(lblHora);
 	pSolCitaIzq.add(pComboHoras);
 	pSolCitaIzq.add(pBtnSolCita);
-	
+	pBtnAnularCita = new JPanel();
+	btnanularCita = new JButton("Anular cita");
+	pBtnAnularCita.add(btnanularCita);
 	pSolCitaDerch.add(scrollListaCitas, BorderLayout.WEST);
+	pSolCitaDerch.add(pBtnAnularCita);
 	listaCitasAlmacenamiento = new ArrayList<>();
 	btnSolicitarCita.addActionListener(new ActionListener() {
 		
@@ -534,14 +541,8 @@ public class VentanaDueño extends JFrame{
 			JOptionPane.showMessageDialog(null, "Se le esta asignando una cita, si desea cambiarla \n la podra modificar en el apartado de Modificar Cita \n Gracias ", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
 			modeloListaCitas.addElement(c);
 			listaCitasAlmacenamiento.add(c);
-			for(Cita citaAlmacenada: listaCitasAlmacenamiento) {
-				Date fechaA = citaAlmacenada.getFecha_cita();
-				String horaA = citaAlmacenada.getHora();
-				String lugarA = citaAlmacenada.getLugar();
-				int numCitaA = citaAlmacenada.getNum_cita();
-				Cita citaParaModificarA = new Cita(fechaA, lugarA, horaA, numCitaA);
-				modeloListaModificarCitas.addElement(citaParaModificarA);
-			}
+			modeloListaModificarCitas.addElement(c);
+			
 			
 		}
 	});
@@ -559,7 +560,7 @@ public class VentanaDueño extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			int pos = listaModificarCitas.getSelectedIndex();
 			if(pos == -1) {
-				JOptionPane.showMessageDialog(null, "Primero debes seleccionar un artículo");
+				JOptionPane.showMessageDialog(null, "Primero debes seleccionar una cita!");
 			}else {
 				Cita c = modeloListaModificarCitas.getElementAt(pos);
 				ocultarPaneles();
@@ -599,8 +600,11 @@ public class VentanaDueño extends JFrame{
 						
 						modeloListaModificarCitas.removeElementAt(pos);
 						modeloListaModificarCitas.addElement(citaCambiada);
+						modeloListaCitas.removeElement(c);
+						modeloListaCitas.addElement(citaCambiada);
 						ocultarPaneles();
 						pModificarCita.setVisible(true);
+						
 					}
 				});
 				
@@ -614,6 +618,23 @@ public class VentanaDueño extends JFrame{
 			
 		}
 	});
+	
+	btnanularCita.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int pos = listaCitas.getSelectedIndex();
+			if(pos == -1) {
+				JOptionPane.showMessageDialog(null, "Primero debes seleccionar una cita!");
+			}else {
+				Cita c = modeloListaCitas.getElementAt(pos);
+				modeloListaCitas.removeElement(c);
+				modeloListaModificarCitas.removeElement(c);
+			
+		}
+			}
+	});
+	
 	
 
 	verCalendario.addActionListener(new ActionListener() {
