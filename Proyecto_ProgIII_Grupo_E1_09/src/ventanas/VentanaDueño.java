@@ -530,20 +530,22 @@ public class VentanaDueño extends JFrame{
 			Object [] lista = {"Clinica1", "Clinica2","Clinica3", "Clinica4" } ;
 			
 			Date diaElegida = dateChooser.getDate();
-			
-			int pos = (int) Math.random();
-			String lugar = (String) lista[pos];
-			numcita++;
-			int hora = (int) comboHoras.getSelectedItem();
-			int minutos = (int) comboMinutos.getSelectedItem();
-			String horaCita = hora + " : " + minutos; 			
-			Cita c = new Cita(diaElegida , lugar, horaCita, numcita); 					
-			JOptionPane.showMessageDialog(null, "Se le esta asignando una cita, si desea cambiarla \n la podra modificar en el apartado de Modificar Cita \n Gracias ", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-			modeloListaCitas.addElement(c);
-			listaCitasAlmacenamiento.add(c);
-			modeloListaModificarCitas.addElement(c);
-			
-			
+			if(diaElegida != null) {
+				//int pos = (int) Math.random();
+				int pos = (int) (Math.floor(Math.random()*(lista.length)));
+				String lugar = (String) lista[pos];
+				numcita++;
+				int hora = (int) comboHoras.getSelectedItem();
+				int minutos = (int) comboMinutos.getSelectedItem();
+				String horaCita = hora + " : " + minutos; 			
+				Cita c = new Cita(diaElegida , lugar, horaCita, numcita); 					
+				JOptionPane.showMessageDialog(null, "Se le esta asignando una cita, si desea cambiarla \n la podra modificar en el apartado de Modificar Cita \n Gracias ", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+				modeloListaCitas.addElement(c);
+				listaCitasAlmacenamiento.add(c);
+				modeloListaModificarCitas.addElement(c);
+			}else {
+				JOptionPane.showMessageDialog(null, "Primero debes seleccionar una fecha");
+			}
 		}
 	});
 	
@@ -558,6 +560,7 @@ public class VentanaDueño extends JFrame{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			pCambiarLaCitaSeleccionada.removeAll();
 			int pos = listaModificarCitas.getSelectedIndex();
 			if(pos == -1) {
 				JOptionPane.showMessageDialog(null, "Primero debes seleccionar una cita!");
@@ -663,7 +666,13 @@ public class VentanaDueño extends JFrame{
 	});
 	
 	
-	
+	perfil.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Dueño dueño = VentanaInicio.getDueño();
+		}
+	});
 	
 	setSize(anchoPantalla, altoPantalla);
 	setExtendedState(MAXIMIZED_BOTH);
