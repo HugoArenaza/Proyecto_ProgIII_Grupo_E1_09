@@ -41,6 +41,7 @@ public class VentanaDueño extends JFrame{
 	private JButton btnModificarCita;
 	private JButton btnGuardarCitaModificada;
 	private JButton btnanularCita;
+	private JButton btnVisualizarContraseña;
 	
 	private JLabel lblFecha;
 	
@@ -50,6 +51,15 @@ public class VentanaDueño extends JFrame{
 	private JLabel lblLugarCita;
 	private JLabel lblHoraCita;
 	private JLabel lblNumeroCita;
+	
+	private JLabel lblNombreApellidosVisualizar;
+
+	private JLabel lblDniVisualizar;
+	private JLabel lblCorreoVisualizar;
+	private JLabel lblTelefonoVisualizar;
+	private JLabel lblFechaNacVisualizar;
+	private JLabel lblContraseñaVisualizar;
+	
 	
 	private JTextField txtFechaCita;
 	private JTextField txtLugarCita;
@@ -74,6 +84,7 @@ public class VentanaDueño extends JFrame{
 	private JPanel pBtnModificarCita;
 	private JPanel pCambiarLaCitaSeleccionada;
 	private JPanel pBtnAnularCita;
+	private JPanel pVisualizarMiPerfil;
 	
 	private JMenuBar menuBar;
 	
@@ -157,6 +168,7 @@ public class VentanaDueño extends JFrame{
 	pVisualizarAgenda = new JPanel();
 	pModificarCita = new JPanel(new GridLayout(2,1));
 	pCambiarLaCitaSeleccionada = new JPanel(new GridLayout(8,1));
+	pVisualizarMiPerfil = new JPanel(new GridLayout(9,1));
 	
 	/*CREACION DE BOTONES*/
 	btnSalir = new JButton("Salir");
@@ -284,7 +296,7 @@ public class VentanaDueño extends JFrame{
 	contenido.add(pVisualizarAgenda);
 	contenido.add(pModificarCita);
 	contenido.add(pCambiarLaCitaSeleccionada);
-	
+	contenido.add(pVisualizarMiPerfil);
 	
 	pMascotas.setVisible(false);
 	pHistorial.setVisible(false);
@@ -295,6 +307,7 @@ public class VentanaDueño extends JFrame{
 	pVisualizarAgenda.setVisible(false);
 	pModificarCita.setVisible(false);
 	pCambiarLaCitaSeleccionada.setVisible(false);
+	pVisualizarMiPerfil.setVisible(false);
 	
 	
 	/*AÑADIMOS A PANELES*/
@@ -670,7 +683,50 @@ public class VentanaDueño extends JFrame{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			ocultarPaneles();
+			pVisualizarMiPerfil.setVisible(true);
+			pVisualizarMiPerfil.removeAll();
 			Dueño dueño = VentanaInicio.getDueño();
+			String nombre = dueño.getNombreDueño();
+			String apellido = dueño.getApellidos();
+			String correo = dueño.getCorreo();
+			String dni = dueño.getDni();
+			String fechaNacimiento = dueño.getfNac();
+			int telefono = dueño.getNumeroTlf();
+			String contraseña = dueño.getContraseña();
+			Font f1 = new Font("Agency FB", Font.BOLD, 25);
+			Font f2 = new Font("Agency FB", Font.BOLD, 14);
+			lblNombreApellidosVisualizar = new JLabel(nombre.toUpperCase()+", " +apellido);
+			lblContraseñaVisualizar = new JLabel("********");
+			lblCorreoVisualizar = new JLabel(correo);
+			lblDniVisualizar = new JLabel(dni);
+			lblFechaNacVisualizar = new JLabel(fechaNacimiento);
+			
+			lblNombreApellidosVisualizar.setFont(f1);
+			lblContraseñaVisualizar.setFont(f2);
+			lblCorreoVisualizar.setFont(f2);
+			lblDniVisualizar.setFont(f2);
+			lblFechaNacVisualizar.setFont(f2);
+			
+			
+			lblTelefonoVisualizar = new JLabel(""+telefono);
+			btnVisualizarContraseña = new JButton("Visualizar Contraseña");
+			btnVisualizarContraseña.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					lblContraseñaVisualizar.setText(contraseña);
+					
+				}
+			});
+			pVisualizarMiPerfil.add(lblNombreApellidosVisualizar);
+			pVisualizarMiPerfil.add(lblDniVisualizar);
+			pVisualizarMiPerfil.add(lblCorreoVisualizar);
+			pVisualizarMiPerfil.add(lblFechaNacVisualizar);
+			pVisualizarMiPerfil.add(lblTelefonoVisualizar);
+			pVisualizarMiPerfil.add(lblContraseñaVisualizar);
+			pVisualizarMiPerfil.add(btnVisualizarContraseña);
+			
 		}
 	});
 	
@@ -691,6 +747,7 @@ public class VentanaDueño extends JFrame{
 		pVisualizarAgenda.setVisible(false);
 		pModificarCita.setVisible(false);
 		pCambiarLaCitaSeleccionada.setVisible(false);
+		pVisualizarMiPerfil.setVisible(false);
 
 		
 		

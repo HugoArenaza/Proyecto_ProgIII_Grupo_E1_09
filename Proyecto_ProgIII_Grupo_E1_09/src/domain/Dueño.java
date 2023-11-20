@@ -9,6 +9,8 @@ public class Dueño {
 	private int numeroTlf;
 	private String correo;
 	private String contraseña;
+	
+	
 	public String getNombreDueño() {
 		return NombreDueño;
 	}
