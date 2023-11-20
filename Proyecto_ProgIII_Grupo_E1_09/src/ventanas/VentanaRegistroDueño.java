@@ -34,7 +34,6 @@ public class VentanaRegistroDueño extends JFrame{
 	private Dueño dueño;
 	private List<Dueño> listaDueños = new ArrayList<>();
 	private Contenedora c;
-	private BD BaseDatos;
 	
 	private static Paciente paciente;
 	
@@ -71,8 +70,6 @@ public class VentanaRegistroDueño extends JFrame{
 		lblConR = new JLabel("CONTRASEÑA: ");
 		lblConR2 = new JLabel("REPITE CONTRASEÑA: ");
 		
-		BaseDatos = new BD("clinicaFurwell.db");
-	
 		txtDniR = new JTextField();
 		txtNomR = new JTextField();
 		txtApeR = new JTextField();
@@ -146,7 +143,7 @@ public class VentanaRegistroDueño extends JFrame{
 			}else if(con.equals(con2)) {
 				Dueño d  = new Dueño(nom, apell, dni, null, fNac, 0, correo, con2);
 				
-				boolean registroInsertado = BaseDatos.insertarDueño(nom, apell, dni, null, fNac, 0, correo, con2);
+				boolean registroInsertado = BD.insertarDueño(nom, apell, dni, null, fNac, 0, correo, con2);
 				/*Tiene que enviar un dueño no esos datos no tocar porfa*/
 				
 				if(registroInsertado) {

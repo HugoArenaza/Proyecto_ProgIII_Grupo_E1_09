@@ -112,6 +112,7 @@ public class VentanaInicioSesion extends JFrame{
 					if(d.getContraseña().equals(con)) {
 						JOptionPane.showMessageDialog(null, "Bienvenido!","SESIÓN INICIADA",JOptionPane.INFORMATION_MESSAGE);
 						dueño = d; 
+						VentanaInicio.setDueño(d);
 						dispose();
 						new VentanaDueño();
 						

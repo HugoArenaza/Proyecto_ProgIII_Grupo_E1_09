@@ -14,19 +14,6 @@ import domain.Clinica;
 
 public class BD {
 	
-	
-	
-	protected Connection con;
-	
-	public BD (String nomBD) {
-		con = initBD(nomBD);
-		if(con != null) {
-			System.out.println("Conexion a la base de datos establecida");
-		}else {
-			System.out.println("Error al conectar a la base de datoss");
-		}
-	}
-	
 	public static Connection initBD(String nomBD) {
 		Connection conn = null;
 		try {
@@ -58,20 +45,35 @@ public class BD {
 	
 	
 	
-	public boolean insertarDueño(String NombreDueño, String apellidos, String dni, Clinica clinica_asociada,
+	public static boolean insertarDueño(String NombreDueño, String apellidos, String dni, Clinica clinica_asociada,
 			 String fNac, int numeroTlf, String correo, String contraseña) {
 		String sql = "INSERT INTO dueños(NombreDueño, apellidos, dni, clinica_asociada, fNac, numeroTlf, correo, contraseña)"
 				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+		String s = "";
+		String clinica = "";
+		if(clinica_asociada!=null)
+			s = String.format("INSERT INTO dueños VALUES('%s','%s','%s','%s','%s','%s','%s','%s')", NombreDueño, apellidos,dni,Integer.toString(clinica_asociada.getId()),fNac,numeroTlf,correo, contraseña );
+		else
+			s = String.format("INSERT INTO dueños VALUES('%s','%s','%s','%s','%s','%s','%s','%s')", NombreDueño, apellidos,dni,clinica,fNac,numeroTlf,correo, contraseña );
+		
 		try {
-			PreparedStatement pstmt = con.prepareStatement(sql);
+			Connection con = initBD("clinicaFurwell.db");
+			/*PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, NombreDueño);
 			pstmt.setString(2, apellidos);
 			pstmt.setString(3, dni);
-			pstmt.setString(4, Integer.toString(clinica_asociada.getId()));
+			if(clinica_asociada!=null)
+				pstmt.setString(4, Integer.toString(clinica_asociada.getId()));
+			else
+				pstmt.setString(4, "");
 			pstmt.setString(5, fNac);
 			pstmt.setString(6, Integer.toString(numeroTlf));
 			pstmt.setString(7, correo);
-			pstmt.setString(8, contraseña);
+			pstmt.setString(8, contraseña);*/
+			Statement st = con.createStatement();
+			st.executeUpdate(s);
+			cerrarBD(con);
+			
 			return true;
 		} catch (SQLException e) {
 			System.out.println("Error al insertar el dueño"+ e.getMessage());
