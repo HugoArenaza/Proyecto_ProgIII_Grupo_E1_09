@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import base_de_datos.BD;
 import ventanas.VentanaDueño;
 import ventanas.VentanaInicio;
+import ventanas.VentanaJefe;
 import ventanas.VentanaTrabajador;
 
 import java.sql.Connection;
@@ -26,6 +27,7 @@ public class ClinicaVeterinaria {
 		
 	
 		Connection con = BD.initBD("clinicaFurwell.db");
+		BD.crearTabla(con);
 		BD.cerrarBD(con);
 		
 		try {
@@ -42,7 +44,7 @@ public class ClinicaVeterinaria {
 		
 		
 		
-		
+		//new VentanaJefe();
 		//new VentanaTrabajador();
 		//new VentanaInicio();
 		new VentanaDueño();

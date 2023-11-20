@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 //import javax.swing.JPasswordField;
 
+import domain.Dueño;
+
 import java.awt.*;
 
 public class VentanaInicio extends JFrame{
@@ -18,6 +20,15 @@ public class VentanaInicio extends JFrame{
 	private JPanel  pSur, pCentro ,pCentroIzq, pCentroDcha;
 	private JFrame vActual;
 	private JLabel foto;
+	private static Dueño dueño;
+	
+	public static Dueño getDueño() {
+		return dueño;
+	}
+	
+	public static void setDueño(Dueño d) {
+		dueño = d;
+	}
 	
 	/*Creamos la primera ventana que se viusualiza*/
 	public VentanaInicio()
