@@ -3,6 +3,7 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.sql.Connection;
 //import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +27,8 @@ public class VentanaRegistroDueño extends JFrame{
 	private Logger logger = java.util.logging.Logger.getLogger("Logger");
 	
 	private JPanel panel, panelSur, panelCentro, pCInformacion, pcIzq;
-	private JLabel lblNomR, lblDniR, lblApeR, lblFNacR ,lblUsuR, lblConR, lblConR2, lblCorreo;
-	private JTextField txtNomR, txtDniR, txtFNacR, txtApeR, txtUsuR, txtCorreo;
+	private JLabel lblNomR, lblDniR, lblApeR, lblFNacR ,lblUsuR, lblConR, lblConR2, lblCorreo, lblTelf;
+	private JTextField txtNomR, txtDniR, txtFNacR, txtApeR, txtUsuR, txtCorreo, txtTelf;
 	private JPasswordField txtConR, txtConR2;
 	private JButton btnRegistrarse, btnSalir;
 	private JFrame vActual;
@@ -69,6 +70,7 @@ public class VentanaRegistroDueño extends JFrame{
 		lblUsuR = new JLabel("USUARIO: ");
 		lblConR = new JLabel("CONTRASEÑA: ");
 		lblConR2 = new JLabel("REPITE CONTRASEÑA: ");
+		lblTelf = new JLabel("NUMERO DE TELEFONO; ");
 		
 		txtDniR = new JTextField();
 		txtNomR = new JTextField();
@@ -78,6 +80,7 @@ public class VentanaRegistroDueño extends JFrame{
 		txtCorreo = new JTextField();
 		txtConR = new JPasswordField();
 		txtConR2 = new JPasswordField();
+		txtTelf = new JTextField();
 		
 		
 		txtNomR.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
@@ -88,7 +91,7 @@ public class VentanaRegistroDueño extends JFrame{
 		txtCorreo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
 		txtConR.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
 		txtConR2.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
-		
+		txtTelf.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
 		
 		
 		pcIzq.add(lblNomR);
@@ -99,6 +102,8 @@ public class VentanaRegistroDueño extends JFrame{
 		pcIzq.add(txtDniR);
 		pcIzq.add(lblFNacR);
 		pcIzq.add(txtFNacR);
+		pcIzq.add(lblTelf);
+		pcIzq.add(txtTelf);
 		pcIzq.add(lblCorreo);
 		pcIzq.add(txtCorreo);
 		pcIzq.add(lblUsuR);
@@ -131,9 +136,10 @@ public class VentanaRegistroDueño extends JFrame{
 			String dni = txtDniR.getText();
 			String fNac = txtFNacR.getText();
 			String correo = txtCorreo.getText();
+			int telefono = Integer.parseInt(txtTelf.getText());
 				
 			
-			Dueño dLista = new Dueño(nom, apell, dni, null, fNac, 0, correo, con);			
+			Dueño dLista = new Dueño(nom, apell, dni, null, fNac, telefono, correo, con);			
 			c = new Contenedora();
 			c.GuardarDueñoRegistrado(dLista);
 			if (nom.isEmpty() || User.isEmpty() || con.isEmpty() || con2.isEmpty() || dni.isEmpty() || correo.isEmpty())  {
@@ -141,9 +147,9 @@ public class VentanaRegistroDueño extends JFrame{
 					logger.warning("Hay algun campo vacio");
 			
 			}else if(con.equals(con2)) {
-				Dueño d  = new Dueño(nom, apell, dni, null, fNac, 0, correo, con2);
+				Dueño d  = new Dueño(nom, apell, dni, null, fNac, telefono, correo, con2);
 				
-				boolean registroInsertado = BD.insertarDueño(nom, apell, dni, null, fNac, 0, correo, con2);
+				boolean registroInsertado = BD.insertarDueño(nom, apell, dni, null, fNac, telefono, correo, con2);
 				/*Tiene que enviar un dueño no esos datos no tocar porfa*/
 				
 				if(registroInsertado) {
@@ -162,13 +168,19 @@ public class VentanaRegistroDueño extends JFrame{
 				txtConR.setText("");
 				logger.warning("Se ha introducido una contraseña que no coincide");
 			}
-				
-			if(Contenedora.buscarCliente(dni)== null) {
+			Connection conn = BD.initBD("clinicaFurwell.db");	
+			if(BD.buscarDueño(conn, dni) == null) {
 				JOptionPane.showMessageDialog(null, "Ya existe un dueño con ese dni","ERROR",JOptionPane.ERROR_MESSAGE);
 				logger.warning("Se ha introducido un dni ya existente");
 			}else {
-				Contenedora.aniadirDueño(dLista);
-			}
+				boolean registroInsertado = BD.insertarDueño(nom, apell, dni, null, fNac, telefono, correo, con2);
+			}/*if (txtTelf.getText().length() == 9 ) {
+				JOptionPane.showMessageDialog(null, "Ese numero de telefono es incorrecto","ERROR",JOptionPane.ERROR_MESSAGE);
+				txtTelf.setText("");
+			}else {
+				boolean registroInsertado = BD.insertarDueño(nom, apell, dni, null, fNac, telefono, correo, con2);
+
+			}*/
 			
 			
 			

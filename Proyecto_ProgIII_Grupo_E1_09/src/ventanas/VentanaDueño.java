@@ -694,8 +694,8 @@ public class VentanaDueño extends JFrame{
 			String fechaNacimiento = dueño.getfNac();
 			int telefono = dueño.getNumeroTlf();
 			String contraseña = dueño.getContraseña();
-			Font f1 = new Font("Agency FB", Font.BOLD, 25);
-			Font f2 = new Font("Agency FB", Font.BOLD, 14);
+			Font f1 = new Font("Agency FB", Font.BOLD, 40);
+			Font f2 = new Font("Tahoma", Font.CENTER_BASELINE, 20);
 			lblNombreApellidosVisualizar = new JLabel(nombre.toUpperCase()+", " +apellido);
 			lblContraseñaVisualizar = new JLabel("********");
 			lblCorreoVisualizar = new JLabel(correo);
