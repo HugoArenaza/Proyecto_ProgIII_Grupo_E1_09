@@ -136,51 +136,59 @@ public class VentanaRegistroDueño extends JFrame{
 			String dni = txtDniR.getText();
 			String fNac = txtFNacR.getText();
 			String correo = txtCorreo.getText();
-			int telefono = Integer.parseInt(txtTelf.getText());
+			int  telefono = 0;
+			if(!txtTelf.getText().isEmpty()) {
+				telefono = Integer.parseInt(txtTelf.getText());
+			}
+			
 				
 			
 			Dueño dLista = new Dueño(nom, apell, dni, null, fNac, telefono, correo, con);			
 			c = new Contenedora();
 			c.GuardarDueñoRegistrado(dLista);
-			if (nom.isEmpty() || User.isEmpty() || con.isEmpty() || con2.isEmpty() || dni.isEmpty() || correo.isEmpty())  {
-					JOptionPane.showMessageDialog(null, "No dejes ningun campo vacio","ERROR",JOptionPane.WARNING_MESSAGE);
-					logger.warning("Hay algun campo vacio");
 			
-			}else if(con.equals(con2)) {
-				Dueño d  = new Dueño(nom, apell, dni, null, fNac, telefono, correo, con2);
-				
-				boolean registroInsertado = BD.insertarDueño(nom, apell, dni, null, fNac, telefono, correo, con2);
-				/*Tiene que enviar un dueño no esos datos no tocar porfa*/
-				
-				if(registroInsertado) {
-					JOptionPane.showMessageDialog(null, "Dueño registrado con exito", "REGISTRADO", JOptionPane.INFORMATION_MESSAGE);
-					logger.info("Se ha registrado un dueño");
-					dispose();
-					new VentanaInicioSesion();
-				}else {
-					JOptionPane.showMessageDialog(null, "Error al registrar el dueño","ERROR",JOptionPane.ERROR_MESSAGE);
-					logger.warning("Error al registrar el dueño");
-				}
-				
-			}else {
-				JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "ERROR", JOptionPane.WARNING_MESSAGE);
-				txtConR.setText("");
-				txtConR.setText("");
-				logger.warning("Se ha introducido una contraseña que no coincide");
-			}
-			Connection conn = BD.initBD("clinicaFurwell.db");	
-			if(BD.buscarDueño(conn, dni) == null) {
-				JOptionPane.showMessageDialog(null, "Ya existe un dueño con ese dni","ERROR",JOptionPane.ERROR_MESSAGE);
-				logger.warning("Se ha introducido un dni ya existente");
-			}else {
-				boolean registroInsertado = BD.insertarDueño(nom, apell, dni, null, fNac, telefono, correo, con2);
-			}/*if (txtTelf.getText().length() == 9 ) {
-				JOptionPane.showMessageDialog(null, "Ese numero de telefono es incorrecto","ERROR",JOptionPane.ERROR_MESSAGE);
-				txtTelf.setText("");
-			}else {
-				boolean registroInsertado = BD.insertarDueño(nom, apell, dni, null, fNac, telefono, correo, con2);
+			if (nom.isEmpty() || User.isEmpty() || con.isEmpty() || con2.isEmpty() || dni.isEmpty() || correo.isEmpty() || txtTelf.getText().isEmpty()) {
+			    JOptionPane.showMessageDialog(null, "No dejes ningún campo vacío", "ERROR", JOptionPane.WARNING_MESSAGE);
+			    logger.warning("Se ha intentado registrar un dueño con un campo vacío");
+			} else if (!con.equals(con2)) {
+			    JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "ERROR", JOptionPane.WARNING_MESSAGE);
+			    txtConR.setText("");
+			    txtConR.setText("");
+			    logger.warning("Se ha introducido una contraseña que no coincide");
+			    
+			} else {
+			    Dueño d = new Dueño(nom, apell, dni, null, fNac, telefono, correo, con2);
+			    Connection conn = BD.initBD("clinicaFurwell.db");
+			    logger.warning("Se ha guardado un dueño en la base de datos");
 
-			}*/
+
+			    if (BD.buscarDueño(conn, dni) != null) {
+			        JOptionPane.showMessageDialog(null, "Ya existe un dueño con ese DNI", "ERROR", JOptionPane.ERROR_MESSAGE);
+			        logger.warning("Se ha introducido un DNI ya existente");
+			    } else {
+			        
+			    	boolean telefonoValido = txtTelf.getText().length() == 9;
+
+			        if (!telefonoValido) {
+			            JOptionPane.showMessageDialog(null, "Ese número de teléfono es incorrecto", "ERROR", JOptionPane.ERROR_MESSAGE);
+			            txtTelf.setText("");
+					    logger.warning("Se ha intentado registrar un dueño un numero incorrecto");
+
+			        } else {
+			            boolean registroInsertado = BD.insertarDueño(nom, apell, dni, null, fNac, telefono, correo, con2);
+
+			            if (registroInsertado) {
+			                JOptionPane.showMessageDialog(null, "Dueño registrado con éxito", "REGISTRADO", JOptionPane.INFORMATION_MESSAGE);
+			                logger.info("Se ha registrado un dueño");
+			                dispose();
+			                new VentanaInicioSesion();
+			            } else {
+			                JOptionPane.showMessageDialog(null, "Error al registrar el dueño", "ERROR", JOptionPane.ERROR_MESSAGE);
+			                logger.warning("Error al registrar el dueño");
+			            }
+			        }
+			    }
+			}
 			
 			
 			
