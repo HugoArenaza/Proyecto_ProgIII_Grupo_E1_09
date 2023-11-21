@@ -132,7 +132,7 @@ public class VentanaTrabajador extends JFrame{
 		calendario = new JMenuItem("Mi agenda");
 		
 		visualizarMedicamentos = new JMenu("Lista de Medicamentos");
-		medicamentos = new JMenuItem();
+		medicamentos = new JMenuItem("Lista de medicamentos");
 		
 		visualizarCuenta = new JMenu("Cuenta");
 		perfil = new JMenuItem("Mi perfil");
@@ -164,15 +164,14 @@ public class VentanaTrabajador extends JFrame{
 		modeloPacientes = new ModeloHistorialPacientes(lPacientes);
 		tablaPacientes = new JTable(modeloPacientes);
 		scrollTablaPacientes = new JScrollPane(tablaPacientes);
-	
 		
 		//JTable Medicamentos
 		modeloMedicamentos = new ModeloMedicamentos();
 		tablaMedicamentos = new JTable(modeloMedicamentos);
 		scrollTablaMedicamentos = new JScrollPane(tablaMedicamentos);
 		
-		
-		
+		pPacientes.setVisible(false);
+		pMedicamentos.setVisible(false);
 		pDisplay.add(pPacientes);
 		pDisplay.add(pCitas);
 		pDisplay.add(pAniadirAnular);
