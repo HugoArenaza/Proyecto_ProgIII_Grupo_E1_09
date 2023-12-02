@@ -27,7 +27,8 @@ public class ClinicaVeterinaria {
 		
 	
 		Connection con = BD.initBD("clinicaFurwell.db");
-		BD.crearTabla(con);
+		BD.crearTablaDueños(con);
+		BD.crearTablaMedicamentos(con);
 		BD.cerrarBD(con);
 		
 		try {
@@ -45,8 +46,8 @@ public class ClinicaVeterinaria {
 		
 		
 		//new VentanaJefe();
-		//new VentanaTrabajador();
-		new VentanaInicio();
-		//new VentanaDueño();
+		new VentanaTrabajador();
+		//new VentanaInicio();
+		new VentanaDueño();
 }
 }

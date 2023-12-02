@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 import domain.Clinica;
 import domain.Dueño;
+import domain.MedicamentosAnimales;
 
 
 public class BD {
@@ -28,7 +29,7 @@ public class BD {
 		return conn;
 	}
 	
-	public static void crearTabla(Connection conn) {
+	public static void crearTablaDueños(Connection conn) {
 		String sql = "CREATE TABLE IF NOT EXISTS dueños (NombreDueño String, apellidos String, dni String"
 			+ ", clinica_asociada Clinica, fNac String, numeroTlf int, correo String, contraseña String)";
 			Statement st;
@@ -42,6 +43,29 @@ public class BD {
 			
 			
 	}
+	public static void crearTablaMedicamentos(Connection conn) {
+		String sql = "CREATE TABLE IF NOT EXISTS medicamentos(Nombre String, ID int)";
+		Statement st;
+		try {
+			st = conn.createStatement();
+			st.executeUpdate(sql);
+			insertarMedicamentos(conn);
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	  private static void insertarMedicamentos(Connection conn) {
+	        String sql = "INSERT INTO medicamentos (nombre) VALUES (?)";
+	        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+	            for (MedicamentosAnimales medicamento : MedicamentosAnimales.values()) {
+	                ps.setString(1, medicamento.name()); 
+	                ps.executeUpdate();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	
 	public static boolean insertarDueño(String NombreDueño, String apellidos, String dni, Clinica clinica_asociada,
 			 String fNac, int numeroTlf, String correo, String contraseña) {
