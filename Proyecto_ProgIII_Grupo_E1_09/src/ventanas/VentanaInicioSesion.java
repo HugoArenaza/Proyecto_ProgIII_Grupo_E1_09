@@ -99,47 +99,62 @@ public class VentanaInicioSesion extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String User = textUsuario.getText();
-				String dni = txtDni.getText();
+				String dni = txtDni.getText().toUpperCase();
 				String con = textContraseña.getText();
 				
 				Connection conn = BD.initBD("clinicaFurwell.db");
 				
 				Dueño dueñoABuscar = BD.buscarDueño(conn, dni);
-				
-				String contraseña = dueñoABuscar.getContraseña();
-				String apellidos = dueñoABuscar.getApellidos();
-				String nombre = dueñoABuscar.getNombreDueño();
-				String correo = dueñoABuscar.getCorreo();
-				String dniRegistrado = dueñoABuscar.getDni();
-				int numeroTlf = dueñoABuscar.getNumeroTlf();
-				String fNac = dueñoABuscar.getfNac();
-				
-				Dueño d = new Dueño(nombre, apellidos, dniRegistrado, null, fNac, numeroTlf, correo, contraseña);
-				
-				if(dni == null) {
-					JOptionPane.showMessageDialog(null, "Para poder iniciar sesión tienes que estar registrado","ERROR",JOptionPane.ERROR_MESSAGE);
-
-					new VentanaRegistroDueño();
-					dispose();
-
-					logger.warning("Se ha introducido un usuario sin registrar");
-
-				}else {
+				if (dueñoABuscar != null) {
+					
+					String contraseña = dueñoABuscar.getContraseña();
+					String apellidos = dueñoABuscar.getApellidos();
+					String nombre = dueñoABuscar.getNombreDueño();
+					String correo = dueñoABuscar.getCorreo();
+					String dniRegistrado = dueñoABuscar.getDni();
+					int numeroTlf = dueñoABuscar.getNumeroTlf();
+					String fNac = dueñoABuscar.getfNac();
+					
+					Dueño d = new Dueño(nombre, apellidos, dniRegistrado, null, fNac, numeroTlf, correo, contraseña);
 					if(contraseña.equals(con)) {
 						JOptionPane.showMessageDialog(null, "Bienvenido!","SESIÓN INICIADA",JOptionPane.INFORMATION_MESSAGE);
 						dueño = d; 
 						VentanaInicio.setDueño(d);
 						dispose();
-						new VentanaDueño();
 						
-						vActual.setVisible(false);
-						textContraseña.setText("");
-						textUsuario.setText("");
-						txtDni.setText("");
-						logger.info("Se ha iniciado sesión con un usuario");
+						
+						new VentanaDueño();
+					
+					logger.info("Se ha iniciado sesión con un usuario");
+					dispose();
+				}else {
+					JOptionPane.showMessageDialog(null, "La contraseña es incorrecta","ERROR",JOptionPane.ERROR_MESSAGE);
+					logger.warning("Se ha introducido un usuario con la contraseña incorrecta");
+					textContraseña.setText("");
+					textUsuario.setText("");
+					txtDni.setText("");
+				}
+					
 					}else {
-						JOptionPane.showMessageDialog(null, "Contraseña incorrecta","ERROR",JOptionPane.WARNING_MESSAGE);
-					}
+						int numero = JOptionPane.showConfirmDialog(null, "Ese dni es incorrecto o no esta registrado ¿Quieres registrarlo?", "Confirmación", JOptionPane.YES_NO_OPTION);
+						if (numero == JOptionPane.YES_OPTION) {
+				            new VentanaRegistroDueño();
+				          
+				        } else {
+				        	textContraseña.setText("");
+							textUsuario.setText("");
+							txtDni.setText("");
+				           
+				        }
+						logger.warning("Se ha introducido un usuario sin registrar");
+						
+					
+					
+						
+							
+						vActual.setVisible(false);
+						
+					
 				
 			}}
 		});

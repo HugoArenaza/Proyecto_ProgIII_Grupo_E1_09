@@ -133,7 +133,7 @@ public class VentanaRegistroDueño extends JFrame{
 			String User = txtUsuR.getText();
 			String con = txtConR.getText();
 			String con2 = txtConR2.getText();
-			String dni = txtDniR.getText();
+			String dni = txtDniR.getText().toUpperCase();
 			String fNac = txtFNacR.getText();
 			String correo = txtCorreo.getText();
 			int  telefono = 0;
