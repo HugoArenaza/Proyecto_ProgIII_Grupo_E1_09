@@ -4,7 +4,7 @@ package base_de_datos;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+
 import java.sql.SQLException;
 
 
@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import domain.Clinica;
 import domain.Dueño;
 import domain.Medicamento;
+
+
 
 
 public class BD {
@@ -29,7 +31,7 @@ public class BD {
 		return conn;
 	}
 	
-	public static void crearTabla(Connection conn) {
+	public static void crearTablas(Connection conn) {
 		String sql = "CREATE TABLE IF NOT EXISTS dueños (NombreDueño String, apellidos String, dni String"
 			+ ", clinica_asociada Clinica, fNac String, numeroTlf int, correo String, contraseña String)";
 		String sql2 = "CREATE TABLE IF NOT EXISTS Medicamento (Nombre String, ID int ,Precio double)";
@@ -45,6 +47,8 @@ public class BD {
 			
 			
 	}
+	
+	 
 	
 	public static boolean insertarDueño(String NombreDueño, String apellidos, String dni, Clinica clinica_asociada,
 			 String fNac, int numeroTlf, String correo, String contraseña) {
@@ -105,6 +109,22 @@ public class BD {
 		}
 		
 	}
+	
+
+	public static void insertarMedicamento(Connection con, Medicamento m) {
+		
+		if(buscarMedicamento(con, m.getNombreMedicamento()) == null) {
+		String sql = String.format("INSERT INTO Medicamento VALUES('%s','%s', '%s')", m.getNombreMedicamento(),m.getId(),m.getPrecioMedicamento());
+			try {					
+				Statement st = con.createStatement();
+				st.executeUpdate(sql);
+				st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				}
+			}
+		}
+		
 	public static Medicamento buscarMedicamento(Connection con, String nombre) {
 		String sql = String.format("SELECT * FROM Medicamento WHERE Nombre = '%s'", nombre);
 		Medicamento m = null;
@@ -125,22 +145,6 @@ public class BD {
 		}
 		return m;
 	}
-
-	public static void insertarMedicamento(Connection con, Medicamento m) {
-		
-		if(buscarMedicamento(con, m.getNombreMedicamento()) == null) {
-		String sql = String.format("INSERT INTO Medicamento VALUES('%s','%s', '%s')", m.getNombreMedicamento(),m.getId(),m.getPrecioMedicamento());
-			try {					
-				Statement st = con.createStatement();
-				st.executeUpdate(sql);
-				st.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				}
-			}
-		}
-		
-		
 		
 	}
 

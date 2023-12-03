@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -18,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import domain.Cita;
+import domain.MedicamentosAnimales;
 import domain.Paciente;
 
 public class VentanaTrabajador extends JFrame{
@@ -81,6 +83,8 @@ public class VentanaTrabajador extends JFrame{
 	protected JTable tablaMedicamentos;
 	protected JScrollPane scrollTablaMedicamentos;
 	
+	protected ArrayList<MedicamentosAnimales> lMedicamentos;
+	
 	
 
 	
@@ -101,6 +105,9 @@ public class VentanaTrabajador extends JFrame{
 		
 		pDisplay = new JPanel();
 		getContentPane().add(pDisplay,BorderLayout.CENTER);
+		
+		
+		
 		
 		pPacientes = new JPanel();
 		pCalendario = new JPanel();
@@ -166,7 +173,7 @@ public class VentanaTrabajador extends JFrame{
 		scrollTablaPacientes = new JScrollPane(tablaPacientes);
 		
 		//JTable Medicamentos
-		modeloMedicamentos = new ModeloMedicamentos();
+		modeloMedicamentos = new ModeloMedicamentos(lMedicamentos);
 		tablaMedicamentos = new JTable(modeloMedicamentos);
 		scrollTablaMedicamentos = new JScrollPane(tablaMedicamentos);
 		

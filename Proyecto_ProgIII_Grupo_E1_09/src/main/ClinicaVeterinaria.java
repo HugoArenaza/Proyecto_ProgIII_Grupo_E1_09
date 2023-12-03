@@ -28,8 +28,10 @@ public class ClinicaVeterinaria {
 		
 	
 		Connection con = BD.initBD("clinicaFurwell.db");
-		BD.crearTabla(con);
+
+		
 		Contenedora.volcarCSVMedicamentos(con, "fichs/medicamentos.csv");
+		BD.crearTablas(con);
 		BD.cerrarBD(con);
 		
 		try {

@@ -14,16 +14,20 @@ public class ModeloMedicamentos extends DefaultTableModel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private List<MedicamentosAnimales> lMedicamentos;
 	private List<String> titulos = Arrays.asList("ID","Nombre");
 	
-	public ModeloMedicamentos() {
-		
+	
+	public ModeloMedicamentos(List<MedicamentosAnimales> lMedicamentos) {
+		this.lMedicamentos = lMedicamentos;
 	}
+	
 	
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
-		return super.getRowCount();
+		if(lMedicamentos == null) {
+			return 0;
+		}return lMedicamentos.size();
 	}
 	
 	@Override
@@ -44,21 +48,12 @@ public class ModeloMedicamentos extends DefaultTableModel{
 
 	@Override
 	public Object getValueAt(int row, int column) {
-		MedicamentosAnimales medicamento = MedicamentosAnimales.values()[row];
-		switch(column) {
-		case 0: 
-			return medicamento.ordinal();
-		case 1:
-			return medicamento.name();
-		default:
-			return null;
+		if(column == 0) {
+			return lMedicamentos.get(row);
 		}
+		return null;
 	}
 	
-	@Override
-	public void setValueAt(Object aValue, int row, int column) {
-		super.setValueAt(aValue, row, column);
-	}
 	
 	
 	

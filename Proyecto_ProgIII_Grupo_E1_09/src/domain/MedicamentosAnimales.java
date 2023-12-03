@@ -1,5 +1,7 @@
 package domain;
 
+
+
 public enum MedicamentosAnimales {
 	 AMOXICILINA,
 	    ENROFLOXACINA,
@@ -50,6 +52,9 @@ public enum MedicamentosAnimales {
 	    PIRANTEL,
 	    DIMINAZENO,
 	    PROPANOLOL,
-	    LORATADINA
+	    LORATADINA;
 //	    generados aleatoriamente con chatGPT
+	    
+	   
+	    
 }
