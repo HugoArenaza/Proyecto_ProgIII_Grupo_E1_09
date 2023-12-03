@@ -10,6 +10,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import base_de_datos.BD;
+import domain.Contenedora;
 import ventanas.VentanaDueño;
 import ventanas.VentanaInicio;
 import ventanas.VentanaJefe;
@@ -28,6 +29,7 @@ public class ClinicaVeterinaria {
 	
 		Connection con = BD.initBD("clinicaFurwell.db");
 		BD.crearTabla(con);
+		Contenedora.volcarCSVMedicamentos(con, "fichs/medicamentos.csv");
 		BD.cerrarBD(con);
 		
 		try {

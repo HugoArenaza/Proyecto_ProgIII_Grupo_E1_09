@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 import domain.Clinica;
 import domain.Dueño;
+import domain.Medicamento;
 
 
 public class BD {
@@ -31,10 +32,12 @@ public class BD {
 	public static void crearTabla(Connection conn) {
 		String sql = "CREATE TABLE IF NOT EXISTS dueños (NombreDueño String, apellidos String, dni String"
 			+ ", clinica_asociada Clinica, fNac String, numeroTlf int, correo String, contraseña String)";
+		String sql2 = "CREATE TABLE IF NOT EXISTS Medicamento (Nombre String, ID int ,Precio double)";
 			Statement st;
 			try {
 				st = conn.createStatement();
 				st.executeUpdate(sql);
+				st.executeUpdate(sql2);
 				st.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -102,4 +105,42 @@ public class BD {
 		}
 		
 	}
-}
+	public static Medicamento buscarMedicamento(Connection con, String nombre) {
+		String sql = String.format("SELECT * FROM Medicamento WHERE Nombre = '%s'", nombre);
+		Medicamento m = null;
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sql); 
+			if(rs.next()) { 
+				String nom = rs.getString("Nombre");
+				String id = rs.getString("ID");
+				String precio = rs.getString("PRECIO");
+				
+				m = new Medicamento(nom, Integer.parseInt(id), Double.parseDouble(precio));
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return m;
+	}
+
+	public static void insertarMedicamento(Connection con, Medicamento m) {
+		
+		if(buscarMedicamento(con, m.getNombreMedicamento()) == null) {
+		String sql = String.format("INSERT INTO Medicamento VALUES('%s','%s', '%s')", m.getNombreMedicamento(),m.getId(),m.getPrecioMedicamento());
+			try {					
+				Statement st = con.createStatement();
+				st.executeUpdate(sql);
+				st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		
+	}
+

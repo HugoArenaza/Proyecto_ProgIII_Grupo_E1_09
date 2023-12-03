@@ -1,9 +1,15 @@
 package domain;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 //import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
+
+import base_de_datos.BD;
 //import java.util.Map;
 
 
@@ -119,7 +125,25 @@ public class Contenedora {
 	}
 
 
-
+	public static void volcarCSVMedicamentos(Connection con, String nomfich) {
+		try {
+			Scanner sc = new Scanner(new FileReader(nomfich));
+			String linea;
+			int id = 1000;
+			while(sc.hasNext()) {
+				linea = sc.nextLine(); 
+				String [] partes = linea.split("; ");
+				String nom = partes[0];
+				String prec = partes[1];
+				id++;
+				Medicamento m = new Medicamento(nom, id, Double.parseDouble(prec));
+				BD.insertarMedicamento(con, m);
+			}
+			sc.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	

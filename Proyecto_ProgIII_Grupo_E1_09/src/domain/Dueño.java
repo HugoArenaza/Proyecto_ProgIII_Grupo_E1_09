@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public class Dueño {
 	private String NombreDueño;
 	private String apellidos;
@@ -61,10 +63,15 @@ public class Dueño {
 		this.contraseña = contraseña;
 	}
 	
-	public Dueño(String NombreDueño, String apellidos, String dni, Clinica clinicaAsociada, String fNac, int numeroTlf,
+	
+	
+	
+	
+	
+	public Dueño(String nombreDueño, String apellidos, String dni, Clinica clinicaAsociada, String fNac, int numeroTlf,
 			String correo, String contraseña) {
 		super();
-		this.NombreDueño = NombreDueño;
+		NombreDueño = nombreDueño;
 		this.apellidos = apellidos;
 		this.dni = dni;
 		this.clinicaAsociada = clinicaAsociada;
@@ -72,8 +79,8 @@ public class Dueño {
 		this.numeroTlf = numeroTlf;
 		this.correo = correo;
 		this.contraseña = contraseña;
+		
 	}
-	
 	public Dueño() {
 		super();
 		this.NombreDueño = "Sin NombreDueño";
@@ -84,14 +91,15 @@ public class Dueño {
 		this.numeroTlf = 000;
 		this.correo = "Sin correo";
 		this.contraseña = "Sin contraseña";
+		
 	}
-	
 	@Override
 	public String toString() {
 		return "Dueño [NombreDueño=" + NombreDueño + ", apellidos=" + apellidos + ", dni=" + dni + ", clinicaAsociada="
-				+ clinicaAsociada + ", direccion=" + fNac + ", numeroTlf=" + numeroTlf + ", correo=" + correo
-				+ ", contraseña=" + contraseña + "]";
+				+ clinicaAsociada + ", fNac=" + fNac + ", numeroTlf=" + numeroTlf + ", correo=" + correo
+				+ ", contraseña=" + contraseña +  "]";
 	}
+	
 	
 	
 
