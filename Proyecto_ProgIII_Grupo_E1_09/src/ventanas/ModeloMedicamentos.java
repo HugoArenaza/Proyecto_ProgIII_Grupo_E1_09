@@ -6,6 +6,7 @@ import java.util.List;
 //import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
+import domain.Medicamento;
 import domain.MedicamentosAnimales;
 
 public class ModeloMedicamentos extends DefaultTableModel{
@@ -14,11 +15,11 @@ public class ModeloMedicamentos extends DefaultTableModel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private List<MedicamentosAnimales> lMedicamentos;
-	private List<String> titulos = Arrays.asList("ID","Nombre");
+	private List<Medicamento> lMedicamentos;
+	private List<String> titulos = Arrays.asList("Nombre Medicamento", "ID","Precio");
 	
 	
-	public ModeloMedicamentos(List<MedicamentosAnimales> lMedicamentos) {
+	public ModeloMedicamentos(List<Medicamento> lMedicamentos) {
 		this.lMedicamentos = lMedicamentos;
 	}
 	
@@ -48,13 +49,24 @@ public class ModeloMedicamentos extends DefaultTableModel{
 
 	@Override
 	public Object getValueAt(int row, int column) {
-		if(column == 0) {
-			return lMedicamentos.get(row);
+		Medicamento m = lMedicamentos.get(row);
+		switch (column) {
+		case 0: return m.getNombreMedicamento();
+		case 1: return m.getId();
+		case 2: return m.getPrecioMedicamento();
+		default: return null;
 		}
-		return null;
+		
+		
+		
 	}
 	
 	
+	
+	public void setValueAt(Object aValue, int row, int column) {
+		
+		super.setValueAt(aValue, row, column);
+	}
 	
 	
 	
