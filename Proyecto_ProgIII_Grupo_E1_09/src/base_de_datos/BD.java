@@ -6,8 +6,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import java.sql.SQLException;
-
-
+import java.util.ArrayList;
+import java.util.List;
 
 import domain.Clinica;
 import domain.Dueño;
@@ -114,7 +114,7 @@ public class BD {
 	public static void insertarMedicamento(Connection con, Medicamento m) {
 		
 		if(buscarMedicamento(con, m.getNombreMedicamento()) == null) {
-		String sql = String.format("INSERT INTO Medicamento VALUES('%s','%s', '%s')", m.getNombreMedicamento(),m.getId(),m.getPrecioMedicamento());
+		String sql = String.format("INSERT INTO medicamento VALUES('%s','%s', '%s')", m.getNombreMedicamento(),m.getId(),m.getPrecioMedicamento());
 			try {					
 				Statement st = con.createStatement();
 				st.executeUpdate(sql);
@@ -124,19 +124,42 @@ public class BD {
 				}
 			}
 		}
+	public static List<Medicamento> volcarTablaMedicamentosALista(Connection conn, List<Medicamento> lMedicamentos){
+		String sql = "select * from Medicamento";
+		
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(sql); 
+			while(rs.next()) {
+				String nombreMedicamento = rs.getString("Nombre");
+				String id = rs.getString("ID");
+				String precioMedicamento = rs.getString("Precio");
+				
+				
+				Medicamento m = new Medicamento(nombreMedicamento, Integer.parseInt(id), Double.parseDouble(precioMedicamento));
+				lMedicamentos.add(m);
+				
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lMedicamentos;
+	}
 		
 	public static Medicamento buscarMedicamento(Connection con, String nombre) {
-		String sql = String.format("SELECT * FROM Medicamento WHERE Nombre = '%s'", nombre);
+		String sql = String.format("SELECT * FROM medicamento WHERE Nombre = '%s'", nombre);
 		Medicamento m = null;
 		try {
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sql); 
 			if(rs.next()) { 
 				String nom = rs.getString("Nombre");
-				String id = rs.getString("ID");
+				String idTabla = rs.getString("ID");
 				String precio = rs.getString("PRECIO");
 				
-				m = new Medicamento(nom, Integer.parseInt(id), Double.parseDouble(precio));
+				m = new Medicamento(nom, Integer.parseInt(idTabla), Double.parseDouble(precio));
 			}
 			rs.close();
 			st.close();
