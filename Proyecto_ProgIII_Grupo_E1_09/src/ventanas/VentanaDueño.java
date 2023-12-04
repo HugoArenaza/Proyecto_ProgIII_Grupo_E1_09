@@ -1,12 +1,17 @@
 package ventanas;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,17 +21,18 @@ import java.util.List;
 
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
-
+import base_de_datos.BD;
 import domain.Cita;
-
-
 import domain.Dueño;
+import domain.Medicamento;
 import domain.Paciente;
 import domain.TipoPaciente;
 
@@ -85,7 +91,10 @@ public class VentanaDueño extends JFrame{
 	private JPanel pCambiarLaCitaSeleccionada;
 	private JPanel pBtnAnularCita;
 	private JPanel pVisualizarMiPerfil;
+	private JPanel pVisualizarMedicamentos;
+	private JPanel pTextAreaMedicamento;
 	
+
 	private JMenuBar menuBar;
 	
 	private JMenu visualizarMascotas;
@@ -125,6 +134,9 @@ public class VentanaDueño extends JFrame{
 	private JTable tablaHistorial;
 	private JScrollPane scrollHistorial;
 	
+	private ModeloMedicamentos modeloMedicamentos;
+	private JTable tablaMedicamentos;
+	private JScrollPane scrollMedicamentos;
 	
 	private JComboBox<Paciente> comboMascotas;
 	private List<Paciente> listaPacientes = new ArrayList<>();
@@ -144,7 +156,7 @@ public class VentanaDueño extends JFrame{
 	private JList<Cita> listaModificarCitas;
 	private JScrollPane scrollListaModificarCitas;
 	
-	
+
 	
 	private JDateChooser dateChooser;
 	
@@ -159,7 +171,7 @@ public class VentanaDueño extends JFrame{
 	pHistorial = new JPanel(new BorderLayout());
 	pMascotas = new JPanel();
 	pFacturas = new JPanel();
-	pTienda = new JPanel();
+	pTienda = new JPanel(new GridLayout(2,2));
 	contenido = new JPanel();
 	pSolCitaIzq = new JPanel(new GridLayout(6,1));
 	pSolCitaDerch = new JPanel(new GridLayout(2,1));
@@ -169,6 +181,9 @@ public class VentanaDueño extends JFrame{
 	pModificarCita = new JPanel(new GridLayout(2,1));
 	pCambiarLaCitaSeleccionada = new JPanel(new GridLayout(8,1));
 	pVisualizarMiPerfil = new JPanel(new GridLayout(9,1));
+	pVisualizarMedicamentos = new JPanel(new GridLayout(7,2));
+	pTextAreaMedicamento = new JPanel();
+	
 	
 	/*CREACION DE BOTONES*/
 	btnSalir = new JButton("Salir");
@@ -257,7 +272,16 @@ public class VentanaDueño extends JFrame{
    scrollHistorial = new JScrollPane(tablaHistorial);
    DefaultTableModel tablaDefault = new DefaultTableModel();
    
+   List<Medicamento> listaMedicamentos = new ArrayList<>();
+   modeloMedicamentos = new ModeloMedicamentos(listaMedicamentos);
+   tablaMedicamentos = new JTable(modeloMedicamentos);
+   scrollMedicamentos = new JScrollPane(tablaMedicamentos);
    
+   
+   Connection conn = BD.initBD("clinicaFurwell.db");
+   BD.volcarTablaMedicamentosALista(conn, listaMedicamentos);
+ 
+   System.out.println(listaMedicamentos);
     
    /*CREACION DEL JCOMBOBOX*/
    comboMascotas = new JComboBox<Paciente>();
@@ -291,12 +315,13 @@ public class VentanaDueño extends JFrame{
 	contenido.add(pMascotas);
 	contenido.add(pHistorial);
 	contenido.add(pFacturas);
-	contenido.add(pTienda);
+	contenido.add(pTienda, BorderLayout.CENTER);
 	contenido.add(pSolCita);
 	contenido.add(pVisualizarAgenda);
 	contenido.add(pModificarCita);
 	contenido.add(pCambiarLaCitaSeleccionada);
 	contenido.add(pVisualizarMiPerfil);
+	contenido.add(pVisualizarMedicamentos);
 	
 	pMascotas.setVisible(false);
 	pHistorial.setVisible(false);
@@ -308,6 +333,7 @@ public class VentanaDueño extends JFrame{
 	pModificarCita.setVisible(false);
 	pCambiarLaCitaSeleccionada.setVisible(false);
 	pVisualizarMiPerfil.setVisible(false);
+	pVisualizarMedicamentos.setVisible(false);
 	
 	
 	/*AÑADIMOS A PANELES*/
@@ -360,6 +386,8 @@ public class VentanaDueño extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			ocultarPaneles();
 			pHistorial.setVisible(true);
+			Dimension panelSize = new Dimension(anchoPantalla-450, altoPantalla-450); 
+			pHistorial.setPreferredSize(panelSize);
 
 			   comboHistorial.addActionListener(new ActionListener() {
 				
@@ -367,6 +395,7 @@ public class VentanaDueño extends JFrame{
 				public void actionPerformed(ActionEvent e) {
 					if(comboHistorial.getSelectedItem().toString().equals("Historial de compras")) {
 						tablaHistorial.setModel(tablaDefault);
+						tablaHistorial.updateUI();
 						tablaDefault.setRowCount(0);
 						//tablaDefault
 						Object [] titulos = {"NOMBRE DEL MEDICAMENTO","PRECIO" ,"FECHA DE COMPRA", "MASCOTA ASOCIADA"};
@@ -375,9 +404,10 @@ public class VentanaDueño extends JFrame{
 						
 						
 					}else if(comboHistorial.getSelectedItem().toString().equals("Historial de mis mascotas")) {
+						
 						modeloHistorialPacientes = new ModeloHistorialPacientes(listaPacientes);
 						tablaHistorial.setModel(modeloHistorialPacientes);
-						tablaHistorial.updateUI();
+						hist.updateUI();
 						
 					}
 					
@@ -405,6 +435,8 @@ public class VentanaDueño extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			ocultarPaneles();
 			pTienda.setVisible(true);
+			pVisualizarMedicamentos.setVisible(true);
+			
 			
 		}
 	});
@@ -419,9 +451,20 @@ public class VentanaDueño extends JFrame{
 			Boolean b = true;
 			while(b==true) {
 				try {
-					
-						String microchip = JOptionPane.showInputDialog("Escriba sus microchip (numero): ");
-						microchipInt = Integer.parseInt(microchip);
+					SpinnerNumberModel snm = new SpinnerNumberModel(1000, 1000, 10000, 1);
+					JSpinner spinner = new JSpinner(snm);
+			        
+			        spinner.setFont(new Font("Arial", Font.PLAIN, 12));
+			        
+			       int opcionSeleccionada = JOptionPane.showOptionDialog(null, spinner, "Selecciona un valor", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+			       int valorSeleccionado = 0;
+			       if (opcionSeleccionada == JOptionPane.OK_OPTION) {
+			            valorSeleccionado = (int) spinner.getValue();
+			            
+			        } else {
+			        	JOptionPane.showMessageDialog(null, "Operación cancelada por el usuario");
+			        }
+			        microchipInt = valorSeleccionado;
 						b = false;
 					
 		        } catch (NumberFormatException e1) {
@@ -437,16 +480,22 @@ public class VentanaDueño extends JFrame{
 			TipoPaciente tipoMascota = null;
 			Boolean b1 = true;
 			while(b1==true) {
-				try {
+				
 					
-					String mascota = JOptionPane.showInputDialog("Escriba el tipo de mascota: ").toUpperCase();
-					tipoMascota = TipoPaciente.valueOf(mascota); 
+					JComboBox<TipoPaciente> comboPacientes = new JComboBox<>(TipoPaciente.values());
+					
+					int mascotaPos = JOptionPane.showOptionDialog(null, comboPacientes, "Seleccione el Tipo de Mascota", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+					if (mascotaPos == JOptionPane.OK_OPTION) {
+			            tipoMascota =  (TipoPaciente) comboPacientes.getSelectedItem();
+			            
+			        } else {
+			        	JOptionPane.showMessageDialog(null, "Operación cancelada por el usuario");
+			        }
+					
+					
 					b1 = false;
 					
-		        } catch (Exception e2) {
-		            JOptionPane.showMessageDialog(null, "Error: Ingrese un tipo de mascota valido.");
-		           b1 = true;
-		        }
+		       
 				
 			}
 			
@@ -730,6 +779,83 @@ public class VentanaDueño extends JFrame{
 		}
 	});
 	
+	
+	Dimension panelSize = new Dimension(anchoPantalla-400, altoPantalla-250); 
+	
+	pTienda.setPreferredSize(panelSize);
+	
+	
+	
+	
+	
+	pTienda.add(scrollMedicamentos);
+	pTienda.add(pVisualizarMedicamentos);
+	//pTienda.add(pVisualizarCarrito);
+	
+	JButton btnAniadirCarrito = new JButton("Añadir al carrito");
+	JLabel labelVacio1 = new JLabel("");
+	JLabel labelVacio2 = new JLabel("");
+	JLabel labelVacio3 = new JLabel("");
+	JLabel labelVacio4 = new JLabel("");
+	JLabel labelVacio5 = new JLabel("");
+	
+	JLabel labelTituloNombre = new JLabel("Nombre del medicamento: ");
+	JLabel labelTituloId = new JLabel("ID del medicamento: ");
+	JLabel labelTituloPrecio = new JLabel("Precio del medicamento: ");
+	JLabel labelNombre = new JLabel("");
+	JLabel labelId = new JLabel("");
+	JLabel labelPrecio = new JLabel("");
+	JTextArea textoArea = new JTextArea();
+	Font f1 = new Font("Impact", Font.BOLD, 25);
+	Font f2 = new Font("Courier New", Font.CENTER_BASELINE, 18);
+	labelTituloNombre.setFont(f1);
+	labelTituloId.setFont(f1);
+	labelTituloPrecio.setFont(f1);
+	labelNombre.setFont(f2);
+	labelId.setFont(f2);
+	labelPrecio.setFont(f2);
+	pVisualizarMedicamentos.add(labelTituloNombre);
+	pTextAreaMedicamento.add(textoArea);
+	pVisualizarMedicamentos.add(labelVacio3);
+	pVisualizarMedicamentos.add(labelNombre);
+	pVisualizarMedicamentos.add(labelVacio2);
+	pVisualizarMedicamentos.add(labelTituloId);
+	pVisualizarMedicamentos.add(pTextAreaMedicamento);
+	pVisualizarMedicamentos.add(labelId);
+	pVisualizarMedicamentos.add(labelVacio4);
+	pVisualizarMedicamentos.add(labelTituloPrecio);
+	pVisualizarMedicamentos.add(labelVacio5);
+	pVisualizarMedicamentos.add(labelPrecio);
+	pVisualizarMedicamentos.add(labelVacio1);
+	pVisualizarMedicamentos.add(btnAniadirCarrito);
+	
+	
+	tablaMedicamentos.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			Point p = e.getPoint();
+			int fila = tablaMedicamentos.rowAtPoint(p);
+			String nombre = (String) tablaMedicamentos.getModel().getValueAt(fila, 0);
+			Connection con = BD.initBD("clinicaFurwell.db");
+			Medicamento m = BD.buscarMedicamento(con, nombre);
+			BD.cerrarBD(con);
+			if (m != null) {
+				labelNombre.setText(m.getNombreMedicamento());
+				labelId.setText(""+m.getId());
+				labelPrecio.setText(""+m.getPrecioMedicamento()+ "€");
+			}
+				btnAniadirCarrito.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						textoArea.setText("Se ha añadido al carrito correctamente (" +m.getNombreMedicamento()+ ") \nPara consultar tu carrito y finalizar la compra ve a 'Cuenta' y 'Mi cesta'");	
+					}
+				});
+			
+		}
+	});
+	
+	
 	setSize(anchoPantalla, altoPantalla);
 	setExtendedState(MAXIMIZED_BOTH);
 	setResizable(false);
@@ -748,11 +874,22 @@ public class VentanaDueño extends JFrame{
 		pModificarCita.setVisible(false);
 		pCambiarLaCitaSeleccionada.setVisible(false);
 		pVisualizarMiPerfil.setVisible(false);
+		pVisualizarMedicamentos.setVisible(false);
 
 		
 		
 		
 		
 	}
+	public static void aniadirBordeAlJPanel(String titulo, JPanel panel) {
+		LineBorder borde = new LineBorder(Color.BLACK, 7);
+		TitledBorder bordeDelTitulo = new TitledBorder(borde, titulo);
+		
+		bordeDelTitulo.setTitleJustification(TitledBorder.CENTER);
+		bordeDelTitulo.setTitleFont(new Font("verdana", Font.BOLD, 20));
+		
+		panel.setBorder(bordeDelTitulo);
+	}
 
 }
+

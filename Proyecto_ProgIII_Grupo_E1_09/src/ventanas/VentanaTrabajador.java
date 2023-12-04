@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import domain.Cita;
+import domain.Medicamento;
 import domain.MedicamentosAnimales;
 import domain.Paciente;
 
@@ -83,7 +84,7 @@ public class VentanaTrabajador extends JFrame{
 	protected JTable tablaMedicamentos;
 	protected JScrollPane scrollTablaMedicamentos;
 	
-	protected ArrayList<MedicamentosAnimales> lMedicamentos;
+	protected ArrayList<Medicamento> lMedicamentos;
 	
 	
 
