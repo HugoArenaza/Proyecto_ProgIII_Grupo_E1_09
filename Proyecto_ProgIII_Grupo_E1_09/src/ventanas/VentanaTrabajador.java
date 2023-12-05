@@ -128,7 +128,7 @@ public class VentanaTrabajador extends JFrame{
 		BarraMenu.setPreferredSize(new Dimension(ancho-400 ,44 ));
 		BarraMenu.setFont(new Font("Baskerville", Font.PLAIN, 4));
 		
-		visualizarPacientes = new JMenu("Pacientes");
+		visualizarPacientes = new JMenu("Dueños de mascotas");
 		pacientes = new JMenuItem("Mis pacientes");
 		
 		visualizarCitas = new JMenu("Citas");
@@ -286,7 +286,6 @@ public class VentanaTrabajador extends JFrame{
 		
 		setSize(ancho, alto);
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Trabajador");
 	
 	}

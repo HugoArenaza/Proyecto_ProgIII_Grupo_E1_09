@@ -503,6 +503,9 @@ public class VentanaDueño extends JFrame{
 			Dueño d = new Dueño();//mas tarde coger dueño registrado
 			Paciente p = new Paciente(id, NombrePaciente, microchipInt, enfermedad, id_veterinario, tipoMascota, d);
 			listaPacientes.add(p);
+			Connection con = BD.initBD("clinicaFurwell.db");
+			BD.insertarPaciente(conn, d.getNombreDueño(), p);
+			BD.cerrarBD(conn);			
 			comboMascotas.addItem(p);
 			
 		}
