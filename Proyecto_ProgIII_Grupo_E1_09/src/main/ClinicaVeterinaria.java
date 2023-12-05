@@ -49,8 +49,8 @@ public class ClinicaVeterinaria {
 		
 		
 		//new VentanaJefe();
-		//new VentanaTrabajador();
-		//new VentanaInicio();
+		new VentanaTrabajador();
+		new VentanaInicio();
 		new VentanaDueño();
 }
 }
