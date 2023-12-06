@@ -12,6 +12,8 @@ import java.util.List;
 import domain.Clinica;
 import domain.Dueño;
 import domain.Medicamento;
+import domain.Paciente;
+import domain.TipoPaciente;
 
 
 
@@ -31,15 +33,52 @@ public class BD {
 		return conn;
 	}
 	
+	public static List<Paciente> obtenerListaPacientes(Connection con, String duenio){
+		String sql = "SELECT * FROM Paciente WHERE Dueño = '" + duenio + "'";
+		List<Paciente> l = new ArrayList<>();
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()) {
+				int id = rs.getInt("ID");
+				
+				String tipo = rs.getString("Tipo Animal");
+				Paciente p = new Paciente(id, "", 0, "", 0,TipoPaciente.valueOf(tipo), null);
+				l.add(p);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return l;
+	}
+	
+	public static void insertarPaciente(Connection con, String duenio, Paciente p) {
+		String sql = String.format("INSERT INTO Paciente VALUES(%d,'%s',%d,'%s','%s','%s')", p.getId(),p.getNombrePaciente(),p.getMicroChip(),p.getEnfermedad(),p.getTipoPaciente().toString(),duenio);
+		try {
+			Statement st = con.createStatement();
+			st.executeUpdate(sql);
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public static void crearTablas(Connection conn) {
 		String sql = "CREATE TABLE IF NOT EXISTS dueños (NombreDueño String, apellidos String, dni String"
 			+ ", clinica_asociada Clinica, fNac String, numeroTlf int, correo String, contraseña String)";
 		String sql2 = "CREATE TABLE IF NOT EXISTS Medicamento (Nombre String, ID int ,Precio double)";
+		
+		String sql3 = "CREATE TABLE IF NOT EXISTS Paciente(ID int, Nombre String, MicroChip int, "
+				+ "Enfermedad String, TipoAnimal String, Dueño String )";
+		//String sql4 = "DROP TABLE Paciente";
 			Statement st;
 			try {
 				st = conn.createStatement();
 				st.executeUpdate(sql);
 				st.executeUpdate(sql2);
+				//st.executeUpdate(sql4);
+				st.executeUpdate(sql3);
 				st.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
