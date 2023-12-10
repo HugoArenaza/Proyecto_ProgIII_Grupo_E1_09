@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import domain.Medicamento;
 import domain.MedicamentosAnimales;
 
-public class ModeloMedicamentos extends DefaultTableModel{
+public class ModeloMedicamentosVentanaTrabajador extends DefaultTableModel{
 
 	/**
 	 * 
@@ -19,7 +19,7 @@ public class ModeloMedicamentos extends DefaultTableModel{
 	private List<String> titulos = Arrays.asList("Nombre Medicamento", "ID","Precio");
 	
 	
-	public ModeloMedicamentos(List<Medicamento> lMedicamentos) {
+	public ModeloMedicamentosVentanaTrabajador(List<Medicamento> lMedicamentos) {
 		this.lMedicamentos = lMedicamentos;
 	}
 	

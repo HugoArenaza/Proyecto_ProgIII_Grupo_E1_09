@@ -88,7 +88,7 @@ public class VentanaTrabajador extends JFrame{
 	protected List<Paciente> lPacientes;
 	
 	//Tabla medicamentos
-	protected ModeloMedicamentos modeloMedicamentos;
+	protected ModeloMedicamentosVentanaTrabajador modeloMedicamentos;
 	protected JTable tablaMedicamentos;
 	protected JScrollPane scrollTablaMedicamentos;
 	
@@ -180,7 +180,7 @@ public class VentanaTrabajador extends JFrame{
 		scrollTablaPacientes = new JScrollPane(tablaPacientes);
 		
 		//JTable Medicamentos
-		modeloMedicamentos = new ModeloMedicamentos(lM);
+		modeloMedicamentos = new ModeloMedicamentosVentanaTrabajador(lM);
 		tablaMedicamentos = new JTable(modeloMedicamentos);
 		scrollTablaMedicamentos = new JScrollPane(tablaMedicamentos);
 		

@@ -141,7 +141,7 @@ public class VentanaDueño extends JFrame{
 	private JTable tablaHistorial;
 	private JScrollPane scrollHistorial;
 	
-	private ModeloMedicamentos modeloMedicamentos;
+	private ModeloMedicamentosVentanaDueño modeloMedicamentos;
 	private JTable tablaMedicamentos;
 	private JScrollPane scrollMedicamentos;
 	
@@ -286,7 +286,7 @@ public class VentanaDueño extends JFrame{
    DefaultTableModel tablaDefault = new DefaultTableModel();
    
    List<Medicamento> listaMedicamentos = new ArrayList<>();
-   modeloMedicamentos = new ModeloMedicamentos(listaMedicamentos);
+   modeloMedicamentos = new ModeloMedicamentosVentanaDueño(listaMedicamentos);
    tablaMedicamentos = new JTable(modeloMedicamentos);
    scrollMedicamentos = new JScrollPane(tablaMedicamentos);
    
