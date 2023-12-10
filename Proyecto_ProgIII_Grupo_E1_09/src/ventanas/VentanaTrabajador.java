@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -18,10 +19,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
+import base_de_datos.BD;
 import domain.Cita;
 import domain.Medicamento;
 import domain.MedicamentosAnimales;
 import domain.Paciente;
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
 
 public class VentanaTrabajador extends JFrame{
 	/**
@@ -50,7 +55,10 @@ public class VentanaTrabajador extends JFrame{
 	protected JMenuItem aniadir;
 	
 	//Elementos de Calendario
-	protected JMenuItem calendario;
+	protected JMenuItem agenda;
+	protected JMenuItem Itemcalendario;
+	protected JCalendar calendario;
+	
 	
 	//Elementos de Medicamentos
 	protected JMenuItem medicamentos;
@@ -84,15 +92,6 @@ public class VentanaTrabajador extends JFrame{
 	protected JTable tablaMedicamentos;
 	protected JScrollPane scrollTablaMedicamentos;
 	
-	protected ArrayList<Medicamento> lMedicamentos;
-	
-	
-
-	
-	
-	
-	
-
 	
 	
 	
@@ -117,6 +116,12 @@ public class VentanaTrabajador extends JFrame{
 		pCuenta = new JPanel();
 		pMedicamentos = new JPanel();
 		
+		calendario = new JCalendar();
+				
+		Connection con = BD.initBD("clinicaFurwell.db");
+		List<Medicamento> lM = new ArrayList<>();
+		BD.volcarTablaMedicamentosALista(con,lM);
+		
 		btnSalir = new JButton("Salir");
 		pAbajo.add(btnSalir);
 		
@@ -137,10 +142,11 @@ public class VentanaTrabajador extends JFrame{
 		anular = new JMenuItem("Anular cita");
 		
 		visualizarCalendario = new JMenu("Agenda");
-		calendario = new JMenuItem("Mi agenda");
+		Itemcalendario = new JMenuItem("Calendario");
 		
 		visualizarMedicamentos = new JMenu("Lista de Medicamentos");
 		medicamentos = new JMenuItem("Lista de medicamentos");
+		
 		
 		visualizarCuenta = new JMenu("Cuenta");
 		perfil = new JMenuItem("Mi perfil");
@@ -161,7 +167,7 @@ public class VentanaTrabajador extends JFrame{
 		
 		visualizarPacientes.add(pacientes);
 		
-		visualizarCalendario.add(calendario);
+		visualizarCalendario.add(Itemcalendario);
 		 
 		visualizarMedicamentos.add(medicamentos);
 		
@@ -174,12 +180,13 @@ public class VentanaTrabajador extends JFrame{
 		scrollTablaPacientes = new JScrollPane(tablaPacientes);
 		
 		//JTable Medicamentos
-		modeloMedicamentos = new ModeloMedicamentos(lMedicamentos);
+		modeloMedicamentos = new ModeloMedicamentos(lM);
 		tablaMedicamentos = new JTable(modeloMedicamentos);
 		scrollTablaMedicamentos = new JScrollPane(tablaMedicamentos);
 		
 		pPacientes.setVisible(false);
 		pMedicamentos.setVisible(false);
+		pCalendario.setVisible(false);
 		pDisplay.add(pPacientes);
 		pDisplay.add(pCitas);
 		pDisplay.add(pAniadirAnular);
@@ -192,6 +199,7 @@ public class VentanaTrabajador extends JFrame{
 		pArriba.add(BarraMenu, BorderLayout.NORTH);
 		pPacientes.add(scrollTablaPacientes,BorderLayout.NORTH);
 		pMedicamentos.add(scrollTablaMedicamentos,BorderLayout.SOUTH);
+		pCalendario.add(calendario, BorderLayout.NORTH);
 		
 		
 		
@@ -228,7 +236,7 @@ public class VentanaTrabajador extends JFrame{
 				pAniadirAnular.setVisible(true);
 				}
 		});
-		calendario.addActionListener(new ActionListener() {
+		Itemcalendario.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -256,29 +264,7 @@ public class VentanaTrabajador extends JFrame{
 		
 		
 		
-		
-		
-		/*btnVerPacientes = new JButton("Visualizar los pacientes");
-		
-	
-		btnAniadirCita = new JButton("Añadir cita");
-		
-		
-		
-		btnAniadirCita.addActionListener((e)->{
-			Contenedora.aniadirCita(citaActual);
-			logger.info("Se ha agregado una nueva cita");
-			
-		});
-		
-		btnAnularCita.addActionListener((e)->{
-			Contenedora.eliminarCita(citaActual);
-			logger.info("Se ha eliminado una cita");
-		});
-		btnVerPacientes.addActionListener((e)->{
-			Contenedora.imprimirListaPacientes();
-			logger.info("Se ha impreso la lista de pacientes");
-		});*/
+		 
 		btnSalir.addActionListener((e)->{
 			dispose();
 		});
