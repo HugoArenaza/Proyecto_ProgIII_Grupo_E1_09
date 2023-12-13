@@ -155,7 +155,11 @@ public class ClinicaTest {
 	        clinicaBase.admitirPaciente();
 	        assertEquals(51, clinicaBase.getCantidadPacientes());
 	    }
-	
+	    
+	    @Test
+	    public void testGetNumMaximoPacientes() {
+	        assertEquals(100, Clinica.getNumMaximoPacientes());
+	    }
 	    @Test
 	    public void testAdmitirPacienteConMaximoAlcanzado() {
 	        for (int i = 0; i < Clinica.num_maximo_pacientes; i++) {
