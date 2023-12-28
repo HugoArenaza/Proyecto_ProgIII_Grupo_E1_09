@@ -3,9 +3,11 @@ package main;
 import java.io.FileInputStream;
 
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOError;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Properties;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -23,13 +25,10 @@ import java.sql.Connection;
 public class ClinicaVeterinaria {
 	public static void main(String[] args) {
 		Logger logger = java.util.logging.Logger.getLogger("Logger");
-		
-		
-		
-	
+		Properties prop = new Properties();
+
 		Connection con = BD.initBD("clinicaFurwell.db");
 
-		
 		Contenedora.volcarCSVMedicamentos(con, "fichs/medicamentos.csv");
 		BD.crearTablas(con);
 		BD.cerrarBD(con);
@@ -45,12 +44,24 @@ public class ClinicaVeterinaria {
 			e.printStackTrace();
 		}
 		
+		try {
+			prop.load(new FileReader("config.properties"));
+			String nombreBD = prop.getProperty("nombreBD");
+			String nombreAplicacion = prop.getProperty("nombreAplicacion");
+			String fechaCreacion = prop.getProperty("fechaCreacion");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		
 		
 		
-		//new VentanaJefe();
+		
+		new VentanaJefe();
 		new VentanaTrabajador();
-		//new VentanaInicio();
+		new VentanaInicio();
 		new VentanaDueño();
 }
 }
