@@ -21,7 +21,7 @@ podemos ver y editar los trabajadores de "rango bajo".
 Para poder ejecutar este programa no es necesario ningun tipo especial de ordenador ni caracteristicas especiales. Para configurar el proyecto en tu ordenador tienes ejecutar el archivo JAR 
 que se proporciona. 
 
-Si se presenta algún tipo de problema no dudes en los emails de los autores del proyecto:
+Si se presenta algún tipo de problema no dudes contactar en los emails de los autores del proyecto:
 - Pablo Romero -> p.romero@opendeusto.es
 - Hugo Arenaza -> hugo.arenaza@opendeusto.es
 - Enrique Corres -> enrique.corres@opendeusto.es
