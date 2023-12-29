@@ -45,7 +45,7 @@ public class ClinicaVeterinaria {
 		}
 		
 		try {
-			prop.load(new FileReader("config.properties"));
+			prop.load(new FileReader("config/config.properties"));
 			String nombreBD = prop.getProperty("nombreBD");
 			String nombreAplicacion = prop.getProperty("nombreAplicacion");
 			String fechaCreacion = prop.getProperty("fechaCreacion");
