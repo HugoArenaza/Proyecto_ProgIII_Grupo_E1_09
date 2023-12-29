@@ -77,6 +77,7 @@ public class VentanaDueño extends JFrame{
 	private JPanel pHistorial;
 	private JPanel pArriba;
 	private JPanel contenido;
+	private JPanel pFotoPrincipal;
 	private JPanel pFacturas;
 	private JPanel pTienda;
 	private JPanel pSolCitaIzq;
@@ -197,6 +198,7 @@ public class VentanaDueño extends JFrame{
 	pMascotasArribaIzquierda = new JPanel(new GridLayout(2,1));
 	pFotoMascotasAbajo = new JPanel();
 	pComboMascotasConBtnAniadirPaciente = new JPanel();
+	pFotoPrincipal = new JPanel();
 	
 	/*CREACION DE BOTONES*/
 	btnSalir = new JButton("Salir");
@@ -335,6 +337,7 @@ public class VentanaDueño extends JFrame{
 	contenido.add(pCambiarLaCitaSeleccionada);
 	contenido.add(pVisualizarMiPerfil);
 	contenido.add(pVisualizarMedicamentos);
+	contenido.add(pFotoPrincipal);
 	
 	pMascotas.setVisible(false);
 	pHistorial.setVisible(false);
@@ -517,7 +520,7 @@ public class VentanaDueño extends JFrame{
 			Dueño d = new Dueño();//mas tarde coger dueño registrado
 			Paciente p = new Paciente(id, NombrePaciente, microchipInt, enfermedad, id_veterinario, tipoMascota, d);
 			listaPacientes.add(p);
-			Connection con = BD.initBD("clinicaFurwell.db");
+			Connection conn = BD.initBD("clinicaFurwell.db");
 			BD.insertarPaciente(conn, d.getNombreDueño(), p);
 			BD.cerrarBD(conn);			
 			comboMascotas.addItem(p);
@@ -894,18 +897,22 @@ public class VentanaDueño extends JFrame{
 		}
 	});
 	
-	
+	Dimension panelSize2 = new Dimension(anchoPantalla-400, altoPantalla-350);
 	JLabel lblMascotas = new JLabel("MIS MASCOTAS: ");
 	JLabel lblInfo = new JLabel("Aqui podras consultar todas tus mascotas.");
-	ImageIcon fotoAnimales = new ImageIcon("src/imagenes/animales.jpg");
+	ImageIcon fotoAnimales = new ImageIcon("src/imagenes/dedicate.png");
 	JLabel fotoMascotas = new JLabel(fotoAnimales);
 	
+	ImageIcon fotoPrincipal = new ImageIcon("src/imagenes/safe.png");
+	JLabel fotoPrincipal2 = new JLabel(fotoPrincipal);
+	pFotoPrincipal.setPreferredSize(panelSize2);
+	pFotoPrincipal.add(fotoPrincipal2);
 	
 	pFotoMascotasAbajo.add(fotoMascotas);
 	lblMascotas.setFont(f1);
 	lblInfo.setFont(f2);
-	
-	pMascotas.setPreferredSize(panelSize);
+
+	pMascotas.setPreferredSize(panelSize2);
 	pMascotas.add(pMascotasArribaIzquierda, BorderLayout.NORTH);
 	pMascotasArribaIzquierda.add(lblMascotas);
 	pMascotasArribaIzquierda.add(lblInfo);
@@ -933,6 +940,7 @@ public class VentanaDueño extends JFrame{
 		pCambiarLaCitaSeleccionada.setVisible(false);
 		pVisualizarMiPerfil.setVisible(false);
 		pVisualizarMedicamentos.setVisible(false);
+		pFotoPrincipal.setVisible(false);
 
 		
 		
