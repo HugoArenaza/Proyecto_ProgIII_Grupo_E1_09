@@ -45,11 +45,11 @@ public class ClinicaVeterinaria {
 		}
 		
 		try {
-			prop.load(new FileReader("config.properties"));
+			prop.load(new FileReader("config/config.properties"));
 			String nombreBD = prop.getProperty("nombreBD");
 			String nombreAplicacion = prop.getProperty("nombreAplicacion");
 			String fechaCreacion = prop.getProperty("fechaCreacion");
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) { 
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -60,8 +60,14 @@ public class ClinicaVeterinaria {
 		
 		
 		//new VentanaJefe();
+
 		//new VentanaTrabajador();
 		//new VentanaInicio();
 		new VentanaDueño();
+
+		new VentanaTrabajador();
+		//new VentanaInicio();
+		//new VentanaDueño();
+
 }
 }

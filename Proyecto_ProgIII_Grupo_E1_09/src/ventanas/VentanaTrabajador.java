@@ -7,12 +7,16 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -28,6 +32,13 @@ import domain.Paciente;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class VentanaTrabajador extends JFrame{
 	/**
 	 * 
@@ -38,6 +49,8 @@ public class VentanaTrabajador extends JFrame{
 	protected Cita citaActual;
 	
 	protected JMenuBar BarraMenu;
+	
+	private JLabel lblReloj;	
 	
 	//Slots de la Barra de Menu
 	protected JMenu visualizarPacientes;
@@ -196,6 +209,31 @@ public class VentanaTrabajador extends JFrame{
 		
 		
 		
+		//Hilo
+		lblReloj = new JLabel();
+		pArriba.add(lblReloj);
+		
+		
+		Thread hiloReloj = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while(true) {
+					actualizarReloj();
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				
+			}
+		});
+		hiloReloj.start();
+		
+		
+		
+		
 		pArriba.add(BarraMenu, BorderLayout.NORTH);
 		pPacientes.add(scrollTablaPacientes,BorderLayout.NORTH);
 		pMedicamentos.add(scrollTablaMedicamentos,BorderLayout.SOUTH);
@@ -282,5 +320,18 @@ public class VentanaTrabajador extends JFrame{
 		pCalendario.setVisible(false);
 		pMedicamentos.setVisible(false);
 		pCuenta.setVisible(false);
+	}
+	
+	private void actualizarReloj() {
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		String horaActual = sdf.format(new Date());
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				lblReloj.setText(horaActual);
+				
+			}
+		});
 	}
 }
