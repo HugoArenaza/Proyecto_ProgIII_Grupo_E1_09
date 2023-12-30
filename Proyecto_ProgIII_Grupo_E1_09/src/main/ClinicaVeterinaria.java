@@ -49,7 +49,7 @@ public class ClinicaVeterinaria {
 			String nombreBD = prop.getProperty("nombreBD");
 			String nombreAplicacion = prop.getProperty("nombreAplicacion");
 			String fechaCreacion = prop.getProperty("fechaCreacion");
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) { 
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -60,8 +60,8 @@ public class ClinicaVeterinaria {
 		
 		
 		//new VentanaJefe();
-		//new VentanaTrabajador();
-		new VentanaInicio();
+		new VentanaTrabajador();
+		//new VentanaInicio();
 		//new VentanaDueño();
 }
 }
