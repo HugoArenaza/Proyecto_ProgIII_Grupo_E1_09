@@ -23,7 +23,6 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import com.toedter.calendar.JCalendar;
@@ -31,6 +30,7 @@ import com.toedter.calendar.JDateChooser;
 
 import base_de_datos.BD;
 import domain.Cita;
+import domain.Compra;
 import domain.Dueño;
 import domain.Medicamento;
 import domain.Paciente;
@@ -136,6 +136,7 @@ public class VentanaDueño extends JFrame{
 	private JScrollPane scrollArbol;
 	
 	private ModeloHistorialPacientes modeloHistorialPacientes;
+	private ModeloHistorialCompras modeloHistorialCompras;
 	
 	private JCalendar calendario;
 
@@ -147,7 +148,9 @@ public class VentanaDueño extends JFrame{
 	private JScrollPane scrollMedicamentos;
 	
 	private JComboBox<Paciente> comboMascotas;
+	private JComboBox<Paciente> comboMascotasCopia;
 	private List<Paciente> listaPacientes = new ArrayList<>();
+	private List<Compra> listaCompras = new ArrayList<>();
 	
 	private JComboBox<String> comboHistorial;
 	
@@ -283,9 +286,10 @@ public class VentanaDueño extends JFrame{
 
 	/*CREACION DE JTABLE*/
    modeloHistorialPacientes = new ModeloHistorialPacientes(listaPacientes);
+   modeloHistorialCompras = new ModeloHistorialCompras(null);
    tablaHistorial = new JTable(modeloHistorialPacientes);
    scrollHistorial = new JScrollPane(tablaHistorial);
-   DefaultTableModel tablaDefault = new DefaultTableModel();
+  
    
    List<Medicamento> listaMedicamentos = new ArrayList<>();
    modeloMedicamentos = new ModeloMedicamentosVentanaDueño(listaMedicamentos);
@@ -300,7 +304,12 @@ public class VentanaDueño extends JFrame{
     
    /*CREACION DEL JCOMBOBOX*/
    comboMascotas = new JComboBox<Paciente>();
+   comboMascotasCopia = new JComboBox<Paciente>();
+   rellenarInfo1();
+   comboMascotas.updateUI();
+   comboMascotasCopia.updateUI();
    listaPacientes = new ArrayList<>();
+   
    
    comboHistorial = new JComboBox<String>();
    comboHistorial.addItem("Historial de mis mascotas");
@@ -397,43 +406,7 @@ public class VentanaDueño extends JFrame{
 	});
 	
 	
-	hist.addActionListener(new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			ocultarPaneles();
-			pHistorial.setVisible(true);
-			
-			pHistorial.setPreferredSize(panelSize);
-
-			   comboHistorial.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if(comboHistorial.getSelectedItem().toString().equals("Historial de compras")) {
-						tablaHistorial.setModel(tablaDefault);
-						tablaHistorial.updateUI();
-						tablaDefault.setRowCount(0);
-						//tablaDefault
-						Object [] titulos = {"NOMBRE DEL MEDICAMENTO","PRECIO" ,"FECHA DE COMPRA", "MASCOTA ASOCIADA"};
-						
-						tablaDefault.setColumnIdentifiers(titulos);
-						
-						
-					}else if(comboHistorial.getSelectedItem().toString().equals("Historial de mis mascotas")) {
-						
-						modeloHistorialPacientes = new ModeloHistorialPacientes(listaPacientes);
-						tablaHistorial.setModel(modeloHistorialPacientes);
-						hist.updateUI();
-						
-					}
-					
-					
-				}
-			});
-			
-		}
-	});
+	
 	
 	fact.addActionListener(new ActionListener() {
 		
@@ -522,8 +495,11 @@ public class VentanaDueño extends JFrame{
 			listaPacientes.add(p);
 			Connection conn = BD.initBD("clinicaFurwell.db");
 			BD.insertarPaciente(conn, d.getNombreDueño(), p);
-			BD.cerrarBD(conn);			
+			BD.cerrarBD(conn);
+			
 			comboMascotas.addItem(p);
+			comboMascotasCopia.addItem(p);
+			
 			
 		}
 	});
@@ -863,7 +839,8 @@ public class VentanaDueño extends JFrame{
 	pVisualizarMedicamentos.add(labelVacio1);
 	pBtnAniadirAlCarrito.add(btnAniadirCarrito, BorderLayout.WEST);
 	pVisualizarMedicamentos.add(pBtnAniadirAlCarrito);
-	
+	rellenarInfo2();
+	listaCompras = new ArrayList<>();
 	
 	tablaMedicamentos.addMouseListener(new MouseAdapter() {
 		@Override
@@ -884,6 +861,25 @@ public class VentanaDueño extends JFrame{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						String textoActual = textoArea.getText();
+						String nombreMedicamento = (String) tablaMedicamentos.getModel().getValueAt(fila, 0);
+						int idMedicamento = (int) tablaMedicamentos.getModel().getValueAt(fila, 1);
+						Double precioMedicamento = (Double) tablaMedicamentos.getModel().getValueAt(fila, 2);
+						Date fechaDeCompraMedicamento = new Date();
+						
+						int pacienteElegido = JOptionPane.showOptionDialog(null, comboMascotasCopia, "Seleccione para que mascota sera el medicamento", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+						Paciente pacienteAsociado = new Paciente();
+						if (pacienteElegido == JOptionPane.OK_OPTION) {
+							pacienteAsociado = comboMascotasCopia.getItemAt(pacienteElegido);
+				            
+				        } else {
+				        	JOptionPane.showMessageDialog(null, "Operación cancelada por el usuario");
+				        }
+						
+						
+						Compra c = new Compra(nombreMedicamento, precioMedicamento, idMedicamento, fechaDeCompraMedicamento, pacienteAsociado); 
+						listaCompras.add(c);
+						modeloHistorialCompras = new ModeloHistorialCompras(listaCompras);
+					
 						
 						textoArea.setText(textoActual + "Se ha añadido al carrito correctamente (" +m.getNombreMedicamento()+ ") \nPara consultar tu carrito y finalizar la compra ve a 'Cuenta' y 'Mi cesta'\n ");	
 						
@@ -893,6 +889,41 @@ public class VentanaDueño extends JFrame{
 						
 					}
 				});
+				
+			
+		}
+	});
+	
+	
+	hist.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ocultarPaneles();
+			pHistorial.setVisible(true);
+			
+			pHistorial.setPreferredSize(panelSize);
+
+			   comboHistorial.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					if(comboHistorial.getSelectedItem().toString().equals("Historial de compras")) {
+						tablaHistorial.setModel(modeloHistorialCompras);
+						tablaHistorial.updateUI();
+						
+						
+					}else if(comboHistorial.getSelectedItem().toString().equals("Historial de mis mascotas")) {
+						tablaHistorial.setModel(modeloHistorialPacientes);
+						tablaHistorial.updateUI();
+						hist.updateUI();
+						
+					}
+					
+					
+				}
+			});
 			
 		}
 	});
@@ -955,6 +986,75 @@ public class VentanaDueño extends JFrame{
 		bordeDelTitulo.setTitleFont(new Font("verdana", Font.BOLD, 20));
 		
 		panel.setBorder(bordeDelTitulo);
+	}
+	
+	public void rellenarInfo1() {
+		/*CREACION DE DUEÑOS*/
+		Dueño d = new Dueño("Pablo", "Romero Baroja", "78324454H", null, "12-06-2004", 656456456, "p.romero@opendeusto.es", "pablo");
+		
+		/*CREACION DE PACIENTES*/
+		Paciente p1 = new Paciente(999, "Rocky", 1050, "Parvovirosis (Parvovirus Canino)", 1, TipoPaciente.PERRO, d);
+		Paciente p2 = new Paciente(998, "Bella", 1051, "Moquillo Canino (Distemper)", 2, TipoPaciente.PERRO, d);
+		Paciente p3 = new Paciente(997, "Max", 1052, "Dermatitis alérgica", 3, TipoPaciente.PERRO, d);
+		Paciente p4 = new Paciente(996, "Luna", 1050, "Parásitos internos y externos (ácaros, pulgas)", 4, TipoPaciente.CERDO, d);
+		Paciente p5 = new Paciente(995, "Simba", 1051, "Tumores", 5, TipoPaciente.LEÓN, d);
+		Paciente p6 = new Paciente(994, "Gizmo", 1052, "Enfermedades dentales (maloclusión, abscesos)", 6, TipoPaciente.BURRO, d);
+		
+		comboMascotas.addItem(p1);
+		comboMascotas.addItem(p2);
+		comboMascotas.addItem(p3);
+		comboMascotas.addItem(p4);
+		comboMascotas.addItem(p5);
+		comboMascotas.addItem(p6);
+		
+		comboMascotasCopia.addItem(p1);
+		comboMascotasCopia.addItem(p2);
+		comboMascotasCopia.addItem(p3);
+		comboMascotasCopia.addItem(p4);
+		comboMascotasCopia.addItem(p5);
+		comboMascotasCopia.addItem(p6);
+		
+		
+		listaPacientes.add(p1);
+		listaPacientes.add(p2);
+		listaPacientes.add(p3);
+		listaPacientes.add(p4);
+		listaPacientes.add(p5);
+		listaPacientes.add(p6);
+		
+		
+	}
+	public void rellenarInfo2() {
+		/*CREACION DE DUEÑOS*/
+		Dueño d = new Dueño("Pablo", "Romero Baroja", "78324454H", null, "12-06-2004", 656456456, "p.romero@opendeusto.es", "pablo");
+		
+		/*CREACION DE PACIENTES*/
+		Paciente p1 = new Paciente(999, "Rocky", 1050, "Parvovirosis (Parvovirus Canino)", 1, TipoPaciente.PERRO, d);
+		Paciente p2 = new Paciente(998, "Bella", 1051, "Moquillo Canino (Distemper)", 2, TipoPaciente.PERRO, d);
+		Paciente p3 = new Paciente(997, "Max", 1052, "Dermatitis alérgica", 3, TipoPaciente.PERRO, d);
+		Paciente p4 = new Paciente(996, "Luna", 1050, "Parásitos internos y externos (ácaros, pulgas)", 4, TipoPaciente.CERDO, d);
+		Paciente p5 = new Paciente(995, "Simba", 1051, "Tumores", 5, TipoPaciente.LEÓN, d);
+		Paciente p6 = new Paciente(994, "Gizmo", 1052, "Enfermedades dentales (maloclusión, abscesos)", 6, TipoPaciente.BURRO, d);
+		
+		/*CREACION DE COMPRAS*/
+		Compra c1 = new Compra("CLINDAMICINA", 10.5, 1051, new Date(), p1);
+		Compra c2 = new Compra("PREDNISOLONA", 65.75, 1052, new Date(), p5);
+		Compra c3 = new Compra("FAMCICLOVIR", 43.3, 1053, new Date(), p2);
+		Compra c4 = new Compra("TRAMADOL", 65.45, 1054, new Date(), p4);
+		Compra c5 = new Compra("METHIMAZOLE", 43.45, 1055, new Date(), p3);
+		Compra c6 = new Compra("MILBEMICINA OXIMA", 23.5, 1056, new Date(), p6);
+		
+		
+		
+		
+		listaCompras.add(c1);
+		listaCompras.add(c2);
+		listaCompras.add(c3);
+		listaCompras.add(c4);
+		listaCompras.add(c5);
+		listaCompras.add(c6);
+		
+		
 	}
 
 }

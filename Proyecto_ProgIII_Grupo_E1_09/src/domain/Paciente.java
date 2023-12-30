@@ -10,6 +10,7 @@ public class Paciente {
 	private int Id_veterinario;
 	private TipoPaciente tipoPaciente;
 	private Dueño dueño;
+	
 	public Paciente(int id, String nombrePaciente, int microChip, String enfermedad, int Id_veterinario,
 			TipoPaciente tipoPaciente, Dueño dueño) {
 		super();
@@ -20,6 +21,11 @@ public class Paciente {
 		this.Id_veterinario = Id_veterinario;
 		this.tipoPaciente = tipoPaciente;
 		this.dueño = dueño;
+	}
+	
+	public Paciente() {
+		super();
+		
 	}
 	public int getId() {
 		return id;
