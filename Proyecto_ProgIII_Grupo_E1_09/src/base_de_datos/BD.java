@@ -2,14 +2,13 @@ package base_de_datos;
 
 //import java.lang.System.Logger;
 import java.sql.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-
-import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import domain.Clinica;
+import domain.Compra;
 import domain.Dueño;
 import domain.Medicamento;
 import domain.Paciente;
@@ -71,13 +70,15 @@ public class BD {
 		
 		String sql3 = "CREATE TABLE IF NOT EXISTS Paciente(ID int, Nombre String, MicroChip int, "
 				+ "Enfermedad String, TipoAnimal String, Dueño String )";
-		//String sql4 = "DROP TABLE Paciente";
+		String sql4 = "CREATE TABLE IF NOT EXISTS Compra(NombreMedicamento String, ID int, Precio Double, "
+				+ "FechaDeCompra Date, paciente Paciente)";
+		
 			Statement st;
 			try {
 				st = conn.createStatement();
 				st.executeUpdate(sql);
 				st.executeUpdate(sql2);
-				//st.executeUpdate(sql4);
+				st.executeUpdate(sql4);
 				st.executeUpdate(sql3);
 				st.close();
 			} catch (SQLException e) {
@@ -207,6 +208,59 @@ public class BD {
 		}
 		return m;
 	}
-		
+	
+		public static void insertarCompra(Connection con, Compra c) {
+			
+			
+			String sql = String.format("INSERT INTO Compra VALUES('%s','%d', '%s', '%s', '%s')", c.getNombreMedicamento(), c.getId(), c.getPrecio().toString(), c.getFechaDeCompra().toString(), c.getPaciente().toString());
+				try {					
+					Statement st = con.createStatement();
+					st.executeUpdate(sql);
+					st.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					}
+				}
+	
+		public static List<Compra> cogerCompra(Connection con) {
+		String sql = "SELECT * FROM Compra";
+		Compra c = new Compra();
+		List<Compra> lc = new ArrayList<>();
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sql); 
+			if(rs.next()) { 
+				String nom = rs.getString("NombreMedicamento");
+				String idTabla = rs.getString("ID");
+				String precio = rs.getString("Precio");
+				String fechaDeCompra = rs.getString("FechaDeCompra");
+				SimpleDateFormat sdf = new SimpleDateFormat();
+				Date d;
+				try{
+					d = (Date) sdf.parse(fechaDeCompra);
+				}catch(ParseException e){
+					d = new Date(0);
+				}
+				String paciente = rs.getString("paciente");
+				String[] partes = paciente.split(" ");
+				String nombre = partes[1];
+				TipoPaciente tipoPaciente = TipoPaciente.valueOf(partes[0]);
+				
+				Paciente p = new Paciente(0, nombre, 0, "", 0, tipoPaciente, null);
+				c = new Compra(nom, Double.parseDouble(precio), Integer.parseInt(idTabla), d, p);
+				lc.add(c);
+				System.out.println(lc);
+				
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lc;
+	
 	}
-
+			
+			
+		}
+	

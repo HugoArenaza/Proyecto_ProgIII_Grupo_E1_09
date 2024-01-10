@@ -13,7 +13,7 @@ public class ModeloHistorialCompras extends DefaultTableModel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private List<String> titulos = Arrays.asList("NOMBRE DEL MEDICAMENTO", "PRECIO", "FECHA DE COMPRA", "MASCOTA ASOCIADA");
+	private List<String> titulos = Arrays.asList("NOMBRE DEL MEDICAMENTO","ID" ,"PRECIO", "FECHA DE COMPRA", "MASCOTA ASOCIADA");
 	private List<Compra> lCompras;
 	
 	
@@ -52,9 +52,10 @@ public class ModeloHistorialCompras extends DefaultTableModel{
 		Compra c = lCompras.get(row); 
 		switch (column) {
 			case 0: return c.getNombreMedicamento();
-			case 1: return c.getPrecio();
-			case 2: return c.getFechaDeCompra();
-			case 3: return c.getPaciente();
+			case 1: return c.getId();
+			case 2: return c.getPrecio();
+			case 3: return c.getFechaDeCompra();
+			case 4: return c.getPaciente();
 	
 		default: return null;
 		}

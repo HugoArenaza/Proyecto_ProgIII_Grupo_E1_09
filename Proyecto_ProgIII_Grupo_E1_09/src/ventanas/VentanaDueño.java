@@ -48,6 +48,7 @@ public class VentanaDueño extends JFrame{
 	private JButton btnGuardarCitaModificada;
 	private JButton btnanularCita;
 	private JButton btnVisualizarContraseña;
+	private JButton btnTramitarPedido;
 	
 	private JLabel lblFecha;
 	
@@ -102,7 +103,8 @@ public class VentanaDueño extends JFrame{
 	private JPanel pMascotasArribaIzquierda;
 	private JPanel pFotoMascotasAbajo;
 	private JPanel pComboMascotasConBtnAniadirPaciente;
-
+	private JPanel pMiCesta;
+	private JPanel pMisPedidos;
 	private JMenuBar menuBar;
 	
 	private JMenu visualizarMascotas;
@@ -147,6 +149,11 @@ public class VentanaDueño extends JFrame{
 	private JTable tablaMedicamentos;
 	private JScrollPane scrollMedicamentos;
 	
+	
+	private JTable tablaCompras;
+	private JScrollPane scrollCompras;
+	
+	
 	private JComboBox<Paciente> comboMascotas;
 	private JComboBox<Paciente> comboMascotasCopia;
 	private List<Paciente> listaPacientes = new ArrayList<>();
@@ -167,7 +174,7 @@ public class VentanaDueño extends JFrame{
 	private JList<Cita> listaModificarCitas;
 	private JScrollPane scrollListaModificarCitas;
 	
-
+	
 	
 	private JDateChooser dateChooser;
 	
@@ -202,6 +209,8 @@ public class VentanaDueño extends JFrame{
 	pFotoMascotasAbajo = new JPanel();
 	pComboMascotasConBtnAniadirPaciente = new JPanel();
 	pFotoPrincipal = new JPanel();
+	pMiCesta = new JPanel(new BorderLayout());
+	pMisPedidos = new JPanel();
 	
 	/*CREACION DE BOTONES*/
 	btnSalir = new JButton("Salir");
@@ -286,7 +295,7 @@ public class VentanaDueño extends JFrame{
 
 	/*CREACION DE JTABLE*/
    modeloHistorialPacientes = new ModeloHistorialPacientes(listaPacientes);
-   modeloHistorialCompras = new ModeloHistorialCompras(null);
+   modeloHistorialCompras = new ModeloHistorialCompras(listaCompras);
    tablaHistorial = new JTable(modeloHistorialPacientes);
    scrollHistorial = new JScrollPane(tablaHistorial);
   
@@ -347,6 +356,9 @@ public class VentanaDueño extends JFrame{
 	contenido.add(pVisualizarMiPerfil);
 	contenido.add(pVisualizarMedicamentos);
 	contenido.add(pFotoPrincipal);
+	contenido.add(pMiCesta);
+	contenido.add(pMisPedidos);
+	
 	
 	pMascotas.setVisible(false);
 	pHistorial.setVisible(false);
@@ -359,6 +371,8 @@ public class VentanaDueño extends JFrame{
 	pCambiarLaCitaSeleccionada.setVisible(false);
 	pVisualizarMiPerfil.setVisible(false);
 	pVisualizarMedicamentos.setVisible(false);
+	pMiCesta.setVisible(false);
+	pMisPedidos.setVisible(false);
 	
 	Dimension panelSize = new Dimension(anchoPantalla-400, altoPantalla-450);
 	pModificarCita.setPreferredSize(panelSize);
@@ -865,18 +879,20 @@ public class VentanaDueño extends JFrame{
 						int idMedicamento = (int) tablaMedicamentos.getModel().getValueAt(fila, 1);
 						Double precioMedicamento = (Double) tablaMedicamentos.getModel().getValueAt(fila, 2);
 						Date fechaDeCompraMedicamento = new Date();
+						Paciente paciente = new Paciente();
 						
-						int pacienteElegido = JOptionPane.showOptionDialog(null, comboMascotasCopia, "Seleccione para que mascota sera el medicamento", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
-						Paciente pacienteAsociado = new Paciente();
-						if (pacienteElegido == JOptionPane.OK_OPTION) {
-							pacienteAsociado = comboMascotasCopia.getItemAt(pacienteElegido);
+						int pos = JOptionPane.showOptionDialog(null, comboMascotasCopia, "Seleccione el Tipo de Mascota", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+						if (pos == JOptionPane.OK_OPTION) {
+				            paciente = (Paciente) comboMascotasCopia.getSelectedItem();
 				            
 				        } else {
 				        	JOptionPane.showMessageDialog(null, "Operación cancelada por el usuario");
 				        }
 						
-						
-						Compra c = new Compra(nombreMedicamento, precioMedicamento, idMedicamento, fechaDeCompraMedicamento, pacienteAsociado); 
+						Connection con = BD.initBD("clinicaFurwell.db");
+						Compra c = new Compra(nombreMedicamento, precioMedicamento, idMedicamento, fechaDeCompraMedicamento, paciente);
+						BD.insertarCompra(conn, c);
+						BD.cerrarBD(con);
 						listaCompras.add(c);
 						modeloHistorialCompras = new ModeloHistorialCompras(listaCompras);
 					
@@ -928,7 +944,58 @@ public class VentanaDueño extends JFrame{
 		}
 	});
 	
+	
+	pedido.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ocultarPaneles();
+			pMisPedidos.setVisible(true);
+			
+			
+		}
+	});
 	Dimension panelSize2 = new Dimension(anchoPantalla-400, altoPantalla-350);
+	pMiCesta.setPreferredSize(panelSize);
+	
+	tablaCompras = new JTable();
+	List<Compra> lc = new ArrayList<>(BD.cogerCompra(conn));
+	
+	
+	tablaCompras.setModel(modeloHistorialCompras = new ModeloHistorialCompras(lc));
+	scrollCompras = new JScrollPane(tablaCompras);
+	
+	
+	btnTramitarPedido = new JButton("Tramitar Pedido");
+	btnTramitarPedido.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			
+			
+		}
+	});
+	
+	pMiCesta.add(scrollCompras, BorderLayout.CENTER);
+	pMiCesta.add(btnTramitarPedido, BorderLayout.SOUTH);
+	
+	cesta.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ocultarPaneles();
+			pMiCesta.setVisible(true);
+			
+			
+			
+			
+		}
+	});
+	
+	
+	
+	
 	JLabel lblMascotas = new JLabel("MIS MASCOTAS: ");
 	JLabel lblInfo = new JLabel("Aqui podras consultar todas tus mascotas.");
 	ImageIcon fotoAnimales = new ImageIcon("src/imagenes/dedicate.png");
@@ -972,6 +1039,8 @@ public class VentanaDueño extends JFrame{
 		pVisualizarMiPerfil.setVisible(false);
 		pVisualizarMedicamentos.setVisible(false);
 		pFotoPrincipal.setVisible(false);
+		pMiCesta.setVisible(false);
+		pMisPedidos.setVisible(false);
 
 		
 		
