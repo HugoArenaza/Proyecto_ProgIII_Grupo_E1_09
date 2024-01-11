@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import java.util.logging.Logger;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -49,6 +49,7 @@ public class VentanaDueño extends JFrame{
 	private JButton btnanularCita;
 	private JButton btnVisualizarContraseña;
 	private JButton btnTramitarPedido;
+	private JButton btnFinalizarPedido;
 	
 	private JLabel lblFecha;
 	
@@ -66,6 +67,7 @@ public class VentanaDueño extends JFrame{
 	private JLabel lblTelefonoVisualizar;
 	private JLabel lblFechaNacVisualizar;
 	private JLabel lblContraseñaVisualizar;
+	private JLabel lblTextoMovimineto;
 	
 	
 	private JTextField txtFechaCita;
@@ -112,7 +114,6 @@ public class VentanaDueño extends JFrame{
 	private JMenu visualizarHistorial;
 	private JMenu visualizarAgenda;
 	private JMenu visualizarMiPerfil;
-	private JMenu visualizarClinica;
 	private JMenu visualizarTienda;
 
 	private JMenuItem perfil;
@@ -127,11 +128,8 @@ public class VentanaDueño extends JFrame{
 	private JMenuItem compMedicamentos;
 	
 	private JMenuItem solicitarCita;
-	private JMenuItem verCalendario;
 	private JMenuItem modificarCita;
 	
-	private JMenuItem solicitarTranslado;
-	private JMenuItem verMiClinica;
 	
 	private DefaultTreeModel modeloArbol;
 	private JTree arbol;
@@ -149,9 +147,11 @@ public class VentanaDueño extends JFrame{
 	private JTable tablaMedicamentos;
 	private JScrollPane scrollMedicamentos;
 	
-	
 	private JTable tablaCompras;
 	private JScrollPane scrollCompras;
+	
+	private JTable tablaCompras2;
+	private JScrollPane scrollCompras2;
 	
 	
 	private JComboBox<Paciente> comboMascotas;
@@ -177,6 +177,8 @@ public class VentanaDueño extends JFrame{
 	
 	
 	private JDateChooser dateChooser;
+	
+	private Logger logger = java.util.logging.Logger.getLogger("Logger");
 	
 	private static int numcita = 000;
 	
@@ -210,7 +212,7 @@ public class VentanaDueño extends JFrame{
 	pComboMascotasConBtnAniadirPaciente = new JPanel();
 	pFotoPrincipal = new JPanel();
 	pMiCesta = new JPanel(new BorderLayout());
-	pMisPedidos = new JPanel();
+	pMisPedidos = new JPanel(new BorderLayout());
 	
 	/*CREACION DE BOTONES*/
 	btnSalir = new JButton("Salir");
@@ -221,6 +223,10 @@ public class VentanaDueño extends JFrame{
 	modeloArbol = new DefaultTreeModel(nraiz);
 	arbol = new JTree(modeloArbol);
 	scrollArbol = new JScrollPane(arbol);
+	
+	//for (Compras c : ) {
+		
+	//}
 	
 
 	/*CREACION DE JMENUBAR*/
@@ -242,7 +248,6 @@ public class VentanaDueño extends JFrame{
     
     visualizarAgenda = new JMenu("Agenda");
     modificarCita = new JMenuItem("Modificar Cita");
-    verCalendario = new JMenuItem("Visualizar Calendario");
     solicitarCita = new JMenuItem("Solicitar Cita");
     
     visualizarMiPerfil = new JMenu("Cuenta");
@@ -251,9 +256,7 @@ public class VentanaDueño extends JFrame{
     cesta = new JMenuItem("Mi Cesta");
     cerrarSesion = new JMenuItem("Cerrar sesion");
     
-    visualizarClinica = new JMenu("Clinica");
-    solicitarTranslado = new JMenuItem("Solicitar Translado");
-    verMiClinica = new JMenuItem("Mi clinica");
+   
     
     visualizarTienda = new JMenu("Medicamentos");
     compMedicamentos = new JMenuItem("Comprar Medicamentos");
@@ -261,7 +264,6 @@ public class VentanaDueño extends JFrame{
     
     menuBar.add(visualizarMascotas);
     menuBar.add(visualizarFacturas);
-    menuBar.add(visualizarClinica);
     menuBar.add(visualizarTienda);
     menuBar.add(visualizarHistorial);
     menuBar.add(visualizarAgenda);
@@ -271,8 +273,7 @@ public class VentanaDueño extends JFrame{
   
     visualizarAgenda.add(solicitarCita);
     visualizarAgenda.add(modificarCita);
-    visualizarAgenda.addSeparator();
-    visualizarAgenda.add(verCalendario);
+   
     
     visualizarMiPerfil.add(perfil);
     visualizarMiPerfil.add(cesta);
@@ -288,8 +289,8 @@ public class VentanaDueño extends JFrame{
     
     visualizarTienda.add(compMedicamentos);
     
-    visualizarClinica.add(solicitarTranslado);
-    visualizarClinica.add(verMiClinica);
+  
+
     
     
 
@@ -340,7 +341,47 @@ public class VentanaDueño extends JFrame{
 	
 	scrollListaCitas.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);  
 	scrollListaCitas.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+	Dueño dueño = VentanaInicio.getDueño();
+	String nombre = dueño.getNombreDueño();
+	String textoBienvenida = "¡Bienvenido "+ nombre.toUpperCase() +" !"+"  Esta es la pagina principal de nuestra clinica Furwell";
 	
+	/*HILO DE LABEL*/
+	lblTextoMovimineto = new JLabel(textoBienvenida);
+	pFotoPrincipal.add(lblTextoMovimineto);
+	Runnable r = new Runnable() {
+		
+		@Override
+		public void run() {
+			
+			while(true) {
+				int x = lblTextoMovimineto.getBounds().x;
+				for(int i=0;i<3;i++) {
+					x = x + 50;
+					lblTextoMovimineto.setBounds(x, lblTextoMovimineto.getY(), lblTextoMovimineto.getWidth(), lblTextoMovimineto.getHeight());
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				x = lblTextoMovimineto.getX();
+				for(int i=0;i<3;i++) {
+					x = x - 50;
+					lblTextoMovimineto.setBounds(x, lblTextoMovimineto.getY(), lblTextoMovimineto.getWidth(), lblTextoMovimineto.getHeight());
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	};
+	Thread t = new Thread(r);
+	t.start();
+	
+	setVisible(true);
+
 	/*AÑADIMOS TODOS LOS COMPONENTES A EL PANEL JEFE*/   
 	getContentPane().add(pAbajo, BorderLayout.SOUTH);
 	getContentPane().add(pArriba, BorderLayout.NORTH);
@@ -397,6 +438,7 @@ public class VentanaDueño extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			dispose();
+			logger.info("Se ha cerrado la ventana");
 			
 		}
 	});
@@ -406,6 +448,7 @@ public class VentanaDueño extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			dispose();
 			new VentanaInicio();
+			logger.info("El usuario ha cerrado sesion");
 			
 		}
 	});
@@ -415,6 +458,7 @@ public class VentanaDueño extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			ocultarPaneles();
 			pMascotas.setVisible(true);
+			logger.info("El usuario a visualizado sus mascotas");
 			
 		}
 	});
@@ -428,6 +472,7 @@ public class VentanaDueño extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			ocultarPaneles();
 			pFacturas.setVisible(true);
+			logger.info("El usuario ha accedido a sus facturas");
 	
 			
 			
@@ -440,6 +485,7 @@ public class VentanaDueño extends JFrame{
 			ocultarPaneles();
 			pTienda.setVisible(true);
 			pVisualizarMedicamentos.setVisible(true);
+			logger.info("El usuario ha accedido a la compra de medicamentos");
 			
 			
 		}
@@ -467,12 +513,14 @@ public class VentanaDueño extends JFrame{
 			            
 			        } else {
 			        	JOptionPane.showMessageDialog(null, "Operación cancelada por el usuario");
+			        	logger.info("Se ha cancelado la implementacion de un nuevo paciente");
 			        }
 			        microchipInt = valorSeleccionado;
 						b = false;
 					
 		        } catch (NumberFormatException e1) {
 		            JOptionPane.showMessageDialog(null, "Error: Ingrese un número entero válido.");
+		            logger.warning("El usuario ha introducido un numero incorrecto");
 		           b = true;
 		        }
 				
@@ -507,8 +555,10 @@ public class VentanaDueño extends JFrame{
 			Dueño d = new Dueño();//mas tarde coger dueño registrado
 			Paciente p = new Paciente(id, NombrePaciente, microchipInt, enfermedad, id_veterinario, tipoMascota, d);
 			listaPacientes.add(p);
+			logger.info("Se ha añadido el paciente correctamente");
 			Connection conn = BD.initBD("clinicaFurwell.db");
 			BD.insertarPaciente(conn, d.getNombreDueño(), p);
+			logger.info("Se ha añadido el paciente a la base de datos");
 			BD.cerrarBD(conn);
 			
 			comboMascotas.addItem(p);
@@ -624,8 +674,10 @@ public class VentanaDueño extends JFrame{
 				modeloListaCitas.addElement(c);
 				listaCitasAlmacenamiento.add(c);
 				modeloListaModificarCitas.addElement(c);
+				logger.info("Se ha solicitado la cita correctamete");
 			}else {
 				JOptionPane.showMessageDialog(null, "Primero debes seleccionar una fecha");
+				logger.warning("Fallo en la solicitud de la cita por falta de fecha");
 			}
 		}
 	});
@@ -645,8 +697,11 @@ public class VentanaDueño extends JFrame{
 			int pos = listaModificarCitas.getSelectedIndex();
 			if(pos == -1) {
 				JOptionPane.showMessageDialog(null, "Primero debes seleccionar una cita!");
+				logger.warning("El paciente no ha seleccionado la cita por modificar");
 			}else {
+				
 				Cita c = modeloListaModificarCitas.getElementAt(pos);
+				logger.info("Se ha seleccionado la cita "+ c+ " paar modificar");
 				ocultarPaneles();
 				lblFechaCita = new JLabel("Cambie la fecha: ");
 				DateFormat sdfDia = new SimpleDateFormat("dd-MM-YYYY");
@@ -681,7 +736,7 @@ public class VentanaDueño extends JFrame{
 						String horaCambiada = txtHoraCita.getText();
 						int numeroDeSiempre = c.getNum_cita();
 						Cita citaCambiada = new Cita(diaCambiadoDate, lugarCambiado, horaCambiada, numeroDeSiempre);
-						
+						logger.info("La cita se ha modificado correctamente a  "+citaCambiada);
 						modeloListaModificarCitas.removeElementAt(pos);
 						modeloListaModificarCitas.addElement(citaCambiada);
 						modeloListaCitas.removeElement(c);
@@ -710,10 +765,13 @@ public class VentanaDueño extends JFrame{
 			int pos = listaCitas.getSelectedIndex();
 			if(pos == -1) {
 				JOptionPane.showMessageDialog(null, "Primero debes seleccionar una cita!");
+				logger.warning("El paciente no ha seleccionado la cita por modificar");
+				
 			}else {
 				Cita c = modeloListaCitas.getElementAt(pos);
 				modeloListaCitas.removeElement(c);
 				modeloListaModificarCitas.removeElement(c);
+				logger.info("El paciente ha anulado una cita correctamnte");
 			
 		}
 			}
@@ -721,16 +779,7 @@ public class VentanaDueño extends JFrame{
 	
 	
 
-	verCalendario.addActionListener(new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			ocultarPaneles();
-			pVisualizarAgenda.setVisible(true);
-			
-			
-		}
-	});
+	
 	calendario = new JCalendar();
 	
 	pVisualizarAgenda.add(calendario);
@@ -741,7 +790,7 @@ public class VentanaDueño extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String selec = comboMascotas.getSelectedItem().toString();
-			System.out.println(selec);
+			
 			
 		}
 	});
@@ -779,10 +828,13 @@ public class VentanaDueño extends JFrame{
 			
 			lblTelefonoVisualizar = new JLabel(""+telefono);
 			btnVisualizarContraseña = new JButton("Visualizar Contraseña");
+			logger.info("El paciente ha visualizado su perfil");
+			
 			btnVisualizarContraseña.addActionListener(new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					logger.info("El paciente ha visualizado su contraseña");
 					lblContraseñaVisualizar.setText(contraseña);
 					
 				}
@@ -887,18 +939,20 @@ public class VentanaDueño extends JFrame{
 				            
 				        } else {
 				        	JOptionPane.showMessageDialog(null, "Operación cancelada por el usuario");
+				        	logger.info("El paciente ha cancelado la operacion de añadir al carrito");
 				        }
 						
 						Connection con = BD.initBD("clinicaFurwell.db");
 						Compra c = new Compra(nombreMedicamento, precioMedicamento, idMedicamento, fechaDeCompraMedicamento, paciente);
 						BD.insertarCompra(conn, c);
+						logger.info("Se ha actualizado la base de datos con la nueva compra realizada por el usuario");
 						BD.cerrarBD(con);
 						listaCompras.add(c);
 						modeloHistorialCompras = new ModeloHistorialCompras(listaCompras);
 					
 						
 						textoArea.setText(textoActual + "Se ha añadido al carrito correctamente (" +m.getNombreMedicamento()+ ") \nPara consultar tu carrito y finalizar la compra ve a 'Cuenta' y 'Mi cesta'\n ");	
-						
+						logger.info("El paciente ha añadido la compra a su carrito correctamente");
 						
 						
 						
@@ -928,12 +982,14 @@ public class VentanaDueño extends JFrame{
 					if(comboHistorial.getSelectedItem().toString().equals("Historial de compras")) {
 						tablaHistorial.setModel(modeloHistorialCompras);
 						tablaHistorial.updateUI();
+						logger.info("Se ha visualizado el historial de compras");
 						
 						
 					}else if(comboHistorial.getSelectedItem().toString().equals("Historial de mis mascotas")) {
 						tablaHistorial.setModel(modeloHistorialPacientes);
 						tablaHistorial.updateUI();
 						hist.updateUI();
+						logger.info("Se ha visualizado el historial de mascotas");
 						
 					}
 					
@@ -945,47 +1001,52 @@ public class VentanaDueño extends JFrame{
 	});
 	
 	
-	pedido.addActionListener(new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			ocultarPaneles();
-			pMisPedidos.setVisible(true);
-			
-			
-		}
-	});
+	
 	Dimension panelSize2 = new Dimension(anchoPantalla-400, altoPantalla-350);
 	pMiCesta.setPreferredSize(panelSize);
+	pMisPedidos.setPreferredSize(panelSize);
 	
 	tablaCompras = new JTable();
 	List<Compra> lc = new ArrayList<>(BD.cogerCompra(conn));
-	
-	
-	tablaCompras.setModel(modeloHistorialCompras = new ModeloHistorialCompras(lc));
 	scrollCompras = new JScrollPane(tablaCompras);
 	
+	tablaCompras2 = new JTable();
+	scrollCompras2 = new JScrollPane(tablaCompras2);
 	
 	btnTramitarPedido = new JButton("Tramitar Pedido");
 	btnTramitarPedido.addActionListener(new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			logger.info("Se ha tramitado el pedido correctamente");
 			
 			
 			
 		}
 	});
+	btnFinalizarPedido = new JButton("Finalizar Pedido");
+	btnFinalizarPedido.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JOptionPane.showOptionDialog(null, "¿Estas seguro que quieres funalizar la compra \n con el valor de "+" ?", "Selecciona un valor", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+			logger.info("Se ha finaliza la compra");
+		}
+	});
 	
 	pMiCesta.add(scrollCompras, BorderLayout.CENTER);
 	pMiCesta.add(btnTramitarPedido, BorderLayout.SOUTH);
+	pMisPedidos.add(scrollCompras2, BorderLayout.CENTER);
+	pMisPedidos.add(btnFinalizarPedido, BorderLayout.SOUTH);
 	
+
 	cesta.addActionListener(new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ocultarPaneles();
 			pMiCesta.setVisible(true);
+			tablaCompras.setModel(modeloHistorialCompras = new ModeloHistorialCompras(lc));
 			
 			
 			
@@ -993,7 +1054,18 @@ public class VentanaDueño extends JFrame{
 		}
 	});
 	
-	
+	pedido.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ocultarPaneles();
+			pMisPedidos.setVisible(true);
+			tablaCompras.setModel(modeloHistorialCompras = new ModeloHistorialCompras(null));
+			
+			
+			
+		}
+	});
 	
 	
 	JLabel lblMascotas = new JLabel("MIS MASCOTAS: ");

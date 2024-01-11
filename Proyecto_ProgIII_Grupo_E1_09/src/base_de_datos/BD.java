@@ -224,7 +224,6 @@ public class BD {
 	
 		public static List<Compra> cogerCompra(Connection con) {
 		String sql = "SELECT * FROM Compra";
-		Compra c = new Compra();
 		List<Compra> lc = new ArrayList<>();
 		try {
 			Statement st = con.createStatement();
@@ -247,9 +246,13 @@ public class BD {
 				TipoPaciente tipoPaciente = TipoPaciente.valueOf(partes[0]);
 				
 				Paciente p = new Paciente(0, nombre, 0, "", 0, tipoPaciente, null);
-				c = new Compra(nom, Double.parseDouble(precio), Integer.parseInt(idTabla), d, p);
-				lc.add(c);
-				System.out.println(lc);
+				Compra c = new Compra(nom, Double.parseDouble(precio), Integer.parseInt(idTabla), d, p);
+				lc.add(c); 
+				for (Compra compra : lc) {
+					System.out.println(compra);
+				}
+				
+				
 				
 			}
 			rs.close();
