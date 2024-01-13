@@ -23,6 +23,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import base_de_datos.BD;
 import domain.Cita;
@@ -85,7 +86,8 @@ public class VentanaTrabajador extends JFrame{
 	protected JPanel pAbajo;
 	protected JPanel pPacientes;
 	protected JPanel pCitas;
-	protected JPanel pAniadirAnular;
+	protected JPanel pAniadir;
+	protected JPanel pAnular;
 	protected JPanel pCalendario;
 	protected JPanel pMedicamentos;
 	protected JPanel pCuenta;
@@ -106,6 +108,11 @@ public class VentanaTrabajador extends JFrame{
 	protected JScrollPane scrollTablaMedicamentos;
 	
 	
+	//Tabla citas
+	protected DefaultTableModel modeloCitas;
+	protected JTable tablaCitas;
+	protected JScrollPane scrollTablaCitas;
+	
 	
 	
 	public VentanaTrabajador() {
@@ -125,11 +132,17 @@ public class VentanaTrabajador extends JFrame{
 		pPacientes = new JPanel();
 		pCalendario = new JPanel();
 		pCitas = new JPanel();
-		pAniadirAnular = new JPanel();
+		pAniadir = new JPanel();
+		pAnular = new JPanel();
 		pCuenta = new JPanel();
 		pMedicamentos = new JPanel();
 		
 		calendario = new JCalendar();
+		
+		
+		modeloCitas = new DefaultTableModel(new Object[]{"Fecha","Hora" },0); 
+		tablaCitas = new JTable(modeloCitas);
+		scrollTablaCitas = new JScrollPane(tablaCitas);
 				
 		Connection con = BD.initBD("clinicaFurwell.db");
 		List<Medicamento> lM = new ArrayList<>();
@@ -186,8 +199,6 @@ public class VentanaTrabajador extends JFrame{
 		
 		
 		//JTable Pacientes
-		
-		
 		modeloPacientes = new ModeloHistorialPacientes(lPacientes);
 		tablaPacientes = new JTable(modeloPacientes);
 		scrollTablaPacientes = new JScrollPane(tablaPacientes);
@@ -202,7 +213,8 @@ public class VentanaTrabajador extends JFrame{
 		pCalendario.setVisible(false);
 		pDisplay.add(pPacientes);
 		pDisplay.add(pCitas);
-		pDisplay.add(pAniadirAnular);
+		pDisplay.add(pAniadir);
+		pDisplay.add(pAnular);
 		pDisplay.add(pCalendario);
 		pDisplay.add(pMedicamentos);
 		pDisplay.add(pCuenta);
@@ -271,8 +283,20 @@ public class VentanaTrabajador extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				quitaPanel();
-				pAniadirAnular.setVisible(true);
+				pAniadir.setVisible(true);
+				aniadirCita();
+				
 				}
+		});
+		anular.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				quitaPanel();
+				pAnular.setVisible(true);
+				anularCita();
+				
+			}
 		});
 		Itemcalendario.addActionListener(new ActionListener() {
 			
@@ -312,7 +336,21 @@ public class VentanaTrabajador extends JFrame{
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Trabajador");
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 	
+	}
+	
+	
+	public void aniadirCita() {
+		modeloCitas.addRow(new Object[] {"Fecha de la cita añadida", "Hora de la cita añadida"});
+	}
+	
+	public void anularCita() {
+		int filaSeleccionada = tablaCitas.getSelectedRow();
+		if(filaSeleccionada !=-1) {
+			modeloCitas.removeRow(filaSeleccionada);
+		}
+		
 	}
 	public void quitaPanel() {
 		pPacientes.setVisible(false);
