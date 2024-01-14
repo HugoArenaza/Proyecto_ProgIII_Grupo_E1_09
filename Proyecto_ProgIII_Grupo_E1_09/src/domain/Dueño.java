@@ -41,7 +41,7 @@ public class Dueño {
 	public String getfNac() {
 		return fNac;
 	}
-	public void setDireccion(String fNac) {
+	public void setFnac(String fNac) {
 		this.fNac = fNac;
 	}
 	public int getNumeroTlf() {

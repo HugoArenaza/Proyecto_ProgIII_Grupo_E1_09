@@ -22,12 +22,18 @@ public class MiniJefe extends Trabajador {
 
 	@Override
 	public String toString() {
-		return "MiniJefe [num_empleados=" + num_empleados + ", getNum_pacientes()=" + getNum_pacientes()
-				+ ", toString()=" + super.toString() + ", getDni()=" + getDni() + ", getNombre()=" + getNombre()
-				+ ", getApellidos()=" + getApellidos() + ", getUsuario()=" + getUsuario() + ", getContraseña()="
-				+ getContraseña() + ", getClinica()=" + getClinica() + ", getPaciente()=" + getPaciente()
-				+ ", getSueldo()=" + getSueldo() + ", getespecialidad()=" + getespecialidad() + "]";
-	}
+		 return "MiniJefe [num_empleados=" + num_empleados + ", " +
+		           "Trabajador [num_pacientes=" + getNum_pacientes() +
+		           ", Dni=" + getDni() +
+		           ", Nombre=" + getNombre() +
+		           ", Apellidos=" + getApellidos() +
+		           ", Usuario=" + getUsuario() +
+		           ", Contraseña=" + getContraseña() +
+		           ", Clinica=" + getClinica() +
+		           ", Paciente=" + getPaciente() +
+		           ", Sueldo=" + getSueldo() +
+		           ", Especialidad=" + getespecialidad() +
+		           "]]";	}
 
 	
 }

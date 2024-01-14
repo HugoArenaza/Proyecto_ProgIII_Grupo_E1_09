@@ -16,10 +16,10 @@ public class Jefe extends MiniJefe {
 	@Override
 	public String toString() {
 		return "Jefe [getNum_empleados()=" + getNum_empleados() + ", toString()=" + super.toString()
-				+ ", getNum_pacientes()=" + getNum_pacientes() + ", getDni()=" + getDni() + ", getNombre()="
-				+ getNombre() + ", getApellidos()=" + getApellidos() + ", getUsuario()=" + getUsuario()
-				+ ", getContraseña()=" + getContraseña() + ", getClinica()=" + getClinica() + ", getPaciente()="
-				+ getPaciente() + ", getSueldo()=" + getSueldo() + ", getespecialidad()=" + getespecialidad() + "]";
+        + ", getNum_pacientes()=" + getNum_pacientes() + ", getDni()=" + getDni() + ", getNombre()="
+        + getNombre() + ", getApellidos()=" + getApellidos() + ", getUsuario()=" + getUsuario()
+        + ", getContraseña()=" + getContraseña() + ", getClinica()=" + getClinica() + ", getPaciente()="
+        + getPaciente() + ", getSueldo()=" + getSueldo() + ", getespecialidad()=" + getespecialidad() + "]";
 	}
 	
 	

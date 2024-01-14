@@ -24,11 +24,10 @@ public class Trabajador extends Veterinario{
 
 	@Override
 	public String toString() {
-		return "Trabajador [num_pacientes=" + num_pacientes + ", getDni()=" + getDni() + ", getNombre()=" + getNombre()
-				+ ", getApellidos()=" + getApellidos() + ", getUsuario()=" + getUsuario() + ", getContraseña()="
-				+ getContraseña() + ", getClinica()=" + getClinica() + ", getPaciente()=" + getPaciente()
-				+ ", getSueldo()=" + getSueldo() + ", getespecialidad()=" + getespecialidad() + ", toString()="
-				+ super.toString() + "]";
+		return "Trabajador [num_pacientes=" + num_pacientes + ", Dni=" + getDni() + ", Nombre=" + getNombre()
+        + ", Apellidos=" + getApellidos() + ", Usuario=" + getUsuario() + ", Contraseña=" + getContraseña()
+        + ", Clinica=" + getClinica() + ", Paciente=" + getPaciente() + ", Sueldo=" + getSueldo()
+        + ", Especialidad=" + getespecialidad() + "]";
 	}
 
 	

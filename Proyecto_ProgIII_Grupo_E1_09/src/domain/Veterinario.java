@@ -101,7 +101,7 @@ public class Veterinario implements Comparable<Veterinario>{
 		this.usuario = "Sin nombre de usuario";
 		this.contraseña = "Sin contraseña";
 	
-		this.pacientes = null;
+		this.pacientes = new ArrayList<>();
 		this.sueldo = (float) 0.0;
 		this.especialidad = null;
 		this.dni = "sin dni";
