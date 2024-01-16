@@ -61,7 +61,7 @@ public class ClinicaVeterinaria {
 		
 		//new VentanaJefe();
 
-		new VentanaTrabajador();
+		new VentanaJefe();
 
 
 		//new VentanaDueño();
