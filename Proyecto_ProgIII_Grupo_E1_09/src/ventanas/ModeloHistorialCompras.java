@@ -7,7 +7,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 import domain.Compra;
-import domain.Paciente;
+
 
 public class ModeloHistorialCompras extends DefaultTableModel{
 	/**

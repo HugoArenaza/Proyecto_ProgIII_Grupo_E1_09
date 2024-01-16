@@ -23,7 +23,6 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import com.toedter.calendar.JCalendar;
@@ -780,7 +779,6 @@ public class VentanaDueño extends JFrame{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String selec = comboMascotas.getSelectedItem().toString();
 			
 			
 		}

@@ -4,7 +4,7 @@ import java.io.FileInputStream;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOError;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.Properties;
@@ -13,12 +13,11 @@ import java.util.logging.Logger;
 
 import base_de_datos.BD;
 import domain.Contenedora;
-import ventanas.VentanaDueño;
-import ventanas.VentanaInicio;
-import ventanas.VentanaJefe;
-import ventanas.VentanaTrabajador;
 
-import java.sql.Connection;
+import ventanas.VentanaInicio;
+
+
+
 
 
 

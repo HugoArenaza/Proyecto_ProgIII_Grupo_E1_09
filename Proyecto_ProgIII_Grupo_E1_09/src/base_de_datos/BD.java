@@ -14,6 +14,7 @@ import domain.Dueño;
 import domain.Medicamento;
 import domain.Paciente;
 import domain.TipoPaciente;
+import domain.Veterinario;
 
 
 
@@ -290,6 +291,7 @@ public class BD {
 	
 	}
 			
-			
 		}
+		
+
 	
