@@ -2,6 +2,7 @@ package ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.util.logging.Logger;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -66,20 +67,18 @@ public class VentanaJefe extends JFrame {
 		btnTrabajadores = new JButton("Trabajadores"); // Boton que mostrara una JTable con todos los trabajadores, mas
 														// funcionalidades por agregar
 
-		JButton botonClinicas = new JButton("Clinicas"); // Boton que muestra clinicas mediante un ComboBox
-
 		btnSalir = new JButton("Salir");
 		Dimension dimensionPanelCentro = new Dimension(100, 80);
 		panelCentro.setMinimumSize(dimensionPanelCentro);
 		Dimension tamañoBotones = new Dimension(150, 40);
-		botonClinicas.setMaximumSize(tamañoBotones);
+
 		btnProveedores.setMaximumSize(tamañoBotones);
 		btnPacientes.setMaximumSize(tamañoBotones);
 		btnTrabajadores.setMaximumSize(tamañoBotones);
+		JButton botonAñadirTrabajador = new JButton("Añadir Trabajador");
 
 		panelIzquierda.add(btnProveedores);
 		panelIzquierda.add(btnPacientes);
-		panelIzquierda.add(botonClinicas);
 		panelIzquierda.add(btnTrabajadores);
 		panelAbajo.add(btnSalir);
 
@@ -87,44 +86,6 @@ public class VentanaJefe extends JFrame {
 		getContentPane().add(panelCentro, BorderLayout.CENTER);
 		getContentPane().add(panelAbajo, BorderLayout.SOUTH);
 
-		botonClinicas.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				panelCentro.removeAll(); // vacio el panel para cambiar contenido que quiero mostrar
-
-				JPanel panelComboBox = new JPanel();
-				panelComboBox.setLayout(new BorderLayout());
-
-				JComboBox<Clinica> clinicas = new JComboBox<>();
-				DefaultComboBoxModel<Clinica> model = new DefaultComboBoxModel<>();
-
-				clinicas.setModel(model);
-
-				JButton botonAbrir = new JButton("Abrir clinca");
-
-				botonAbrir.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						System.out.println("Prueba de boton"); // Prueba funcionalidad, este boton se usara para abrir
-																// la
-																// clinica seleccionada en una nueva ventana con todos
-																// los datos
-
-					}
-				});
-
-				panelComboBox.add(clinicas, BorderLayout.CENTER);
-				JPanel panelBotonAbrir = new JPanel();
-				panelBotonAbrir.add(botonAbrir);
-				panelCentro.add(panelComboBox);
-				panelCentro.revalidate();
-				panelCentro.repaint();
-				panelComboBox.add(panelBotonAbrir, BorderLayout.SOUTH);
-
-			}
-		});
 
 		btnProveedores.addActionListener(new ActionListener() {
 
@@ -169,6 +130,7 @@ public class VentanaJefe extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				panelCentro.removeAll();
+				panelAbajo.removeAll();
 
 				JTable tablePacientes = new JTable();
 				DefaultTableModel model = (DefaultTableModel) tablePacientes.getModel();
@@ -180,7 +142,6 @@ public class VentanaJefe extends JFrame {
 				model.addColumn("MicroChip");
 				model.addColumn("Enfermedad");
 				model.addColumn("Veterinario");
-				model.addColumn("Clinica");
 				model.addColumn("Tipo Paciente");
 				model.addColumn("Telefono Dueño");
 				model.addColumn("Correo Dueño");
@@ -188,6 +149,9 @@ public class VentanaJefe extends JFrame {
 				panelCentro.add(new JScrollPane(tablePacientes));
 				panelCentro.revalidate();
 				panelCentro.repaint();
+				panelAbajo.add(btnSalir);
+				panelAbajo.revalidate();
+				panelAbajo.repaint();
 
 			}
 		});
@@ -201,60 +165,24 @@ public class VentanaJefe extends JFrame {
 				panelCentro.setPreferredSize(dimensionPanelCentro);
 				panelCentro.setBorder(borderResaltado);
 
-//				Connection conn = BD.initBD("clinicaFurwell.db");
-//				
-//				
-//
-//
-//				Trabajador veterinario = new Trabajador(1, "Mario", "Diaz", "aijsdj", "uno", 23, new ArrayList<Paciente>(), (float) 1000.0, Especialidades.CARDIOLOGIA, "12344", 21);
-//				Paciente paciente1 = new Paciente(1,"Matias",2839, "Escoliosis", veterinario.getId(), TipoPaciente.CERDO,null );
-//				veterinario.anyadirPaciente(paciente1);
-//				
-//				Trabajador veterinario2 = new Trabajador(2, "Mario", "Apellidos", "Usuario", "Contraseña", 1, new ArrayList<Paciente>(),
-//						(float) 5000.0, Especialidades.CIRUGIA, "bbbb", 12);
-//				Trabajador veterinario3 = new Trabajador(45, "Antonio", "Apellidos", "Usuario", "Contraseña", 1, new ArrayList<Paciente>(),
-//						(float) 5000.0, Especialidades.CIRUGIA, "ccccc", 12);
-//				Trabajador veterinario4 = new Trabajador(3, "Bea", "Apellidos", "Usuario", "Contraseña", 1, new ArrayList<Paciente>(),
-//						(float) 5000.0, Especialidades.CIRUGIA, "uuuu", 12);
-//				Jefe jefe = new Jefe(3, "Jorge", "Apellidos", "Usuario", "Contraseña", 1, new ArrayList<Paciente>(),
-//						(float) 5000.0, Especialidades.CIRUGIA, "bbbb", 12, getDefaultCloseOperation());
-//				
-//				ArrayList<Veterinario> veterinarios = new ArrayList<Veterinario>();
-//				
-//				veterinarios.add(veterinario);
-//				veterinarios.add(veterinario2);
-//				veterinarios.add(veterinario3);
-//				veterinarios.add(veterinario4);
-//				veterinarios.add(jefe);
-//				Collections.sort(veterinarios);
-//				veterinarios.sort(new VeterinarioComparatorPorDni());
-//				
+			
 				JTable tableVeterinarios = new JTable();
 				DefaultTableModel model = (DefaultTableModel) tableVeterinarios.getModel();
 				
-//
+
 				model.addColumn("Id");
 				model.addColumn("Nombre");
 				model.addColumn("Apellidos");
 				model.addColumn("Usuario");
 				model.addColumn("Contraseña");
 				model.addColumn("DNI");
-				model.addColumn("Clinica");
-				model.addColumn("Paciente");
 				model.addColumn("Sueldo");
+				model.addColumn("Numero Empleados");
+				model.addColumn("Numero Pacientes");
+				
 				model.addColumn("Especialidad");
 				model.addColumn("Tipo");// Columna para diferenciar tipo de veterinario
-//				
-//				
-//				for (Veterinario vet : veterinarios) {
-//					model.addRow(new Object[] { vet.getId(),vet.getNombre(), vet.getApellidos(),
-//						vet.getUsuario(), vet.getContraseña(), vet.getDni(),
-//						vet.getClinica(), vet.getPaciente(), vet.getSueldo(),
-//						vet.getespecialidad(), vet.getClass().getSimpleName()
-//						});	
-					
-//					}
-//				
+
 				
 				try {
 					Connection conn = BD.initBD("clinicaFurwell.db");
@@ -262,19 +190,55 @@ public class VentanaJefe extends JFrame {
 				    PreparedStatement statement = conn.prepareStatement(consulta);
 				    ResultSet resultado = statement.executeQuery();
 				    while (resultado.next()) {
-				        int id = resultado.getInt("id");
+				        int Id = resultado.getInt("Id");
 				        String nombre = resultado.getString("nombre");
 				        String apellidos = resultado.getString("apellidos");
 				        String usuario = resultado.getString("usuario");
 				        String contraseña = resultado.getString("contraseña");
 				        String dni = resultado.getString("dni");
-				        String clinica = resultado.getString("id_clinica");
-				        String paciente = resultado.getString("pacientes");
 				        Float sueldo = resultado.getFloat("sueldo");
-				        String especialidad = resultado.getString("especialidad");
-				        String tipo = resultado.getString("tipo_veterinario");
-
-				        model.addRow(new Object[]{id, nombre, apellidos, usuario, contraseña, dni, clinica, paciente, sueldo, especialidad, tipo});
+				        int numEmpleados= resultado.getInt("numero_empleados");
+				        int numPacientes= resultado.getInt("numero_pacientes");
+				        String especialidad = resultado.getString("Especialidad");
+				        String tipo = resultado.getString("TIPO_VETERINARIO");
+				        
+//				        String consultaPaciente = "SELECT nombre FROM Pacientes WHERE id = ?";
+//				        PreparedStatement statementPaciente = conn.prepareStatement(consultaPaciente);
+//				        statementPaciente.setString(1, pacienteId);
+//				        ResultSet resultadoPaciente = statementPaciente.executeQuery();
+//
+//				        // Procesa el resultado y obtén el nombre del paciente
+//				        String nombrePaciente = "";
+//				        if (resultadoPaciente.next()) {
+//				            nombrePaciente = resultadoPaciente.getString("nombre");
+//				        }
+//
+//				        // Limpia los recursos de la consulta del paciente
+//				        resultadoPaciente.close();
+//				        statementPaciente.close();
+//				        
+//				        ArrayList<String> pacientesList = obtenerPacientesDelVeterinario(Id);
+//
+//				     // Crear un JComboBox con la lista de pacientes
+//				     JComboBox<String> comboBox = new JComboBox<>(pacientesList.toArray(new String[0]));
+//
+//				     // Configurar el editor de la celda para usar el JComboBox
+//				     TableColumn pacienteColumn = tableVeterinarios.getColumnModel().getColumn(7);
+//				     pacienteColumn.setCellEditor(new DefaultCellEditor(comboBox));
+//
+//				     // Personalizar el renderizador para mostrar el JComboBox en lugar de texto
+//				     pacienteColumn.setCellRenderer(new DefaultTableCellRenderer() {
+//				         /**
+//						 * 
+//						 */
+//						private static final long serialVersionUID = 1L;
+//
+//						@Override
+//				         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+//				             return comboBox;
+//				         }
+//				     });
+				        model.addRow(new Object[]{Id, nombre, apellidos, usuario, contraseña, dni, sueldo,numEmpleados,numPacientes, especialidad, tipo});
 				    }
 
 				    resultado.close();
@@ -284,23 +248,14 @@ public class VentanaJefe extends JFrame {
 				    ex.printStackTrace();
 				    // Manejar la excepción apropiadamente
 				}
-								
-				 TableColumn pacienteColumn = tableVeterinarios.getColumnModel().getColumn(7);
-				        JComboBox<String> comboBox = new JComboBox<>(new String[]{"Gato", "Perro", "Otro"});
-				        pacienteColumn.setCellEditor(new DefaultCellEditor(comboBox));
 
-				        // Personalizar el renderer para la columna 'Paciente'
-				        pacienteColumn.setCellRenderer((TableCellRenderer) new DefaultTableCellRenderer() {
-				            /**
-							 * 
-							 */
-							private static final long serialVersionUID = 1L;
+				
+				
+				
 
-							@Override
-				            public void setValue(Object value) {
-				                setText((value == null) ? "" : value.toString());
-				            }
-				        });
+				
+				
+				
 				JTableHeader tableHeader = tableVeterinarios.getTableHeader();
 				tableHeader.setReorderingAllowed(false);  // Deshabilitar la reordenación de columnas
 				tableHeader.setResizingAllowed(false);     // Deshabilitar el redimensionamiento de columnas
@@ -315,13 +270,47 @@ public class VentanaJefe extends JFrame {
 				panelCentro.add(new JScrollPane(tableVeterinarios));
 				panelCentro.revalidate();
 				panelCentro.repaint();
+				panelAbajo.add(botonAñadirTrabajador);
 				tableVeterinarios.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
+			}
+			public ArrayList<String> obtenerPacientesDelVeterinario(int idVeterinario) {
+			    ArrayList<String> pacientesList = new ArrayList<>();
+
+			    try {
+			        Connection conn = BD.initBD("clinicaFurwell.db");
+			        String consulta = "SELECT nombre FROM Paciente WHERE Id_veterinario = ?";
+			        PreparedStatement statement = conn.prepareStatement(consulta);
+			        statement.setInt(1, idVeterinario);
+			        ResultSet resultado = statement.executeQuery();
+
+			        while (resultado.next()) {
+			            String nombrePaciente = resultado.getString("nombre");
+			            pacientesList.add(nombrePaciente);
+			        }
+
+			        resultado.close();
+			        statement.close();
+			        conn.close();
+			    } catch (SQLException ex) {
+			        ex.printStackTrace();
+			        // Manejar la excepción apropiadamente
+			    }
+
+			    return pacientesList;
 			}
 		});
 		btnSalir.addActionListener((e) -> {
 			dispose();
 			logger.info("Se ha cerrado la sesion");
+		});
+		botonAñadirTrabajador.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VentanaAnyadirTrabajador();
+				
+			}
 		});
 
 		setTitle("Ventana Jefe");
