@@ -41,7 +41,7 @@ public class BD {
 			while(rs.next()) {
 				int id = rs.getInt("ID");
 				
-				String tipo = rs.getString("Tipo Animal");
+				String tipo = rs.getString("TipoAnimal");
 				Paciente p = new Paciente(id, "", 0, "", 0,TipoPaciente.valueOf(tipo), null);
 				l.add(p);
 			}
@@ -59,7 +59,6 @@ public class BD {
 			st.executeUpdate(sql);
 			st.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
