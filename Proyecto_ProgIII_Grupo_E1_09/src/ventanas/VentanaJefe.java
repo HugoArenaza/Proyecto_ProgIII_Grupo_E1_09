@@ -1,13 +1,20 @@
 package ventanas;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.util.logging.Logger;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -17,14 +24,18 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.Border;
 //import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import base_de_datos.BD;
 import domain.Clinica;
 import domain.Especialidades;
+import domain.Jefe;
 import domain.Proveedor;
 import domain.TipoPaciente;
 import domain.Trabajador;
@@ -40,8 +51,9 @@ public class VentanaJefe extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JButton btnProveedores, btnPacientes, btnTrabajadores, btnSalir;
 	private JPanel panelCentro, panelAbajo;
-
+	
 	public VentanaJefe() {
+		Logger logger = java.util.logging.Logger.getLogger("Logger");
 
 		JPanel panelIzquierda = new JPanel();
 		panelIzquierda.setLayout(new GridLayout(0, 1));
@@ -184,49 +196,43 @@ public class VentanaJefe extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				panelCentro.removeAll();
-				Dimension dimensionPanelCentro = new Dimension(10, 80);
-				panelCentro.setMinimumSize(dimensionPanelCentro);
+				Dimension dimensionPanelCentro = new Dimension(1000, 10000);
+				Border borderResaltado = BorderFactory.createLineBorder(Color.BLUE, 2);
+				panelCentro.setPreferredSize(dimensionPanelCentro);
+				panelCentro.setBorder(borderResaltado);
 
-
-//			int microchip = 0;
-//			if (pacientes != null && !pacientes.isEmpty()) {
-//			    Paciente ultimoPaciente = pacientes.get(pacientes.size());
-//			    microchip = ultimoPaciente.getMicroChip();
-//			} 
-
-				/*
-				 * No funciona como quiero que funcione este codigo por lo que tendre que
-				 * revisarlo, el funcionamiento planeado es temporal ya que quiero implementar
-				 * un renderer que haga que la columna de pacientes sea un comboBox y que
-				 * muestre todos los pacientes identificados por su microchip, que luego sea
-				 * clickable y muestre el paciente con todos sus datos. de momento ese codigo
-				 * coge el ultimo paciente del arrayList.
-				 * 
-				 */
-
-
-				Trabajador veterinario = new Trabajador(1, "Mario", "Diaz", "aijsdj", "uno", 23, new ArrayList<Paciente>(), (float) 1000.0, Especialidades.CARDIOLOGIA, "12344", 21);
-				Paciente paciente1 = new Paciente(1,"Matias",2839, "Escoliosis", veterinario.getId(), TipoPaciente.CERDO,null );
-				veterinario.anyadirPaciente(paciente1);
-				
-				Trabajador veterinario2 = new Trabajador(2, "Mario", "Apellidos", "Usuario", "Contraseña", 1, new ArrayList<Paciente>(),
-						(float) 5000.0, Especialidades.CIRUGIA, "bbbb", 12);
-				Trabajador veterinario3 = new Trabajador(45, "Antonio", "Apellidos", "Usuario", "Contraseña", 1, new ArrayList<Paciente>(),
-						(float) 5000.0, Especialidades.CIRUGIA, "ccccc", 12);
-				Trabajador veterinario4 = new Trabajador(3, "Bea", "Apellidos", "Usuario", "Contraseña", 1, new ArrayList<Paciente>(),
-						(float) 5000.0, Especialidades.CIRUGIA, "uuuu", 12);
-				
-				ArrayList<Veterinario> veterinarios = new ArrayList<Veterinario>();
-				
-				veterinarios.add(veterinario);
-				veterinarios.add(veterinario2);
-				veterinarios.add(veterinario3);
-				veterinarios.add(veterinario4);
-				Collections.sort(veterinarios);
-				veterinarios.sort(new VeterinarioComparatorPorDni());
-				
+//				Connection conn = BD.initBD("clinicaFurwell.db");
+//				
+//				
+//
+//
+//				Trabajador veterinario = new Trabajador(1, "Mario", "Diaz", "aijsdj", "uno", 23, new ArrayList<Paciente>(), (float) 1000.0, Especialidades.CARDIOLOGIA, "12344", 21);
+//				Paciente paciente1 = new Paciente(1,"Matias",2839, "Escoliosis", veterinario.getId(), TipoPaciente.CERDO,null );
+//				veterinario.anyadirPaciente(paciente1);
+//				
+//				Trabajador veterinario2 = new Trabajador(2, "Mario", "Apellidos", "Usuario", "Contraseña", 1, new ArrayList<Paciente>(),
+//						(float) 5000.0, Especialidades.CIRUGIA, "bbbb", 12);
+//				Trabajador veterinario3 = new Trabajador(45, "Antonio", "Apellidos", "Usuario", "Contraseña", 1, new ArrayList<Paciente>(),
+//						(float) 5000.0, Especialidades.CIRUGIA, "ccccc", 12);
+//				Trabajador veterinario4 = new Trabajador(3, "Bea", "Apellidos", "Usuario", "Contraseña", 1, new ArrayList<Paciente>(),
+//						(float) 5000.0, Especialidades.CIRUGIA, "uuuu", 12);
+//				Jefe jefe = new Jefe(3, "Jorge", "Apellidos", "Usuario", "Contraseña", 1, new ArrayList<Paciente>(),
+//						(float) 5000.0, Especialidades.CIRUGIA, "bbbb", 12, getDefaultCloseOperation());
+//				
+//				ArrayList<Veterinario> veterinarios = new ArrayList<Veterinario>();
+//				
+//				veterinarios.add(veterinario);
+//				veterinarios.add(veterinario2);
+//				veterinarios.add(veterinario3);
+//				veterinarios.add(veterinario4);
+//				veterinarios.add(jefe);
+//				Collections.sort(veterinarios);
+//				veterinarios.sort(new VeterinarioComparatorPorDni());
+//				
 				JTable tableVeterinarios = new JTable();
 				DefaultTableModel model = (DefaultTableModel) tableVeterinarios.getModel();
+				
+//
 				model.addColumn("Id");
 				model.addColumn("Nombre");
 				model.addColumn("Apellidos");
@@ -238,15 +244,48 @@ public class VentanaJefe extends JFrame {
 				model.addColumn("Sueldo");
 				model.addColumn("Especialidad");
 				model.addColumn("Tipo");// Columna para diferenciar tipo de veterinario
+//				
+//				
+//				for (Veterinario vet : veterinarios) {
+//					model.addRow(new Object[] { vet.getId(),vet.getNombre(), vet.getApellidos(),
+//						vet.getUsuario(), vet.getContraseña(), vet.getDni(),
+//						vet.getClinica(), vet.getPaciente(), vet.getSueldo(),
+//						vet.getespecialidad(), vet.getClass().getSimpleName()
+//						});	
+					
+//					}
+//				
 				
-				
-				for (Veterinario vet : veterinarios) {
-					model.addRow(new Object[] { vet.getId(),vet.getNombre(), vet.getApellidos(),
-						vet.getUsuario(), vet.getContraseña(), vet.getDni(),
-						vet.getClinica(), vet.getPaciente(), vet.getSueldo(),
-						vet.getespecialidad(), vet.getClass().getSimpleName()
-						});	
-					 TableColumn pacienteColumn = tableVeterinarios.getColumnModel().getColumn(7);
+				try {
+					Connection conn = BD.initBD("clinicaFurwell.db");
+				    String consulta = "SELECT * FROM Veterinario";
+				    PreparedStatement statement = conn.prepareStatement(consulta);
+				    ResultSet resultado = statement.executeQuery();
+				    while (resultado.next()) {
+				        int id = resultado.getInt("id");
+				        String nombre = resultado.getString("nombre");
+				        String apellidos = resultado.getString("apellidos");
+				        String usuario = resultado.getString("usuario");
+				        String contraseña = resultado.getString("contraseña");
+				        String dni = resultado.getString("dni");
+				        String clinica = resultado.getString("id_clinica");
+				        String paciente = resultado.getString("pacientes");
+				        Float sueldo = resultado.getFloat("sueldo");
+				        String especialidad = resultado.getString("especialidad");
+				        String tipo = resultado.getString("tipo_veterinario");
+
+				        model.addRow(new Object[]{id, nombre, apellidos, usuario, contraseña, dni, clinica, paciente, sueldo, especialidad, tipo});
+				    }
+
+				    resultado.close();
+				    statement.close();
+				    conn.close();
+				} catch (SQLException ex) {
+				    ex.printStackTrace();
+				    // Manejar la excepción apropiadamente
+				}
+								
+				 TableColumn pacienteColumn = tableVeterinarios.getColumnModel().getColumn(7);
 				        JComboBox<String> comboBox = new JComboBox<>(new String[]{"Gato", "Perro", "Otro"});
 				        pacienteColumn.setCellEditor(new DefaultCellEditor(comboBox));
 
@@ -262,27 +301,34 @@ public class VentanaJefe extends JFrame {
 				                setText((value == null) ? "" : value.toString());
 				            }
 				        });
-					}
-				
-						
-					
+				JTableHeader tableHeader = tableVeterinarios.getTableHeader();
+				tableHeader.setReorderingAllowed(false);  // Deshabilitar la reordenación de columnas
+				tableHeader.setResizingAllowed(false);     // Deshabilitar el redimensionamiento de columnas
 
 				
+				
+				panelCentro.add(tableHeader);
+				
+				tableVeterinarios.setPreferredScrollableViewportSize(new Dimension(1000, 10000)); // Reemplaza ancho y alto con los valores deseados
 
+				tableVeterinarios.setEnabled(true);
 				panelCentro.add(new JScrollPane(tableVeterinarios));
 				panelCentro.revalidate();
 				panelCentro.repaint();
+				tableVeterinarios.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 			}
 		});
 		btnSalir.addActionListener((e) -> {
 			dispose();
+			logger.info("Se ha cerrado la sesion");
 		});
 
 		setTitle("Ventana Jefe");
-		setBounds(400, 100, 800, 600);
+		setBounds(200, 50, 1200, 800);		
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 	}
 }
+
