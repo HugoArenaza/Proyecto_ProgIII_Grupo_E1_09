@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 import domain.Clinica;
 import domain.Compra;
@@ -220,6 +221,32 @@ public class BD {
 					e.printStackTrace();
 					}
 				}
+		
+		/*public static void buscarCompra(Connection con, String nombre) {
+			String sql = String.format("SELECT * FROM Compra WHERE nombre = '%s'",nombre);
+			Compra c = null;
+			Date fecha = new Date();
+
+			
+			String formato = "yyyy-MM-dd HH:mm:ss"; 
+			SimpleDateFormat sdf = new SimpleDateFormat(formato);
+			String fechaComoString = sdf.format(fecha);
+			try {
+				Statement st = con.createStatement();
+				ResultSet rs = st.executeQuery(sql);
+				if(rs.next()) {
+					String nombreMed = rs.getString("NombreMedicamento");
+					int id = Integer.parseInt(rs.getString("ID"));
+					double precio = Double.parseDouble(rs.getString("Precio"));
+					fechaComoString = rs.getString("FechaDeCompra");
+					
+					c = new Compra(nombreMed, id, precio,fechaComoString);
+					
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}*/
 	
 		public static List<Compra> cogerCompra(Connection con) {
 		String sql = "SELECT * FROM Compra";

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import domain.Clinica;
+import domain.Compra;
 import domain.Dueño;
+import domain.Medicamento;
 import domain.Paciente;
 import domain.TipoPaciente;
 
@@ -64,8 +67,35 @@ public class BDTest {
 		Dueño d = BD.buscarDueño(con, "123456789");
 		assertNotNull(d);
 		d = BD.buscarDueño(con, "999Z");
-		assertNull(d);
-		
+		assertNull(d);	
+	}
+	
+	@Test
+	public void testInsertarMedicamento() {
+		BD.insertarMedicamento(con, new Medicamento("Med1", 123, 23.3));
+		Medicamento m = BD.buscarMedicamento(con, "Med1");
+		assertNotNull(m);
+	}
+	
+	@Test
+	public void testBuscarMedicamento () {
+		Medicamento m = BD.buscarMedicamento(con, "AMOXICILINA");
+		assertNotNull(m);
+		m = BD.buscarMedicamento(con, "PARACETAMOL");
+		assertNull(m);
+	}
+	
+	@Test
+	public void testInsertarCompra() {
+		BD.insertarCompra(con, new Compra("CollarAntiPulgas", 51.99, 4590, new Date(), new Paciente(999, "a", 999, "a", 1, TipoPaciente.ARAÑA,
+		        new Dueño("A", "A", "1", new Clinica(1, "A", 1, new ArrayList<>(), new ArrayList<>(), null, 0,
+		                new ArrayList<>(), new ArrayList<>()), null, 0, null, null))));
+	}
+	
+	@Test
+	public void testVolcarTablaMedicamentosALista() {
+		List<Medicamento> lM = BD.volcarTablaMedicamentosALista(con, new ArrayList<>());
+		assertNotNull(lM);
 	}
 	
 
