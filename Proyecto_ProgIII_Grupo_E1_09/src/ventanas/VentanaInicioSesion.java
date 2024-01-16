@@ -96,7 +96,7 @@ public class VentanaInicioSesion extends JFrame{
 		
 		getContentPane().add(panel);
 		
-		textContraseña.addActionListener(new ActionListener() {
+		btnAceptar.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -107,6 +107,7 @@ public class VentanaInicioSesion extends JFrame{
 				Connection conn = BD.initBD("clinicaFurwell.db");
 				
 				Dueño dueñoABuscar = BD.buscarDueño(conn, dni);
+				
 				if (dueñoABuscar != null) {
 					
 					String contraseña = dueñoABuscar.getContraseña();

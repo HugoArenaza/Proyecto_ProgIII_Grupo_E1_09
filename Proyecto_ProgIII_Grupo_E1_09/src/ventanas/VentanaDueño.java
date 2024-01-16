@@ -111,7 +111,6 @@ public class VentanaDueño extends JFrame{
 	private JMenuBar menuBar;
 	
 	private JMenu visualizarMascotas;
-	private JMenu visualizarFacturas;
 	private JMenu visualizarHistorial;
 	private JMenu visualizarAgenda;
 	private JMenu visualizarMiPerfil;
@@ -124,7 +123,7 @@ public class VentanaDueño extends JFrame{
 	
 	private JMenuItem hist;
 	private JMenuItem masc;
-	private JMenuItem fact;
+	
 
 	private JMenuItem compMedicamentos;
 	
@@ -245,8 +244,7 @@ public class VentanaDueño extends JFrame{
 	visualizarMascotas = new JMenu("Mascotas");
 	masc = new JMenuItem("Mis Mascotas");
 	 
-    visualizarFacturas = new JMenu("Facturas");
-    fact = new JMenuItem("Mis facturas");
+    
     
     visualizarHistorial = new JMenu("Historial");
     hist = new JMenuItem("Mi Historial");
@@ -268,7 +266,6 @@ public class VentanaDueño extends JFrame{
     
     
     menuBar.add(visualizarMascotas);
-    menuBar.add(visualizarFacturas);
     menuBar.add(visualizarTienda);
     menuBar.add(visualizarHistorial);
     menuBar.add(visualizarAgenda);
@@ -290,7 +287,7 @@ public class VentanaDueño extends JFrame{
     
     visualizarMascotas.add(masc);
     
-    visualizarFacturas.add(fact);
+    
     
     visualizarTienda.add(compMedicamentos);
     
@@ -471,18 +468,7 @@ public class VentanaDueño extends JFrame{
 	
 	
 	
-	fact.addActionListener(new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			ocultarPaneles();
-			pFacturas.setVisible(true);
-			logger.info("El usuario ha accedido a sus facturas");
 	
-			
-			
-		}
-	});
 	compMedicamentos.addActionListener(new ActionListener() {
 		
 		@Override
@@ -1012,7 +998,7 @@ public class VentanaDueño extends JFrame{
 	pMisPedidos.setPreferredSize(panelSize);
 	
 	tablaCompras = new JTable();
-	List<Compra> lc = new ArrayList<>(BD.cogerCompra(conn));
+	
 	scrollCompras = new JScrollPane(tablaCompras);
 	
 	tablaCompras2 = new JTable();
@@ -1037,7 +1023,8 @@ public class VentanaDueño extends JFrame{
 		public void mouseClicked(MouseEvent e) {
 			Point p = e.getPoint();
 			fila2 = tablaCompras.rowAtPoint(p);
-			}
+			
+		}
 		});
 	                   
 	btnTramitarPedido = new JButton("Tramitar Pedido");
@@ -1052,12 +1039,20 @@ public class VentanaDueño extends JFrame{
 			int id = (int) tablaCompras.getModel().getValueAt(fila2, 1);
 			Date fechaCompra = (Date) tablaCompras.getModel().getValueAt(fila2, 3);
 			Paciente paciente = (Paciente) tablaCompras.getModel().getValueAt(fila2, 4);
-			System.out.println(nombreMedicamento+"\t"+precio+"\t"+id+"\t"+fechaCompra+"\t"+paciente);
+			
 			Compra c = new Compra(nombreMedicamento, precio, id, fechaCompra, paciente);
 			
-			listaCompras.remove(c);
+			for(Compra compra : listaCompras) {
+				
+				if(compra.equals(c)) {
+					
+					listaCompras.remove(c);
+				}
+			}
 			
+			System.out.println(listaCompras);
 			tablaCompras.setModel(new ModeloHistorialCompras(listaCompras));
+			tablaCompras.updateUI();
 			comprasFinalizadas.add(c);
 			
 		
@@ -1073,7 +1068,10 @@ public class VentanaDueño extends JFrame{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showOptionDialog(null, "¿Estas seguro que quieres funalizar la compra \n con el valor de "+" ?", "Selecciona un valor", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+			
+			JOptionPane.showOptionDialog(null, "¿Estas seguro que quieres funalizar la compra?", "Selecciona un valor", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+			modeloHistorialCompras.setRowCount(0);
+			
 			logger.info("Se ha finaliza la compra");
 		}
 	});
@@ -1092,7 +1090,7 @@ public class VentanaDueño extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			ocultarPaneles();
 			pMisPedidos.setVisible(true);
-			tablaCompras.setModel(modeloHistorialCompras = new ModeloHistorialCompras(comprasFinalizadas));
+			tablaCompras2.setModel(modeloHistorialCompras = new ModeloHistorialCompras(comprasFinalizadas));
 			
 			
 			
