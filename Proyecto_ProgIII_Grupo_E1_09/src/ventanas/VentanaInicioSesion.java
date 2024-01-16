@@ -7,6 +7,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.Connection;
 import java.util.logging.Logger;
 
@@ -94,7 +96,7 @@ public class VentanaInicioSesion extends JFrame{
 		
 		getContentPane().add(panel);
 		
-		btnAceptar.addActionListener(new ActionListener() {
+		textContraseña.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -157,6 +159,86 @@ public class VentanaInicioSesion extends JFrame{
 					
 				
 			}}
+		});
+		
+		panel.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+
+					String User = textUsuario.getText();
+					String dni = txtDni.getText().toUpperCase();
+					String con = textContraseña.getText();
+					
+					Connection conn = BD.initBD("clinicaFurwell.db");
+					
+					Dueño dueñoABuscar = BD.buscarDueño(conn, dni);
+					if (dueñoABuscar != null) {
+						
+						String contraseña = dueñoABuscar.getContraseña();
+						String apellidos = dueñoABuscar.getApellidos();
+						String nombre = dueñoABuscar.getNombreDueño();
+						String correo = dueñoABuscar.getCorreo();
+						String dniRegistrado = dueñoABuscar.getDni();
+						int numeroTlf = dueñoABuscar.getNumeroTlf();
+						String fNac = dueñoABuscar.getfNac();
+						
+						Dueño d = new Dueño(nombre, apellidos, dniRegistrado, null, fNac, numeroTlf, correo, contraseña);
+						if(contraseña.equals(con)) {
+							JOptionPane.showMessageDialog(null, "Bienvenido!","SESIÓN INICIADA",JOptionPane.INFORMATION_MESSAGE);
+							dueño = d; 
+							VentanaInicio.setDueño(d);
+							dispose();
+							
+							
+							new VentanaDueño();
+						
+						logger.info("Se ha iniciado sesión con un usuario");
+						dispose();
+					}else {
+						JOptionPane.showMessageDialog(null, "La contraseña es incorrecta","ERROR",JOptionPane.ERROR_MESSAGE);
+						logger.warning("Se ha introducido un usuario con la contraseña incorrecta");
+						textContraseña.setText("");
+						textUsuario.setText("");
+						txtDni.setText("");
+					}
+						
+						}else {
+							int numero = JOptionPane.showConfirmDialog(null, "Ese dni es incorrecto o no esta registrado ¿Quieres registrarlo?", "Confirmación", JOptionPane.YES_NO_OPTION);
+							if (numero == JOptionPane.YES_OPTION) {
+					            new VentanaRegistroDueño();
+					          
+					        } else {
+					        	textContraseña.setText("");
+								textUsuario.setText("");
+								txtDni.setText("");
+					           
+					        }
+							logger.warning("Se ha introducido un usuario sin registrar");
+							
+						
+						
+							
+								
+							vActual.setVisible(false);
+							}
+				}else if(e.isControlDown() && e.getKeyCode() == KeyEvent.VK_PLUS) {
+					System.out.println("CTRL +");
+				}
+			}
 		});
 		
 		btnCancelar.addActionListener((e)->{

@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import com.toedter.calendar.JCalendar;
@@ -159,6 +160,8 @@ public class VentanaDueño extends JFrame{
 	private List<Paciente> listaPacientes = new ArrayList<>();
 	private List<Compra> listaCompras = new ArrayList<>();
 	
+	private List<Compra> comprasFinalizadas = new ArrayList<>();
+	
 	private JComboBox<String> comboHistorial;
 	
 	private JComboBox<Integer> comboHoras;
@@ -181,7 +184,9 @@ public class VentanaDueño extends JFrame{
 	private Logger logger = java.util.logging.Logger.getLogger("Logger");
 	
 	private static int numcita = 000;
-	
+	private int fila;
+	private int fila2;
+	private Medicamento m;
 	public VentanaDueño(){
 		
 	/*CREACION DE PANELES*/
@@ -296,7 +301,7 @@ public class VentanaDueño extends JFrame{
 
 	/*CREACION DE JTABLE*/
    modeloHistorialPacientes = new ModeloHistorialPacientes(listaPacientes);
-   modeloHistorialCompras = new ModeloHistorialCompras(listaCompras);
+   modeloHistorialCompras = new ModeloHistorialCompras(comprasFinalizadas);
    tablaHistorial = new JTable(modeloHistorialPacientes);
    scrollHistorial = new JScrollPane(tablaHistorial);
   
@@ -907,59 +912,59 @@ public class VentanaDueño extends JFrame{
 	pVisualizarMedicamentos.add(pBtnAniadirAlCarrito);
 	rellenarInfo2();
 	listaCompras = new ArrayList<>();
-	
+	btnAniadirCarrito.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String textoActual = textoArea.getText();
+			String nombreMedicamento = (String) tablaMedicamentos.getModel().getValueAt(fila, 0);
+			int idMedicamento = (int) tablaMedicamentos.getModel().getValueAt(fila, 1);
+			Double precioMedicamento = (Double) tablaMedicamentos.getModel().getValueAt(fila, 2);
+			Date fechaDeCompraMedicamento = new Date();
+			Paciente paciente = new Paciente();
+			System.out.println("Botón añadir");
+			int pos = JOptionPane.showOptionDialog(null, comboMascotasCopia, "Seleccione el Tipo de Mascota", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+			if (pos == JOptionPane.OK_OPTION) {
+	            paciente = (Paciente) comboMascotasCopia.getSelectedItem();
+	            
+	        } else {
+	        	JOptionPane.showMessageDialog(null, "Operación cancelada por el usuario");
+	        	logger.info("El paciente ha cancelado la operacion de añadir al carrito");
+	        }
+			
+			Connection con = BD.initBD("clinicaFurwell.db");
+			Compra c = new Compra(nombreMedicamento, precioMedicamento, idMedicamento, fechaDeCompraMedicamento, paciente);
+			BD.insertarCompra(conn, c);
+			logger.info("Se ha actualizado la base de datos con la nueva compra realizada por el usuario");
+			BD.cerrarBD(con);
+			listaCompras.add(c);
+			modeloHistorialCompras = new ModeloHistorialCompras(comprasFinalizadas);
+		
+			
+			textoArea.setText(textoActual + "Se ha añadido al carrito correctamente (" +m.getNombreMedicamento()+ ") \nPara consultar tu carrito y finalizar la compra ve a 'Cuenta' y 'Mi cesta'\n ");	
+			logger.info("El paciente ha añadido la compra a su carrito correctamente");
+			
+			
+			
+			
+		}
+	});
+
 	tablaMedicamentos.addMouseListener(new MouseAdapter() {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			Point p = e.getPoint();
-			int fila = tablaMedicamentos.rowAtPoint(p);
+			fila = tablaMedicamentos.rowAtPoint(p);
 			String nombre = (String) tablaMedicamentos.getModel().getValueAt(fila, 0);
 			Connection con = BD.initBD("clinicaFurwell.db");
-			Medicamento m = BD.buscarMedicamento(con, nombre);
+			m = BD.buscarMedicamento(con, nombre);
 			BD.cerrarBD(con);
 			if (m != null) {
 				labelNombre.setText(m.getNombreMedicamento());
 				labelId.setText(""+m.getId());
 				labelPrecio.setText(""+m.getPrecioMedicamento()+ "€");
 			}
-				btnAniadirCarrito.addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						String textoActual = textoArea.getText();
-						String nombreMedicamento = (String) tablaMedicamentos.getModel().getValueAt(fila, 0);
-						int idMedicamento = (int) tablaMedicamentos.getModel().getValueAt(fila, 1);
-						Double precioMedicamento = (Double) tablaMedicamentos.getModel().getValueAt(fila, 2);
-						Date fechaDeCompraMedicamento = new Date();
-						Paciente paciente = new Paciente();
-						
-						int pos = JOptionPane.showOptionDialog(null, comboMascotasCopia, "Seleccione el Tipo de Mascota", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
-						if (pos == JOptionPane.OK_OPTION) {
-				            paciente = (Paciente) comboMascotasCopia.getSelectedItem();
-				            
-				        } else {
-				        	JOptionPane.showMessageDialog(null, "Operación cancelada por el usuario");
-				        	logger.info("El paciente ha cancelado la operacion de añadir al carrito");
-				        }
-						
-						Connection con = BD.initBD("clinicaFurwell.db");
-						Compra c = new Compra(nombreMedicamento, precioMedicamento, idMedicamento, fechaDeCompraMedicamento, paciente);
-						BD.insertarCompra(conn, c);
-						logger.info("Se ha actualizado la base de datos con la nueva compra realizada por el usuario");
-						BD.cerrarBD(con);
-						listaCompras.add(c);
-						modeloHistorialCompras = new ModeloHistorialCompras(listaCompras);
-					
-						
-						textoArea.setText(textoActual + "Se ha añadido al carrito correctamente (" +m.getNombreMedicamento()+ ") \nPara consultar tu carrito y finalizar la compra ve a 'Cuenta' y 'Mi cesta'\n ");	
-						logger.info("El paciente ha añadido la compra a su carrito correctamente");
-						
-						
-						
-						
-					}
-				});
-				
+							
 			
 		}
 	});
@@ -1013,11 +1018,50 @@ public class VentanaDueño extends JFrame{
 	tablaCompras2 = new JTable();
 	scrollCompras2 = new JScrollPane(tablaCompras2);
 	
+	cesta.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ocultarPaneles();
+			pMiCesta.setVisible(true);
+			tablaCompras.setModel(modeloHistorialCompras = new ModeloHistorialCompras(listaCompras));
+			
+			
+			
+			
+		}
+	});
+	
+	tablaCompras.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			Point p = e.getPoint();
+			fila2 = tablaCompras.rowAtPoint(p);
+			}
+		});
+	                   
 	btnTramitarPedido = new JButton("Tramitar Pedido");
 	btnTramitarPedido.addActionListener(new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
+			
+			String nombreMedicamento = (String) tablaCompras.getModel().getValueAt(fila2, 0);
+			Double precio = (Double) tablaCompras.getModel().getValueAt(fila2, 2);
+			int id = (int) tablaCompras.getModel().getValueAt(fila2, 1);
+			Date fechaCompra = (Date) tablaCompras.getModel().getValueAt(fila2, 3);
+			Paciente paciente = (Paciente) tablaCompras.getModel().getValueAt(fila2, 4);
+			System.out.println(nombreMedicamento+"\t"+precio+"\t"+id+"\t"+fechaCompra+"\t"+paciente);
+			Compra c = new Compra(nombreMedicamento, precio, id, fechaCompra, paciente);
+			
+			listaCompras.remove(c);
+			
+			tablaCompras.setModel(new ModeloHistorialCompras(listaCompras));
+			comprasFinalizadas.add(c);
+			
+		
+			
 			logger.info("Se ha tramitado el pedido correctamente");
 			
 			
@@ -1040,19 +1084,7 @@ public class VentanaDueño extends JFrame{
 	pMisPedidos.add(btnFinalizarPedido, BorderLayout.SOUTH);
 	
 
-	cesta.addActionListener(new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			ocultarPaneles();
-			pMiCesta.setVisible(true);
-			tablaCompras.setModel(modeloHistorialCompras = new ModeloHistorialCompras(lc));
-			
-			
-			
-			
-		}
-	});
+	
 	
 	pedido.addActionListener(new ActionListener() {
 		
@@ -1060,7 +1092,7 @@ public class VentanaDueño extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			ocultarPaneles();
 			pMisPedidos.setVisible(true);
-			tablaCompras.setModel(modeloHistorialCompras = new ModeloHistorialCompras(null));
+			tablaCompras.setModel(modeloHistorialCompras = new ModeloHistorialCompras(comprasFinalizadas));
 			
 			
 			

@@ -1,5 +1,6 @@
 package ventanas;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class ModeloHistorialCompras extends DefaultTableModel{
 	
 	
 	public ModeloHistorialCompras(List<Compra> lc) {
-		lCompras = lc;
+		lCompras = new ArrayList<>(lc); 
 	}
 	
 
