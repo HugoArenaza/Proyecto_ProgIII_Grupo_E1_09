@@ -4,9 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.sql.Connection;
-//import java.awt.GraphicsEnvironment;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 import javax.swing.*;
@@ -31,9 +28,6 @@ public class VentanaRegistroDueño extends JFrame{
 	private JTextField txtNomR, txtDniR, txtFNacR, txtApeR, txtUsuR, txtCorreo, txtTelf;
 	private JPasswordField txtConR, txtConR2;
 	private JButton btnRegistrarse, btnSalir;
-	private JFrame vActual;
-	private Dueño dueño;
-	private List<Dueño> listaDueños = new ArrayList<>();
 	private Contenedora c;
 	
 	private static Paciente paciente;
@@ -131,7 +125,9 @@ public class VentanaRegistroDueño extends JFrame{
 			String nom = txtNomR.getText();
 			String apell = txtApeR.getText();
 			String User = txtUsuR.getText();
+			@SuppressWarnings("deprecation")
 			String con = txtConR.getText();
+			@SuppressWarnings("deprecation")
 			String con2 = txtConR2.getText();
 			String dni = txtDniR.getText().toUpperCase();
 			String fNac = txtFNacR.getText();
@@ -157,7 +153,8 @@ public class VentanaRegistroDueño extends JFrame{
 			    logger.warning("Se ha introducido una contraseña que no coincide");
 			    
 			} else {
-			    Dueño d = new Dueño(nom, apell, dni, null, fNac, telefono, correo, con2);
+			    @SuppressWarnings("unused")
+				Dueño d = new Dueño(nom, apell, dni, null, fNac, telefono, correo, con2);
 			    Connection conn = BD.initBD("clinicaFurwell.db");
 			    logger.warning("Se ha guardado un dueño en la base de datos");
 
@@ -201,7 +198,6 @@ public class VentanaRegistroDueño extends JFrame{
 			new VentanaInicio();
 		});
 		
-		vActual = this;
 		setBounds(800, 350, 350, 400);
 		
 		setVisible(true);

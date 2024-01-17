@@ -2,11 +2,8 @@ package ventanas;
 import javax.swing.*;
 
 
-import domain.Especialidades;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
 
 
 public class VentanaAnyadirTrabajador extends JFrame {
@@ -40,8 +37,7 @@ public class VentanaAnyadirTrabajador extends JFrame {
   
         
         btnContinuar.addActionListener(new ActionListener() {
-            @SuppressWarnings("deprecation")
-			@Override
+            @Override
             public void actionPerformed(ActionEvent e) {
             	String tipoVeterinarioSeleccionado = (String) comboTipoVeterinario.getSelectedItem();
 

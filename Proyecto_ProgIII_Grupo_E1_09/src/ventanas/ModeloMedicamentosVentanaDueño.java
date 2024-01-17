@@ -7,7 +7,6 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 import domain.Medicamento;
-import domain.MedicamentosAnimales;
 
 public class ModeloMedicamentosVentanaDueño extends DefaultTableModel{
 

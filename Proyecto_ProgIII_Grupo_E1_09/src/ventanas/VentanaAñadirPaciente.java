@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import base_de_datos.BD;
-import domain.Especialidades;
 import domain.TipoPaciente;
 
 public class VentanaAñadirPaciente extends JFrame {

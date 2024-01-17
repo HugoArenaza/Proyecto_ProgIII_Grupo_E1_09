@@ -18,7 +18,6 @@ public class VentanaInicio extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JButton btnInicioSesion, btnRegistro, btnSalir;
 	private JPanel  pSur, pCentro ,pCentroIzq, pCentroDcha;
-	private JFrame vActual;
 	private JLabel foto;
 	private static Dueño dueño;
 	
@@ -34,7 +33,6 @@ public class VentanaInicio extends JFrame{
 	public VentanaInicio()
 	{	
 		ImageIcon imPortada = new ImageIcon("src/imagenes/fotoportada.png");
-		vActual = this;
 		setTitle("Bienvenido a Furwell!");
 		setBounds(400, 100, 800, 600);
 		
@@ -61,6 +59,12 @@ public class VentanaInicio extends JFrame{
 		pSur.add(btnSalir);
 		getContentPane().add(pCentro, BorderLayout.CENTER);
 		getContentPane().add(pSur, BorderLayout.SOUTH);
+		
+		
+	
+		
+		
+		
 		
 		
 		/*Eventos*/

@@ -3,8 +3,6 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GraphicsEnvironment;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -28,6 +26,11 @@ import domain.Dueño;
 
 public class VentanaInicioSesion extends JFrame{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Logger logger = java.util.logging.Logger.getLogger("Logger");
 	
 	private JFrame vActual;
@@ -36,9 +39,6 @@ public class VentanaInicioSesion extends JFrame{
 	private JTextField textUsuario, txtDni; 
 	private JPasswordField textContraseña;
 	private JButton btnAceptar, btnCancelar;
-	private Dueño dueño;
-	
-	
 	public VentanaInicioSesion(){
 		//BoxLayout.X_AXIS
 		panel = new JPanel();
@@ -96,12 +96,57 @@ public class VentanaInicioSesion extends JFrame{
 		
 		getContentPane().add(panel);
 		
+		
+		
 		textContraseña.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				String dni = txtDni.getText().toUpperCase();
+		        @SuppressWarnings("deprecation")
+		        String con = textContraseña.getText();
+
+		        // Verificar si el DNI coincide con el de vet1
+		        if (dni.equals("12345678")) { // Reemplaza con el DNI de vet1
+		            if (con.equals("contraseña1")) { // Reemplaza con la contraseña de vet1
+		                // Abre la ventana correspondiente al veterinario vet1
+		                // Ejemplo:
+		                new VentanaJefe();
+		            } else {
+		                JOptionPane.showMessageDialog(null, "La contraseña es incorrecta", "ERROR", JOptionPane.ERROR_MESSAGE);
+		                textContraseña.setText("");
+		                textUsuario.setText("");
+		                txtDni.setText("");
+		            }
+		        }
+		        // Verificar si el DNI coincide con el de vet2
+		        else if (dni.equals("72345618")) { // Reemplaza con el DNI de vet2
+		            if (con.equals("contraseña2")) { // Reemplaza con la contraseña de vet2
+		                // Abre la ventana correspondiente al veterinario vet2
+		                // Ejemplo:
+		                new VentanaTrabajador();
+		            } else {
+		                JOptionPane.showMessageDialog(null, "La contraseña es incorrecta", "ERROR", JOptionPane.ERROR_MESSAGE);
+		                textContraseña.setText("");
+		                textUsuario.setText("");
+		                txtDni.setText("");
+		            }
+		        }
+		        // El DNI no coincide con ninguno de los veterinarios
+		        else {
+		            JOptionPane.showMessageDialog(null, "DNI incorrecto o no registrado", "ERROR", JOptionPane.ERROR_MESSAGE);
+		            textContraseña.setText("");
+		            textUsuario.setText("");
+		            txtDni.setText("");
+		        }
+		    }
+				
+				/*
+				@SuppressWarnings("unused")
 				String User = textUsuario.getText();
 				String dni = txtDni.getText().toUpperCase();
+				@SuppressWarnings("deprecation")
 				String con = textContraseña.getText();
 				
 				Connection conn = BD.initBD("clinicaFurwell.db");
@@ -120,7 +165,6 @@ public class VentanaInicioSesion extends JFrame{
 					Dueño d = new Dueño(nombre, apellidos, dniRegistrado, null, fNac, numeroTlf, correo, contraseña);
 					if(contraseña.equals(con)) {
 						JOptionPane.showMessageDialog(null, "Bienvenido!","SESIÓN INICIADA",JOptionPane.INFORMATION_MESSAGE);
-						dueño = d; 
 						VentanaInicio.setDueño(d);
 						dispose();
 						
@@ -158,8 +202,8 @@ public class VentanaInicioSesion extends JFrame{
 						
 					
 				
-			}}
-		});
+			}*/}
+		);
 		
 		panel.addKeyListener(new KeyListener() {
 			
@@ -179,8 +223,10 @@ public class VentanaInicioSesion extends JFrame{
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 
+					@SuppressWarnings("unused")
 					String User = textUsuario.getText();
 					String dni = txtDni.getText().toUpperCase();
+					@SuppressWarnings("deprecation")
 					String con = textContraseña.getText();
 					
 					Connection conn = BD.initBD("clinicaFurwell.db");
@@ -199,7 +245,6 @@ public class VentanaInicioSesion extends JFrame{
 						Dueño d = new Dueño(nombre, apellidos, dniRegistrado, null, fNac, numeroTlf, correo, contraseña);
 						if(contraseña.equals(con)) {
 							JOptionPane.showMessageDialog(null, "Bienvenido!","SESIÓN INICIADA",JOptionPane.INFORMATION_MESSAGE);
-							dueño = d; 
 							VentanaInicio.setDueño(d);
 							dispose();
 							

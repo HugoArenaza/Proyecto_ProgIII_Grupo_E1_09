@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOError;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.Properties;
@@ -13,17 +12,14 @@ import java.util.logging.Logger;
 
 import base_de_datos.BD;
 import domain.Contenedora;
-import ventanas.VentanaDueño;
 import ventanas.VentanaInicio;
-import ventanas.VentanaJefe;
-import ventanas.VentanaTrabajador;
-
-import java.sql.Connection;
 
 
 
 public class ClinicaVeterinaria {
 	public static void main(String[] args) {
+		
+		@SuppressWarnings("unused")
 		Logger logger = java.util.logging.Logger.getLogger("Logger");
 		Properties prop = new Properties();
 
@@ -46,8 +42,11 @@ public class ClinicaVeterinaria {
 		
 		try {
 			prop.load(new FileReader("config/config.properties"));
+			@SuppressWarnings("unused")
 			String nombreBD = prop.getProperty("nombreBD");
+			@SuppressWarnings("unused")
 			String nombreAplicacion = prop.getProperty("nombreAplicacion");
+			@SuppressWarnings("unused")
 			String fechaCreacion = prop.getProperty("fechaCreacion");
 		} catch (FileNotFoundException e) { 
 			e.printStackTrace();

@@ -23,7 +23,6 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import com.toedter.calendar.JCalendar;
@@ -794,6 +793,7 @@ public class VentanaDueño extends JFrame{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			@SuppressWarnings("unused")
 			String selec = comboMascotas.getSelectedItem().toString();
 			
 			
@@ -1012,6 +1012,7 @@ public class VentanaDueño extends JFrame{
 	pMisPedidos.setPreferredSize(panelSize);
 	
 	tablaCompras = new JTable();
+	@SuppressWarnings("unused")
 	List<Compra> lc = new ArrayList<>(BD.cogerCompra(conn));
 	scrollCompras = new JScrollPane(tablaCompras);
 	
