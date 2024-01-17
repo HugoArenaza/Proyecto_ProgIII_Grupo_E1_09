@@ -21,7 +21,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import base_de_datos.BD;
-import domain.Contenedora;
 import domain.Dueño;
 
 public class VentanaInicioSesion extends JFrame{
