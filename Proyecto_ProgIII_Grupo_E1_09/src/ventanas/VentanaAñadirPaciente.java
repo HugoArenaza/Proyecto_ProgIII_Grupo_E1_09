@@ -33,7 +33,7 @@ public class VentanaAñadirPaciente extends JFrame {
     public VentanaAñadirPaciente() {
         setTitle("Ventana Paciente");
         setSize(400, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         initComponents();
         initListeners();
@@ -102,7 +102,7 @@ public class VentanaAñadirPaciente extends JFrame {
             statementTrabajador.close();
 
             JOptionPane.showMessageDialog(this, "Paciente agregado exitosamente");
-
+            
             // Cierra los recursos
             conn.close();
         } catch (SQLException ex) {

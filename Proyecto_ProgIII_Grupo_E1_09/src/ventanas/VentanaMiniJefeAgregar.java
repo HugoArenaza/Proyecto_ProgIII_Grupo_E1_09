@@ -38,7 +38,7 @@ public class VentanaMiniJefeAgregar extends JFrame{
 	    public VentanaMiniJefeAgregar() {
 	        setTitle("Ventana MiniJefe");
 	        setSize(400, 400);
-	        	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        	        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 	        initComponents();
 	        initListeners();

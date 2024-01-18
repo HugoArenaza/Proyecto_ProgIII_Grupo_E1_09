@@ -35,7 +35,7 @@ public class VentanaTrabajadorAgregar extends JFrame {
     public VentanaTrabajadorAgregar() {
         setTitle("Ventana Trabajador");
         setSize(400, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
 
         initComponents();

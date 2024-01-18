@@ -14,6 +14,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 //import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -93,6 +94,7 @@ public class VentanaJefe extends JFrame {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
+						
 						
 
 					}
@@ -286,7 +288,7 @@ public class VentanaJefe extends JFrame {
 		setTitle("Ventana Jefe");
 		setBounds(200, 50, 1200, 800);		
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 	}
 

@@ -17,7 +17,7 @@ public class VentanaAnyadirTrabajador extends JFrame {
         setTitle("Seleccionar Tipo de Veterinario");
         setSize(300, 150);
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
