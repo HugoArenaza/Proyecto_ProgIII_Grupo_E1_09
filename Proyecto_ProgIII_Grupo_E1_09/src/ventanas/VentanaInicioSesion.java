@@ -114,6 +114,7 @@ public class VentanaInicioSesion extends JFrame{
 				String User = textUsuario.getText();
 				String dni = txtDni.getText().toUpperCase();
 				
+				@SuppressWarnings("deprecation")
 				String con = textContraseña.getText();
 				
 				Connection conn = BD.initBD("clinicaFurwell.db");
@@ -197,6 +198,7 @@ public class VentanaInicioSesion extends JFrame{
 					String User = textUsuario.getText();
 					String dni = txtDni.getText().toUpperCase();
 					
+					@SuppressWarnings("deprecation")
 					String con = textContraseña.getText();
 					
 					Connection conn = BD.initBD("clinicaFurwell.db");

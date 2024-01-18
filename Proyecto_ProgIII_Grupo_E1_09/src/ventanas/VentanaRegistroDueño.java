@@ -125,7 +125,9 @@ public class VentanaRegistroDueño extends JFrame{
 			String nom = txtNomR.getText();
 			String apell = txtApeR.getText();
 			String User = txtUsuR.getText();
+			@SuppressWarnings("deprecation")
 			String con = txtConR.getText();
+			@SuppressWarnings("deprecation")
 			String con2 = txtConR2.getText();
 			String dni = txtDniR.getText().toUpperCase();
 			String fNac = txtFNacR.getText();
@@ -152,6 +154,7 @@ public class VentanaRegistroDueño extends JFrame{
 			    
 			} else {
 			   
+				@SuppressWarnings("unused")
 				Dueño d = new Dueño(nom, apell, dni, null, fNac, telefono, correo, con2);
 			    Connection conn = BD.initBD("clinicaFurwell.db");
 			    logger.warning("Se ha guardado un dueño en la base de datos");
