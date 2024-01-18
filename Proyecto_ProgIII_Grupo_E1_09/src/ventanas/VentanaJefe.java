@@ -76,6 +76,7 @@ public class VentanaJefe extends JFrame {
 		btnPacientes.setMaximumSize(tamañoBotones);
 		btnTrabajadores.setMaximumSize(tamañoBotones);
 		JButton botonAñadirTrabajador = new JButton("Añadir Trabajador");
+		JButton botonAñadirPaciente = new JButton("Añadir paciente");
 
 		panelIzquierda.add(btnProveedores);
 		panelIzquierda.add(btnPacientes);
@@ -92,6 +93,7 @@ public class VentanaJefe extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				panelCentro.removeAll(); // vacio el panel para cambiar contenido que quiero mostrar
+				panelAbajo.removeAll();
 
 				JPanel panelComboBox = new JPanel();
 				panelComboBox.setLayout(new BorderLayout());
@@ -121,8 +123,12 @@ public class VentanaJefe extends JFrame {
 				panelCentro.add(panelComboBox);
 				panelCentro.revalidate();
 				panelCentro.repaint();
-				panelComboBox.add(panelBotonAbrir, BorderLayout.SOUTH);
+				panelAbajo.add(btnSalir);
+				panelAbajo.revalidate();
+				panelAbajo.repaint();
 
+				panelComboBox.add(panelBotonAbrir, BorderLayout.SOUTH);
+				
 			}
 		});
 		btnPacientes.addActionListener(new ActionListener() {
@@ -137,19 +143,52 @@ public class VentanaJefe extends JFrame {
 
 				model.addColumn("Identificativo");
 				model.addColumn("Nombre Paciente");
-				model.addColumn("Nombre Dueño");
-				model.addColumn("Apellidos Dueño");
 				model.addColumn("MicroChip");
 				model.addColumn("Enfermedad");
 				model.addColumn("Veterinario");
 				model.addColumn("Tipo Paciente");
 				model.addColumn("Telefono Dueño");
-				model.addColumn("Correo Dueño");
 
+				try {
+					Connection conn = BD.initBD("clinicaFurwell.db");
+				    String consulta = "SELECT * FROM Paciente";
+				    PreparedStatement statement = conn.prepareStatement(consulta);
+				    ResultSet resultado = statement.executeQuery();
+				    while (resultado.next()) {
+				        int ID = resultado.getInt("ID");
+				        String Nombre = resultado.getString("Nombre");
+				        int MicroChip = resultado.getInt("MicroChip");
+				        String Enfermedad = resultado.getString("Enfermedad");
+				        String TipoAnimal = resultado.getString("TipoAnimal");
+				        String Dueño = resultado.getString("Dueño");
+				        
+
+				        model.addRow(new Object[]{ID, Nombre, MicroChip, Enfermedad, TipoAnimal, Dueño});
+				    }
+
+				    resultado.close();
+				    statement.close();
+				    conn.close();
+				} catch (SQLException ex) {
+				    ex.printStackTrace();
+				    // Manejar la excepción apropiadamente
+				}
+
+				
+				JTableHeader tableHeader = tablePacientes.getTableHeader();
+				tableHeader.setReorderingAllowed(false);  // Deshabilitar la reordenación de columnas
+				tableHeader.setResizingAllowed(false);     
+
+				tablePacientes.setPreferredScrollableViewportSize(new Dimension(1000, 10000)); // Reemplaza ancho y alto con los valores deseados
+
+				tablePacientes.setEnabled(true);
+				
 				panelCentro.add(new JScrollPane(tablePacientes));
 				panelCentro.revalidate();
 				panelCentro.repaint();
+				
 				panelAbajo.add(btnSalir);
+				panelAbajo.add(botonAñadirPaciente);
 				panelAbajo.revalidate();
 				panelAbajo.repaint();
 
@@ -161,9 +200,8 @@ public class VentanaJefe extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				panelCentro.removeAll();
 				Dimension dimensionPanelCentro = new Dimension(1000, 10000);
-				Border borderResaltado = BorderFactory.createLineBorder(Color.BLUE, 2);
 				panelCentro.setPreferredSize(dimensionPanelCentro);
-				panelCentro.setBorder(borderResaltado);
+				
 
 			
 				JTable tableVeterinarios = new JTable();
@@ -179,10 +217,12 @@ public class VentanaJefe extends JFrame {
 				model.addColumn("Sueldo");
 				model.addColumn("Numero Empleados");
 				model.addColumn("Numero Pacientes");
-				
 				model.addColumn("Especialidad");
-				model.addColumn("Tipo");// Columna para diferenciar tipo de veterinario
-
+				model.addColumn("Tipo");
+				
+				
+				
+				
 				
 				try {
 					Connection conn = BD.initBD("clinicaFurwell.db");
@@ -202,42 +242,7 @@ public class VentanaJefe extends JFrame {
 				        String especialidad = resultado.getString("Especialidad");
 				        String tipo = resultado.getString("TIPO_VETERINARIO");
 				        
-//				        String consultaPaciente = "SELECT nombre FROM Pacientes WHERE id = ?";
-//				        PreparedStatement statementPaciente = conn.prepareStatement(consultaPaciente);
-//				        statementPaciente.setString(1, pacienteId);
-//				        ResultSet resultadoPaciente = statementPaciente.executeQuery();
-//
-//				        // Procesa el resultado y obtén el nombre del paciente
-//				        String nombrePaciente = "";
-//				        if (resultadoPaciente.next()) {
-//				            nombrePaciente = resultadoPaciente.getString("nombre");
-//				        }
-//
-//				        // Limpia los recursos de la consulta del paciente
-//				        resultadoPaciente.close();
-//				        statementPaciente.close();
-//				        
-//				        ArrayList<String> pacientesList = obtenerPacientesDelVeterinario(Id);
-//
-//				     // Crear un JComboBox con la lista de pacientes
-//				     JComboBox<String> comboBox = new JComboBox<>(pacientesList.toArray(new String[0]));
-//
-//				     // Configurar el editor de la celda para usar el JComboBox
-//				     TableColumn pacienteColumn = tableVeterinarios.getColumnModel().getColumn(7);
-//				     pacienteColumn.setCellEditor(new DefaultCellEditor(comboBox));
-//
-//				     // Personalizar el renderizador para mostrar el JComboBox en lugar de texto
-//				     pacienteColumn.setCellRenderer(new DefaultTableCellRenderer() {
-//				         /**
-//						 * 
-//						 */
-//						private static final long serialVersionUID = 1L;
-//
-//						@Override
-//				         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-//				             return comboBox;
-//				         }
-//				     });
+
 				        model.addRow(new Object[]{Id, nombre, apellidos, usuario, contraseña, dni, sueldo,numEmpleados,numPacientes, especialidad, tipo});
 				    }
 
@@ -274,31 +279,6 @@ public class VentanaJefe extends JFrame {
 				tableVeterinarios.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 			}
-			public ArrayList<String> obtenerPacientesDelVeterinario(int idVeterinario) {
-			    ArrayList<String> pacientesList = new ArrayList<>();
-
-			    try {
-			        Connection conn = BD.initBD("clinicaFurwell.db");
-			        String consulta = "SELECT nombre FROM Paciente WHERE Id_veterinario = ?";
-			        PreparedStatement statement = conn.prepareStatement(consulta);
-			        statement.setInt(1, idVeterinario);
-			        ResultSet resultado = statement.executeQuery();
-
-			        while (resultado.next()) {
-			            String nombrePaciente = resultado.getString("nombre");
-			            pacientesList.add(nombrePaciente);
-			        }
-
-			        resultado.close();
-			        statement.close();
-			        conn.close();
-			    } catch (SQLException ex) {
-			        ex.printStackTrace();
-			        // Manejar la excepción apropiadamente
-			    }
-
-			    return pacientesList;
-			}
 		});
 		btnSalir.addActionListener((e) -> {
 			dispose();
@@ -312,6 +292,15 @@ public class VentanaJefe extends JFrame {
 				
 			}
 		});
+		botonAñadirPaciente.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new VentanaAñadirPaciente();
+				
+			}
+		});
 
 		setTitle("Ventana Jefe");
 		setBounds(200, 50, 1200, 800);		
@@ -320,4 +309,5 @@ public class VentanaJefe extends JFrame {
 
 	}
 }
+
 

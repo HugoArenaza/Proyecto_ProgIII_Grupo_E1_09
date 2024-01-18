@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -31,6 +32,7 @@ public class VentanaMiniJefeAgregar extends JFrame{
 	    private JTextField num_empleados;
 	    private JButton btnAgregarTrabajador;
 	    private JComboBox<Especialidades> comboEspecialidad;
+	    Logger logger = java.util.logging.Logger.getLogger("Logger");
 	    
 	    
 	    public VentanaMiniJefeAgregar() {
@@ -89,6 +91,7 @@ public class VentanaMiniJefeAgregar extends JFrame{
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
 	                agregarTrabajador();
+	                logger.info("Se ha añadido un trabajador");
 	            }
 	        });
 	    }
@@ -130,18 +133,15 @@ public class VentanaMiniJefeAgregar extends JFrame{
 	    }
 
 	    private int obtenerUltimoId(Connection conn) throws SQLException {
-	        String consulta = "SELECT MAX(Id) FROM Trabajador";
+	        String consulta = "SELECT MAX(Id) FROM VETERINARIO";
 	        try (PreparedStatement statement = conn.prepareStatement(consulta);
 	             ResultSet resultado = statement.executeQuery()) {
 	            return resultado.next() ? resultado.getInt(1) : 0;
 	        }
 	    }
 
-	    private int obtenerIdVeterinario(Connection conn) throws SQLException {
-	        // Aquí puedes obtener el Id del veterinario actualmente logueado o asignar un valor por defecto
-	        // En este ejemplo, se asume que existe un veterinario con Id=1
-	        return 1;
+	    
 	    }
-	}    
+	   
 
 

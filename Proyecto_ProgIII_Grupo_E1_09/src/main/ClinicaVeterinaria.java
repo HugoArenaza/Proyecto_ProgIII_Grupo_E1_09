@@ -15,6 +15,7 @@ import base_de_datos.BD;
 import domain.Contenedora;
 
 import ventanas.VentanaInicio;
+import ventanas.VentanaJefe;
 
 
 
@@ -58,12 +59,16 @@ public class ClinicaVeterinaria {
 		
 		
 		
-		//new VentanaJefe();
+		new VentanaJefe();
+
 
 		//new VentanaTrabajador();
 
 
-		new VentanaInicio();
+		//new VentanaInicio();
+
+
+		//new VentanaInicio();
 
 
 
