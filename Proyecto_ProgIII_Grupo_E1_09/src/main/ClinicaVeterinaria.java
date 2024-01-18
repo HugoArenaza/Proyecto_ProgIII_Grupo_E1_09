@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import base_de_datos.BD;
 import domain.Contenedora;
 import ventanas.VentanaInicio;
+import ventanas.VentanaJefe;
+import ventanas.VentanaTrabajador;
 
 
 
@@ -58,7 +60,9 @@ public class ClinicaVeterinaria {
 		
 		
 		
-		//new VentanaJefe();
+		new VentanaJefe();
+		
+		new VentanaTrabajador();
 
 		new VentanaInicio();
 

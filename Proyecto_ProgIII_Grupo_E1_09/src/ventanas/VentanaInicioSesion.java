@@ -102,46 +102,10 @@ public class VentanaInicioSesion extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				String dni = txtDni.getText().toUpperCase();
-		        @SuppressWarnings("deprecation")
-		        String con = textContraseña.getText();
-
-		        // Verificar si el DNI coincide con el de vet1
-		        if (dni.equals("12345678")) { // Reemplaza con el DNI de vet1
-		            if (con.equals("contraseña1")) { // Reemplaza con la contraseña de vet1
-		                // Abre la ventana correspondiente al veterinario vet1
-		                // Ejemplo:
-		                new VentanaJefe();
-		            } else {
-		                JOptionPane.showMessageDialog(null, "La contraseña es incorrecta", "ERROR", JOptionPane.ERROR_MESSAGE);
-		                textContraseña.setText("");
-		                textUsuario.setText("");
-		                txtDni.setText("");
-		            }
-		        }
-		        // Verificar si el DNI coincide con el de vet2
-		        else if (dni.equals("72345618")) { // Reemplaza con el DNI de vet2
-		            if (con.equals("contraseña2")) { // Reemplaza con la contraseña de vet2
-		                // Abre la ventana correspondiente al veterinario vet2
-		                // Ejemplo:
-		                new VentanaTrabajador();
-		            } else {
-		                JOptionPane.showMessageDialog(null, "La contraseña es incorrecta", "ERROR", JOptionPane.ERROR_MESSAGE);
-		                textContraseña.setText("");
-		                textUsuario.setText("");
-		                txtDni.setText("");
-		            }
-		        }
-		        // El DNI no coincide con ninguno de los veterinarios
-		        else {
-		            JOptionPane.showMessageDialog(null, "DNI incorrecto o no registrado", "ERROR", JOptionPane.ERROR_MESSAGE);
-		            textContraseña.setText("");
-		            textUsuario.setText("");
-		            txtDni.setText("");
-		        }
-		    }
 				
-				/*
+		    
+				
+				
 				@SuppressWarnings("unused")
 				String User = textUsuario.getText();
 				String dni = txtDni.getText().toUpperCase();
@@ -201,7 +165,7 @@ public class VentanaInicioSesion extends JFrame{
 						
 					
 				
-			}*/}
+			}}}
 		);
 		
 		panel.addKeyListener(new KeyListener() {
