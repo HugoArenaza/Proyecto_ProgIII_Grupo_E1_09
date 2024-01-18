@@ -7,14 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
-
-import domain.Clinica;
 import domain.Compra;
 import domain.Dueño;
 import domain.Medicamento;
 import domain.Paciente;
 import domain.TipoPaciente;
-import domain.Veterinario;
+
 
 
 
