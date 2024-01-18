@@ -135,7 +135,7 @@ public class VentanaDueño extends JFrame{
 	private JScrollPane scrollArbol;
 	
 	private ModeloHistorialPacientes modeloHistorialPacientes;
-	private ModeloHistorialCompras modeloHistorialCompras;
+	private static ModeloHistorialCompras modeloHistorialCompras;
 	
 	private JCalendar calendario;
 
@@ -1077,8 +1077,11 @@ public class VentanaDueño extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			JOptionPane.showOptionDialog(null, "¿Estas seguro que quieres funalizar la compra?", "Selecciona un valor", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
-			modeloHistorialCompras.setRowCount(0);
+			int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estas seguro que quieres funalizar la compra?", "Confirmacion", JOptionPane.YES_NO_OPTION);
+			if (confirmacion == JOptionPane.YES_OPTION){
+				modeloHistorialCompras.setRowCount(0);
+			}
+			
 			
 			logger.info("Se ha finaliza la compra");
 		}
