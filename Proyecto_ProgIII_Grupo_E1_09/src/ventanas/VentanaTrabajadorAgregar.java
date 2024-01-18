@@ -36,6 +36,7 @@ public class VentanaTrabajadorAgregar extends JFrame {
         setTitle("Ventana Trabajador");
         setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
 
         initComponents();
         initListeners();
@@ -84,9 +85,16 @@ public class VentanaTrabajadorAgregar extends JFrame {
         btnAgregarTrabajador.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                agregarTrabajador();
+            	
+               if(num_pacientes.getText().isEmpty() || txtSueldo.getText().isEmpty() || txtDNI.getText().isEmpty() || txtContraseña.getText().isEmpty() || txtUsuario.getText().isEmpty() || txtApellidos.getText().isEmpty() || txtNombre.getText().isEmpty()) {
+            	   JOptionPane.showMessageDialog(null, "Rellena todos los campos!!");
+            
+            
+            }else {
+            	agregarTrabajador();	
             }
-        });
+            
+        }});
     }
     private void agregarTrabajador() {
     	try {

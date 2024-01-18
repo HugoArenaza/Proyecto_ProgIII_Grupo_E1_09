@@ -19,8 +19,7 @@ import domain.Contenedora;
 
 
 import ventanas.VentanaInicio;
-import ventanas.VentanaJefe;
-import ventanas.VentanaTrabajador;
+
 
 
 
@@ -68,10 +67,7 @@ public class ClinicaVeterinaria {
 		}
 
 		
-		
-		
-		
-		
+
 		new VentanaInicio();
 
 

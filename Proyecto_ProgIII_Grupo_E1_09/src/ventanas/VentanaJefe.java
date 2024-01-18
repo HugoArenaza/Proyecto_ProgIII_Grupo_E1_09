@@ -31,6 +31,7 @@ public class VentanaJefe extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JButton btnProveedores, btnPacientes, btnTrabajadores, btnSalir;
 	private JPanel panelCentro, panelAbajo;
+	private static JComboBox<Proveedor> proveedores;
 	
 	public VentanaJefe() {
 		Logger logger = java.util.logging.Logger.getLogger("Logger");
@@ -77,10 +78,14 @@ public class VentanaJefe extends JFrame {
 				JPanel panelComboBox = new JPanel();
 				panelComboBox.setLayout(new BorderLayout());
 
-				JComboBox<Proveedor> proveedores = new JComboBox<>();
+				proveedores = new JComboBox<>();
+				
+				
 				DefaultComboBoxModel<Proveedor> model = new DefaultComboBoxModel<>();
 
 				proveedores.setModel(model);
+				
+				aniadirProveedoresAlCombo();
 
 				JButton botonAbrir = new JButton("Abrir proveedor");
 
@@ -88,10 +93,7 @@ public class VentanaJefe extends JFrame {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						System.out.println("Prueba de boton"); // Prueba funcionalidad, este boton se usara para abrir
-																// la
-																// clinica seleccionada en una nueva ventana con todos
-																// los datos
+						
 
 					}
 				});
@@ -287,6 +289,27 @@ public class VentanaJefe extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 	}
-}
 
+		
+	public static void aniadirProveedoresAlCombo() {
+		String correo = "@gmail.com";
+		Proveedor p1 = new Proveedor("provedor1"+correo, 661223435);
+		Proveedor p2 = new Proveedor("provedor2"+correo, 661224554);
+		Proveedor p3 = new Proveedor("provedor3"+correo, 694353432);
+		Proveedor p4 = new Proveedor("provedor4"+correo, 643523443);
+		Proveedor p5 = new Proveedor("provedor5"+correo, 624245325);
+		Proveedor p6 = new Proveedor("provedor6"+correo, 634352124);
+		
+		proveedores.addItem(p1);
+		proveedores.addItem(p2);
+		proveedores.addItem(p3);
+		proveedores.addItem(p4);
+		proveedores.addItem(p5);
+		proveedores.addItem(p6);
+		
+		
+		
+	}
+		
+}
 

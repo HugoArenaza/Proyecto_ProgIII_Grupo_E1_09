@@ -120,7 +120,9 @@ public class VentanaInicioSesion extends JFrame{
 				
 				Dueño dueñoABuscar = BD.buscarDueño(conn, dni);
 				
-				if (dueñoABuscar != null) {
+				if(User.equals("TRABAJADOR")&& dni.equals("12345678A")&& con.equals("TRABAJADOR")) {
+						new VentanaJefe();
+				}else if (dueñoABuscar != null) {
 					
 					String contraseña = dueñoABuscar.getContraseña();
 					String apellidos = dueñoABuscar.getApellidos();
@@ -191,16 +193,18 @@ public class VentanaInicioSesion extends JFrame{
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 
-					@SuppressWarnings("unused")
+					
 					String User = textUsuario.getText();
 					String dni = txtDni.getText().toUpperCase();
-					@SuppressWarnings("deprecation")
+					
 					String con = textContraseña.getText();
 					
 					Connection conn = BD.initBD("clinicaFurwell.db");
 					
 					Dueño dueñoABuscar = BD.buscarDueño(conn, dni);
-					if (dueñoABuscar != null) {
+					if(User.equals("TRABAJADOR")&& dni.equals("12345678A")&& con.equals("TRABAJADOR")) {
+						new VentanaJefe();
+				}else if(dueñoABuscar != null) {
 						
 						String contraseña = dueñoABuscar.getContraseña();
 						String apellidos = dueñoABuscar.getApellidos();

@@ -45,7 +45,7 @@ public class Proveedor {
 
 	@Override
 	public String toString() {
-		return "Proveedor [correo=" + correo + ", num_contacto=" + num_contacto + "]";
+		return correo  + ", " +num_contacto ;
 	}
 	
 

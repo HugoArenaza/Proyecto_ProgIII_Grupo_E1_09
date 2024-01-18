@@ -125,9 +125,7 @@ public class VentanaRegistroDueño extends JFrame{
 			String nom = txtNomR.getText();
 			String apell = txtApeR.getText();
 			String User = txtUsuR.getText();
-			@SuppressWarnings("deprecation")
 			String con = txtConR.getText();
-			@SuppressWarnings("deprecation")
 			String con2 = txtConR2.getText();
 			String dni = txtDniR.getText().toUpperCase();
 			String fNac = txtFNacR.getText();
@@ -153,7 +151,7 @@ public class VentanaRegistroDueño extends JFrame{
 			    logger.warning("Se ha introducido una contraseña que no coincide");
 			    
 			} else {
-			    @SuppressWarnings("unused")
+			   
 				Dueño d = new Dueño(nom, apell, dni, null, fNac, telefono, correo, con2);
 			    Connection conn = BD.initBD("clinicaFurwell.db");
 			    logger.warning("Se ha guardado un dueño en la base de datos");
@@ -172,7 +170,7 @@ public class VentanaRegistroDueño extends JFrame{
 					    logger.warning("Se ha intentado registrar un dueño un numero incorrecto");
 
 			        } else {
-			            boolean registroInsertado = BD.insertarDueño(nom, apell, dni, null, fNac, telefono, correo, con2);
+			            boolean registroInsertado = BD.insertarDueño(nom, apell, dni, fNac, telefono, correo, con2);
 
 			            if (registroInsertado) {
 			                JOptionPane.showMessageDialog(null, "Dueño registrado con éxito", "REGISTRADO", JOptionPane.INFORMATION_MESSAGE);

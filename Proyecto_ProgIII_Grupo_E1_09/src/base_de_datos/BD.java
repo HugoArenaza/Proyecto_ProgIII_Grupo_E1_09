@@ -91,17 +91,14 @@ public class BD {
 	
 	 
 	
-	public static boolean insertarDueño(String NombreDueño, String apellidos, String dni, Clinica clinica_asociada,
+	public static boolean insertarDueño(String NombreDueño, String apellidos, String dni,
 			 String fNac, int numeroTlf, String correo, String contraseña) {
-		@SuppressWarnings("unused")
-		String sql = "INSERT INTO dueños(NombreDueño, apellidos, dni, clinica_asociada, fNac, numeroTlf, correo, contraseña)"
-				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		
 		String s = "";
-		String clinica = "";
-		if(clinica_asociada!=null)
-			s = String.format("INSERT INTO dueños VALUES('%s','%s','%s','%s','%s','%s','%s','%s')", NombreDueño, apellidos,dni,Integer.toString(clinica_asociada.getId()),fNac,numeroTlf,correo, contraseña );
-		else
-			s = String.format("INSERT INTO dueños VALUES('%s','%s','%s','%s','%s','%s','%s','%s')", NombreDueño, apellidos,dni,clinica,fNac,numeroTlf,correo, contraseña );
+		
+		
+			s = String.format("INSERT INTO dueños VALUES('%s','%s','%s','%s','%s','%s','%s')", NombreDueño, apellidos,dni,fNac,numeroTlf,correo, contraseña );
 		
 		try {
 			Connection con = initBD("clinicaFurwell.db");
