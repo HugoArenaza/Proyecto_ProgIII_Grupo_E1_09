@@ -93,6 +93,7 @@ public class BD {
 	
 	public static boolean insertarDueño(String NombreDueño, String apellidos, String dni, Clinica clinica_asociada,
 			 String fNac, int numeroTlf, String correo, String contraseña) {
+		@SuppressWarnings("unused")
 		String sql = "INSERT INTO dueños(NombreDueño, apellidos, dni, clinica_asociada, fNac, numeroTlf, correo, contraseña)"
 				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 		String s = "";
@@ -165,6 +166,25 @@ public class BD {
 				}
 			}
 		}
+	//ID int, Nombre String, MicroChip int, " + "Enfermedad String, TipoAnimal String, Dueño String
+	/*public static List<Paciente> volcarTablaPacienteALista(Connection con, List<Paciente> lPaciente){
+		String sql = "select *from Paciente";
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()) {
+				int ID = rs.getInt("ID");
+				String nombre = rs.getString("Nombre");
+				int microchip = rs.getInt("MicroChip");
+				String enfermedad = rs.getString("Enfermedad");
+				String tipoAnimal = rs.getString("TipoAnimal");
+				String duenio = rs.getString("Dueño");
+				Paciente p = new Paciente();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}*/
 	public static List<Medicamento> volcarTablaMedicamentosALista(Connection conn, List<Medicamento> lMedicamentos){
 		String sql = "select * from Medicamento";
 		

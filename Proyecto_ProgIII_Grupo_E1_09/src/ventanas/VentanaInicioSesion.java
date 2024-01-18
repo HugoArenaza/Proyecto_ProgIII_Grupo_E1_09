@@ -3,8 +3,6 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GraphicsEnvironment;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -23,11 +21,15 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import base_de_datos.BD;
-import domain.Contenedora;
 import domain.Dueño;
 
 public class VentanaInicioSesion extends JFrame{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Logger logger = java.util.logging.Logger.getLogger("Logger");
 	
 	private JFrame vActual;
@@ -36,9 +38,6 @@ public class VentanaInicioSesion extends JFrame{
 	private JTextField textUsuario, txtDni; 
 	private JPasswordField textContraseña;
 	private JButton btnAceptar, btnCancelar;
-	private Dueño dueño;
-	
-	
 	public VentanaInicioSesion(){
 		//BoxLayout.X_AXIS
 		panel = new JPanel();
@@ -96,12 +95,25 @@ public class VentanaInicioSesion extends JFrame{
 		
 		getContentPane().add(panel);
 		
+
+		
+
+		
+		
 		btnAceptar.addActionListener(new ActionListener() {
+
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				
+		    
+				
+				
+		
 				String User = textUsuario.getText();
 				String dni = txtDni.getText().toUpperCase();
+				
 				String con = textContraseña.getText();
 				
 				Connection conn = BD.initBD("clinicaFurwell.db");
@@ -121,7 +133,6 @@ public class VentanaInicioSesion extends JFrame{
 					Dueño d = new Dueño(nombre, apellidos, dniRegistrado, null, fNac, numeroTlf, correo, contraseña);
 					if(contraseña.equals(con)) {
 						JOptionPane.showMessageDialog(null, "Bienvenido!","SESIÓN INICIADA",JOptionPane.INFORMATION_MESSAGE);
-						dueño = d; 
 						VentanaInicio.setDueño(d);
 						dispose();
 						
@@ -159,8 +170,8 @@ public class VentanaInicioSesion extends JFrame{
 						
 					
 				
-			}}
-		});
+			}}}
+		);
 		
 		panel.addKeyListener(new KeyListener() {
 			
@@ -180,8 +191,10 @@ public class VentanaInicioSesion extends JFrame{
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 
+					@SuppressWarnings("unused")
 					String User = textUsuario.getText();
 					String dni = txtDni.getText().toUpperCase();
+					@SuppressWarnings("deprecation")
 					String con = textContraseña.getText();
 					
 					Connection conn = BD.initBD("clinicaFurwell.db");
@@ -200,7 +213,6 @@ public class VentanaInicioSesion extends JFrame{
 						Dueño d = new Dueño(nombre, apellidos, dniRegistrado, null, fNac, numeroTlf, correo, contraseña);
 						if(contraseña.equals(con)) {
 							JOptionPane.showMessageDialog(null, "Bienvenido!","SESIÓN INICIADA",JOptionPane.INFORMATION_MESSAGE);
-							dueño = d; 
 							VentanaInicio.setDueño(d);
 							dispose();
 							

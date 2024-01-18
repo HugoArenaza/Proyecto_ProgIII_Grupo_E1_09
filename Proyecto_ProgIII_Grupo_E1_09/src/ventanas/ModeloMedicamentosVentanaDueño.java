@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 import domain.Medicamento;
 
 
+
+
 public class ModeloMedicamentosVentanaDueño extends DefaultTableModel{
 
 	/**

@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.List;
-
 public class Dueño {
 	private String NombreDueño;
 	private String apellidos;

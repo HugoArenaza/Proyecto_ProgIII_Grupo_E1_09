@@ -779,6 +779,11 @@ public class VentanaDueño extends JFrame{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
+=======
+			@SuppressWarnings("unused")
+			String selec = comboMascotas.getSelectedItem().toString();
+>>>>>>> branch 'Proyecto_Main' of https://github.com/HugoArenaza/Proyecto_ProgIII_Grupo_E1_09.git
 			
 			
 		}
@@ -996,7 +1001,12 @@ public class VentanaDueño extends JFrame{
 	pMisPedidos.setPreferredSize(panelSize);
 	
 	tablaCompras = new JTable();
+
 	
+
+	@SuppressWarnings("unused")
+	List<Compra> lc = new ArrayList<>(BD.cogerCompra(conn));
+
 	scrollCompras = new JScrollPane(tablaCompras);
 	
 	tablaCompras2 = new JTable();

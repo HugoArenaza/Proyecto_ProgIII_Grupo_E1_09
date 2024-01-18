@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 import domain.Compra;
 
 
+
+
 public class ModeloHistorialCompras extends DefaultTableModel{
 	/**
 	 * 

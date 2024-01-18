@@ -113,8 +113,9 @@ public class Contenedora {
 //	
 //	this.jefe = new Jefe("Mario","Ibañez","jefe@jefefurweel.com", "adad", clinicaPrincipal, null, (float) 10000.0, Especialidades.CIRUGIA, "uahsdudhas2", 12, 2  );
 	}
-
-
+	Veterinario vet1 = new Veterinario(1, "Enrique", "Corres", "enriquecorres", "123245", 123, new ArrayList<Paciente>(), (float) 1200.22, Especialidades.CARDIOLOGIA, "12345678");
+	Veterinario vet2 = new Veterinario(2, "Hugo", "Arenaza", "hugoarenaza", "98765432", 456, new ArrayList<Paciente>(), (float) 3000.321, Especialidades.CIRUGIA, "72345618");
+	
 	public String getMascotasPorTipo() {
 		List<Paciente> lP = new ArrayList<>();
 		

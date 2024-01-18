@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
@@ -28,17 +27,9 @@ import javax.swing.table.DefaultTableModel;
 import base_de_datos.BD;
 import domain.Cita;
 import domain.Medicamento;
-import domain.MedicamentosAnimales;
 import domain.Paciente;
 import com.toedter.calendar.JCalendar;
-import com.toedter.calendar.JDateChooser;
-
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class VentanaTrabajador extends JFrame{
 	/**

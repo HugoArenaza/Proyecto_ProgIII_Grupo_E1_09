@@ -1,8 +1,6 @@
 package ventanas;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.util.logging.Logger;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -12,11 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import javax.swing.BorderFactory;
-import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -25,24 +18,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.Border;
-//import javax.swing.border.Border;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-
 import base_de_datos.BD;
-import domain.Clinica;
-import domain.Especialidades;
-import domain.Jefe;
 import domain.Proveedor;
-import domain.TipoPaciente;
-import domain.Trabajador;
-import domain.Veterinario;
-import domain.VeterinarioComparatorPorDni;
-import domain.Paciente;
 
 public class VentanaJefe extends JFrame {
 
