@@ -9,10 +9,6 @@ dueño a otra clínica este lo puede hacer por si mismo en el apartado de clinic
 pueden ver todas las veces que el dueño haya acudido a la clinica con alguna de sus mascotas. Si el dueño observa que a su mascota le sucede algo puede solicitar una cita en el apartado de
 citas sin tener que contactar con la propia clinica.
 
-La ventana de trabajador permite a los trabajadores de "rango bajo" visualizar los pacientes que tengan asignados mediante el apartado de Pacientes. El Item de Citas nos permite ver las citas
-ya programadas, agregar nuevas citas o eliminar otra ya existentes. También se puewde ver un calendario con el que lo trabajadores podrán organizarse a la hora de establecer las citas. Los trabajadores
-tambien podran ver los medicamentos que hay en stock y realizar un pedido de ellos en caso de que haya escasez de algun medicamento.
-
 La ventana Jefe es una ventana exclusiva para los jefes de la clinica. A ella solo se podra acceder con unas credenciales exclusivas que cada jefe deberá saber. Obviamente los jefes tendran
 unas funciones a las que los trabajadores no pueden acceder. Entre ellas se encuentran un boton para ver los proveedores de la clinica y poder añadir nuevos o eliminarlos. Compartido con la 
 ventana trabajador es la opcion de ver los pacientes asignados. Propio de la ventana jefe podemos ver y editar todas las clinicas que se encuentren bajo el nombre de la marca, a su vez 
